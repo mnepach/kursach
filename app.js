@@ -33,6 +33,22 @@ class ErrorBoundary extends React.Component {
 function App() {
   const [showAuthModal, setShowAuthModal] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [showOnboarding, setShowOnboarding] = React.useState(false);
+
+  const handleGetStarted = () => {
+    setShowOnboarding(true);
+  };
+
+  const handleOnboardingComplete = (userData) => {
+    setShowOnboarding(false);
+    if (userData.registered) {
+      setShowAuthModal(true);
+    }
+  };
+
+  if (showOnboarding) {
+    return <OnboardingFlow onComplete={handleOnboardingComplete} />;
+  }
 
   return (
     <div className="snap-container">
@@ -40,7 +56,7 @@ function App() {
         onAuthClick={() => setShowAuthModal(true)} 
         isLoggedIn={isLoggedIn}
       />
-      <Hero onGetStarted={() => setShowAuthModal(true)} />
+      <Hero onGetStarted={handleGetStarted} />
       <HowItWorks />
       <Features />
       <Languages />

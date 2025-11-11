@@ -1,9 +1,9 @@
 function Stats() {
   const stats = [
-    { number: '10M+', label: 'Активных пользователей', icon: 'users' },
-    { number: '30+', label: 'Языков доступно', icon: 'globe' },
-    { number: '500K+', label: 'Уроков пройдено ежедневно', icon: 'book-open' },
-    { number: '95%', label: 'Довольных пользователей', icon: 'heart' }
+    { number: '10M+', label: 'Активных пользователей', icon: '../trickle/assets/users.png' },
+    { number: '30+', label: 'Языков доступно', icon: '../trickle/assets/study.png' },
+    { number: '500K+', label: 'Уроков пройдено ежедневно', icon: '../trickle/assets/lesson.png' },
+    { number: '95%', label: 'Довольных пользователей', icon: '../trickle/assets/smile.png' }
   ];
 
   return (
@@ -17,21 +17,39 @@ function Stats() {
             Присоединяйтесь к миллионам людей, изучающих языки с нами
           </p>
         </div>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }} className="grid-cols-4">
+
+        <div 
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(4, 1fr)', 
+            gap: '2rem' 
+          }}
+          className="grid-cols-4"
+        >
           {stats.map((stat, index) => (
-            <div key={index} className="card" style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '5rem', 
-                height: '5rem', 
-                background: 'var(--secondary-color)', 
-                borderRadius: '1.5rem', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1.5rem'
-              }}>
-                <i className={`lucide-${stat.icon}`} style={{ fontSize: '2.5rem', color: 'var(--primary-color)' }}></i>
+            <div key={index} className="card" style={{ textAlign: 'center', position: 'relative' }}>
+              <div 
+                style={{ 
+                  width: '5rem', 
+                  height: '5rem',
+                  margin: '0 auto 1.5rem',
+                  position: 'relative',
+                }}
+              >
+                <img 
+                  src={stat.icon} 
+                  alt={stat.label} 
+                  style={{ 
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) scale(1.5)', 
+                    width: '5rem',
+                    height: '5rem',
+                    objectFit: 'contain',
+                    pointerEvents: 'none'
+                  }}
+                />
               </div>
               <div className="stat-number">{stat.number}</div>
               <p style={{ color: 'var(--text-light)', fontSize: '1rem', marginTop: '0.5rem' }}>
@@ -43,4 +61,4 @@ function Stats() {
       </div>
     </section>
   );
-}   
+}
