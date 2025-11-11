@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinguaPlay - Изучайте языки играючи</title>
+    <meta name="description" content="Изучайте иностранные языки с элементами геймификации. Веселые персонажи, интересные уроки и прогресс в личном кабинете.">
+    <meta name="keywords" content="изучение языков, геймификация, обучение, языковое приложение">
+    <meta property="og:title" content="LinguaPlay - Изучайте языки играючи">
+    <meta property="og:description" content="Изучайте иностранные языки с элементами геймификации">
+    <meta property="twitter:title" content="LinguaPlay - Изучайте языки играючи">
+    <meta property="twitter:description" content="Изучайте иностранные языки с элементами геймификации">
+
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react@18/umd/react.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://resource.trickle.so/vendor_lib/unpkg/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
+
+    <style type="text/tailwindcss">
+    @layer theme {
+        :root {
+            --primary-color: #60A5FA;
+            --secondary-color: #DBEAFE;
+            --accent-color: #3B82F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+        }
+    }
+
+    @layer base {
+        body {
+            @apply bg-[var(--bg-light)] text-[var(--text-dark)] font-sans;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            @apply font-bold;
+        }
+    }
+
+    @layer components {
+        .btn-primary {
+            @apply px-8 py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold hover:bg-[var(--accent-color)] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+        }
+        
+        .btn-secondary {
+            @apply px-8 py-4 bg-white text-[var(--primary-color)] border-2 border-[var(--primary-color)] rounded-2xl font-bold hover:bg-[var(--secondary-color)] transition-all duration-300 hover:scale-105;
+        }
+        
+        .card {
+            @apply bg-white rounded-3xl shadow-lg p-8 hover:shadow-2
