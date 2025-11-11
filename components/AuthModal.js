@@ -25,7 +25,11 @@ function AuthModal({ onClose, onLogin }) {
               <div className="flex justify-between items-start mb-10">
                 <div className="flex items-center gap-6">
                   <div className="w-24 h-24 bg-gradient-blue rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl">
-                    {userName.charAt(0)}
+                       <img 
+                       src="../trickle/assets/icon.jpg" 
+                        alt="User avatar"
+                        className="w-full h-full object-cover"
+                     />
                   </div>
                   <div>
                     <h2 className="text-3xl font-bold text-[var(--text-dark)] mb-1">{userName}</h2>

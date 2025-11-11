@@ -1,60 +1,54 @@
 function Download() {
-  try {
-    return (
-      <section 
-        id="download"
-        className="snap-section gradient-bg flex items-center justify-center"
-        data-name="download"
-        data-file="components/Download.js"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-dark)] mb-6">
-              Скачайте приложение
-            </h2>
-            <p className="text-xl text-[var(--text-light)] mb-12 max-w-2xl mx-auto">
-              Начните изучать языки прямо сейчас! Доступно на iOS и Android
+  return (
+    <section id="download" className="snap-section gradient-bg">
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 2rem', width: '100%' }}>
+        <div style={{ textAlign: 'center' }}>
+          <h2 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
+            Скачайте приложение
+          </h2>
+          <p style={{ fontSize: '1.25rem', color: 'var(--text-light)', maxWidth: '40rem', margin: '0 auto 3rem' }}>
+            Начните изучать языки прямо сейчас! Доступно на iOS и Android
+          </p>
+          
+          <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap' }}>
+            <a 
+              href="https://apps.apple.com" 
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'black', color: 'white', padding: '1rem 2rem', borderRadius: '1rem', textDecoration: 'none', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)', transition: 'transform 0.3s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              <i className="lucide-smartphone" style={{ fontSize: '2rem' }}></i>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '0.75rem' }}>Загрузить в</div>
+                <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>App Store</div>
+              </div>
+            </a>
+            
+            <a 
+              href="https://play.google.com" 
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'black', color: 'white', padding: '1rem 2rem', borderRadius: '1rem', textDecoration: 'none', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)', transition: 'transform 0.3s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              <i className="lucide-smartphone" style={{ fontSize: '2rem' }}></i>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '0.75rem' }}>Загрузить в</div>
+                <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>Google Play</div>
+              </div>
+            </a>
+          </div>
+          
+          <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid #E2E8F0' }}>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>
+              © 2025 LinguaPlay. Все права защищены.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-              <a 
-                href="https://apps.apple.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 bg-black text-white px-8 py-4 rounded-2xl hover:bg-gray-800 transition-colors shadow-lg"
-              >
-                <div className="icon-smartphone text-3xl"></div>
-                <div className="text-left">
-                  <div className="text-xs">Загрузить в</div>
-                  <div className="text-xl font-bold">App Store</div>
-                </div>
-              </a>
-              
-              <a 
-                href="https://play.google.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 bg-black text-white px-8 py-4 rounded-2xl hover:bg-gray-800 transition-colors shadow-lg"
-              >
-                <div className="icon-smartphone text-3xl"></div>
-                <div className="text-left">
-                  <div className="text-xs">Загрузить в</div>
-                  <div className="text-xl font-bold">Google Play</div>
-                </div>
-              </a>
-            </div>
-            
-            <div className="mt-16 pt-8 border-t border-gray-300">
-              <p className="text-sm text-[var(--text-light)]">
-                © 2025 LinguaPlay. Все права защищены.
-              </p>
-            </div>
           </div>
         </div>
-      </section>
-    );
-  } catch (error) {
-    console.error('Download component error:', error);
-    return null;
-  }
+      </div>
+    </section>
+  );
 }

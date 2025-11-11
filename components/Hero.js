@@ -9,6 +9,8 @@ function Hero({ onGetStarted }) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
+            
+            {/* Текст */}
             <div className="text-center md:text-left">
               <h1 className="text-5xl md:text-6xl font-bold text-[var(--text-dark)] mb-6">
                 Учите языки<br />
@@ -21,28 +23,43 @@ function Hero({ onGetStarted }) {
                 <button onClick={onGetStarted} className="btn-primary">
                   Начать обучение
                 </button>
-                <button onClick={() => document.getElementById('download').scrollIntoView({ behavior: 'smooth' })} className="btn-secondary">
+                <button 
+                  onClick={() => document.getElementById('download').scrollIntoView({ behavior: 'smooth' })} 
+                  className="btn-secondary"
+                >
                   Скачать приложение
                 </button>
               </div>
             </div>
             
-            <div className="relative">
-              <div className="floating">
+            {/* Изображения */}
+            <div className="relative flex justify-center items-center">
+              
+              {/* Kitty */}
+              <div className="z-10">
                 <img 
-                  src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=400&h=400&fit=crop" 
-                  alt="Kirby character"
-                  className="w-64 h-64 mx-auto rounded-full object-cover shadow-2xl"
+                  src="../trickle/assets/kitty.png" 
+                  alt="Kitty character"
+                  className="w-80 h-auto mx-auto drop-shadow-2xl floating"
                 />
               </div>
-              <div className="absolute -bottom-10 -right-10 floating" style={{ animationDelay: '1s' }}>
+
+              {/* Cinnamoroll */}
+              <div 
+                className="absolute z-20" 
+                style={{
+                  transform: 'translate(130px, 100px)' // стабильное положение
+                }}
+              >
                 <img 
-                  src="https://images.unsplash.com/photo-1603481546506-d0630a0ecf9f?w=200&h=200&fit=crop" 
+                  src="../trickle/assets/cinamonroll.png" 
                   alt="Cinnamoroll character"
-                  className="w-32 h-32 rounded-full object-cover shadow-xl"
+                  className="w-64 h-auto drop-shadow-2xl floating"
+                  style={{ animationDelay: '0.8s' }}
                 />
               </div>
             </div>
+
           </div>
         </div>
       </section>

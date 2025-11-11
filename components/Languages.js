@@ -1,51 +1,44 @@
 function Languages() {
-  try {
-    const languages = [
-      { name: 'Английский', flag: '🇬🇧', learners: '5M+' },
-      { name: 'Испанский', flag: '🇪🇸', learners: '3M+' },
-      { name: 'Французский', flag: '🇫🇷', learners: '2M+' },
-      { name: 'Немецкий', flag: '🇩🇪', learners: '1.5M+' },
-      { name: 'Итальянский', flag: '🇮🇹', learners: '1M+' },
-      { name: 'Японский', flag: '🇯🇵', learners: '2M+' },
-      { name: 'Корейский', flag: '🇰🇷', learners: '1.5M+' },
-      { name: 'Китайский', flag: '🇨🇳', learners: '1M+' }
-    ];
+  const languages = [
+    { name: 'Английский', flag: '🇬🇧', learners: '5M+', level: 'A1-C2' },
+    { name: 'Испанский', flag: '🇪🇸', learners: '3M+', level: 'A1-C2' },
+    { name: 'Французский', flag: '🇫🇷', learners: '2M+', level: 'A1-C1' },
+    { name: 'Немецкий', flag: '🇩🇪', learners: '1.5M+', level: 'A1-C1' },
+    { name: 'Итальянский', flag: '🇮🇹', learners: '1M+', level: 'A1-B2' },
+    { name: 'Японский', flag: '🇯🇵', learners: '2M+', level: 'A1-B2' },
+    { name: 'Корейский', flag: '🇰🇷', learners: '1.5M+', level: 'A1-B2' },
+    { name: 'Китайский', flag: '🇨🇳', learners: '1M+', level: 'A1-B1' }
+  ];
 
-    return (
-      <section 
-        id="languages"
-        className="snap-section bg-white flex items-center justify-center"
-        data-name="languages"
-        data-file="components/Languages.js"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-bold text-[var(--text-dark)] mb-4">
-              Изучайте <span className="text-[var(--primary-color)]">любой</span> язык
-            </h2>
-            <p className="text-xl text-[var(--text-light)] max-w-2xl mx-auto">
-              Более 30 языковых курсов доступно прямо сейчас
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {languages.map((lang, index) => (
-              <div key={index} className="card text-center hover:bg-[var(--secondary-color)] cursor-pointer">
-                <div className="text-6xl mb-4">{lang.flag}</div>
-                <h3 className="text-xl font-bold text-[var(--text-dark)] mb-2">
-                  {lang.name}
-                </h3>
-                <p className="text-[var(--text-light)]">
-                  {lang.learners} учеников
-                </p>
-              </div>
-            ))}
-          </div>
+  return (
+    <section id="languages" className="snap-section" style={{ background: 'white' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 2rem', width: '100%' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'var(--text-dark)', marginBottom: '1rem' }}>
+            Изучайте <span style={{ color: 'var(--primary-color)' }}>любой</span> язык
+          </h2>
+          <p style={{ fontSize: '1.25rem', color: 'var(--text-light)', maxWidth: '40rem', margin: '0 auto' }}>
+            Более 30 языковых курсов доступно прямо сейчас
+          </p>
         </div>
-      </section>
-    );
-  } catch (error) {
-    console.error('Languages component error:', error);
-    return null;
-  }
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }} className="grid-cols-4">
+          {languages.map((lang, index) => (
+            <div key={index} className="card language-card" style={{ textAlign: 'center', cursor: 'pointer' }}>
+              <div className="language-flag">{lang.flag}</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--text-dark)', marginBottom: '0.5rem' }}>
+                {lang.name}
+              </h3>
+              <p style={{ color: 'var(--text-light)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                {lang.learners} учеников
+              </p>
+              <p style={{ color: 'var(--primary-color)', fontSize: '0.875rem', fontWeight: 'bold' }}>
+                Уровни: {lang.level}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

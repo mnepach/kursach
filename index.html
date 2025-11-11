@@ -5,20 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinguaPlay - Изучайте языки играючи</title>
     <meta name="description" content="Изучайте иностранные языки с элементами геймификации. Веселые персонажи, интересные уроки и прогресс в личном кабинете.">
-    <meta name="keywords" content="изучение языков, геймификация, обучение, языковое приложение">
-    <meta property="og:title" content="LinguaPlay - Изучайте языки играючи">
-    <meta property="og:description" content="Изучайте иностранные языки с элементами геймификации">
-    <meta property="twitter:title" content="LinguaPlay - Изучайте языки играючи">
-    <meta property="twitter:description" content="Изучайте иностранные языки с элементами геймификации">
-
-    <script src="https://resource.trickle.so/vendor_lib/unpkg/react@18/umd/react.production.min.js"></script>
-    <script src="https://resource.trickle.so/vendor_lib/unpkg/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://resource.trickle.so/vendor_lib/unpkg/@babel/standalone/babel.min.js"></script>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://resource.trickle.so/vendor_lib/unpkg/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
+    <link href="https://unpkg.com/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
 
-    <style type="text/tailwindcss">
-    @layer theme {
+    <style>
         :root {
             --primary-color: #60A5FA;
             --secondary-color: #DBEAFE;
@@ -27,26 +21,178 @@
             --text-light: #64748B;
             --bg-light: #F8FAFC;
         }
-    }
 
-    @layer base {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            @apply bg-[var(--bg-light)] text-[var(--text-dark)] font-sans;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
-            @apply font-bold;
-        }
-    }
 
-    @layer components {
+        .snap-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .snap-section {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .bounce {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%);
+        }
+
+        .gradient-blue {
+            background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+        }
+
         .btn-primary {
-            @apply px-8 py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold hover:bg-[var(--accent-color)] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 1rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
         }
-        
+
+        .btn-primary:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.4);
+        }
+
         .btn-secondary {
-            @apply px-8 py-4 bg-white text-[var(--primary-color)] border-2 border-[var(--primary-color)] rounded-2xl font-bold hover:bg-[var(--secondary-color)] transition-all duration-300 hover:scale-105;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        
+
+        .btn-secondary:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
         .card {
-            @apply bg-white rounded-3xl shadow-lg p-8 hover:shadow-2
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            height: 100%;
+        }
+
+        .testimonial-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .language-flag {
+            font-size: 4rem;
+            transition: transform 0.3s;
+        }
+
+        .language-card:hover .language-flag {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        @media (max-width: 768px) {
+            .snap-section > div {
+                padding: 2rem 1rem !important;
+            }
+            .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" src="components/Header.js"></script>
+    <script type="text/babel" src="components/Hero.js"></script>
+    <script type="text/babel" src="components/HowItWorks.js"></script>
+    <script type="text/babel" src="components/Features.js"></script>
+    <script type="text/babel" src="components/Languages.js"></script>
+    <script type="text/babel" src="components/Testimonials.js"></script>
+    <script type="text/babel" src="components/Stats.js"></script>
+    <script type="text/babel" src="components/Download.js"></script>
+    <script type="text/babel" src="components/AuthModal.js"></script>
+    <script type="text/babel" src="app.js"></script>
+</body>
+</html>

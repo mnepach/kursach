@@ -1,48 +1,39 @@
 function Header({ onAuthClick, isLoggedIn }) {
-  try {
-    const scrollToSection = (sectionId) => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-    return (
-      <header 
-        className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50"
-        data-name="header"
-        data-file="components/Header.js"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-[var(--primary-color)] rounded-full flex items-center justify-center">
-                <div className="icon-sparkles text-xl text-white"></div>
-              </div>
-              <span className="text-2xl font-bold text-[var(--primary-color)]">LinguaPlay</span>
+  return (
+    <header>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ 
+              width: '2.5rem', 
+              height: '2.5rem', 
+              background: 'var(--primary-color)', 
+              borderRadius: '50%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center' 
+            }}>
+              <i className="lucide-sparkles" style={{ color: 'white', fontSize: '1.5rem' }}></i>
             </div>
-            
-            <nav className="hidden md:flex space-x-8">
-              <button onClick={() => scrollToSection('hero')} className="text-[var(--text-dark)] hover:text-[var(--primary-color)] transition-colors">
-                Главная
-              </button>
-              <button onClick={() => scrollToSection('features')} className="text-[var(--text-dark)] hover:text-[var(--primary-color)] transition-colors">
-                Возможности
-              </button>
-              <button onClick={() => scrollToSection('download')} className="text-[var(--text-dark)] hover:text-[var(--primary-color)] transition-colors">
-                Скачать
-              </button>
-            </nav>
-            
-            <button onClick={onAuthClick} className="btn-primary">
+            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>LinguaPlay</span>
+          </div>
+          
+          <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+            <button onClick={() => scrollToSection('hero')} style={{ background: 'none', border: 'none', color: 'var(--text-dark)', cursor: 'pointer', fontSize: '1rem', fontWeight: '500' }}>Главная</button>
+            <button onClick={() => scrollToSection('how-it-works')} style={{ background: 'none', border: 'none', color: 'var(--text-dark)', cursor: 'pointer', fontSize: '1rem', fontWeight: '500' }}>Как работает</button>
+            <button onClick={() => scrollToSection('features')} style={{ background: 'none', border: 'none', color: 'var(--text-dark)', cursor: 'pointer', fontSize: '1rem', fontWeight: '500' }}>Возможности</button>
+            <button onClick={() => scrollToSection('languages')} style={{ background: 'none', border: 'none', color: 'var(--text-dark)', cursor: 'pointer', fontSize: '1rem', fontWeight: '500' }}>Языки</button>
+            <button onClick={() => scrollToSection('testimonials')} style={{ background: 'none', border: 'none', color: 'var(--text-dark)', cursor: 'pointer', fontSize: '1rem', fontWeight: '500' }}>Отзывы</button>
+            <button onClick={onAuthClick} className="btn-primary" style={{ padding: '0.75rem 1.5rem' }}>
               {isLoggedIn ? 'Личный кабинет' : 'Войти'}
             </button>
-          </div>
+          </nav>
         </div>
-      </header>
-    );
-  } catch (error) {
-    console.error('Header component error:', error);
-    return null;
-  }
+      </div>
+    </header>
+  );
 }
