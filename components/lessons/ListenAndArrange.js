@@ -94,9 +94,7 @@ function ListenAndArrange({ lesson, onAnswer }) {
           className={`w-full py-4 rounded-xl font-bold transition-all ${
             selectedWords.length === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : checked
-                ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
-                : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+              : 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
           }`}
         >
           {checked ? 'Далее' : 'Проверить'}

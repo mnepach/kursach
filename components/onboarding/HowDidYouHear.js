@@ -27,9 +27,10 @@ function HowDidYouHear({ onNext }) {
           <img 
             src="../trickle/assets/hello.png" 
             alt="Hello Kitty"
-            className="w-24 h-24 rounded-full shadow-lg object-cover"
+            className="w-24 h-24 object-cover bounce"
           />
-          <div className="bg-white rounded-3xl px-8 py-6 shadow-xl flex-1">
+          <div className="bg-white rounded-3xl px-8 py-6 shadow-xl flex-1 relative">
+            <div className="absolute top-1/2 left-0 transform -translate-x-full -translate-y-1/2 w-0 h-0 border-t-[12px] border-b-[12px] border-r-[18px] border-t-transparent border-b-transparent border-r-white"></div>
             <p className="text-2xl font-bold text-[var(--text-dark)]">
               Как вы узнали о нашем приложении?
             </p>
