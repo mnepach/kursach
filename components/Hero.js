@@ -3,14 +3,42 @@ function Hero({ onGetStarted }) {
     return (
       <section 
         id="hero"
-        className="snap-section gradient-bg flex items-center justify-center pt-16"
+        className="snap-section flex items-center justify-center pt-16 relative overflow-hidden"
         data-name="hero"
         data-file="components/Hero.js"
+        style={{
+          background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'
+        }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'url(../trickle/assets/background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: 0.7,
+            zIndex: 0
+          }}
+        ></div>
+
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '15vh',
+            background: 'linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0) 100%)',
+            zIndex: 1
+          }}
+        ></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            
-            {/* Текст */}
             <div className="text-center md:text-left">
               <h1 className="text-5xl md:text-6xl font-bold text-[var(--text-dark)] mb-6">
                 Учите языки<br />
@@ -31,11 +59,8 @@ function Hero({ onGetStarted }) {
                 </button>
               </div>
             </div>
-            
-            {/* Изображения */}
+
             <div className="relative flex justify-center items-center">
-              
-              {/* Kitty */}
               <div className="z-10">
                 <img 
                   src="../trickle/assets/kitty.png" 
@@ -43,12 +68,10 @@ function Hero({ onGetStarted }) {
                   className="w-80 h-auto mx-auto drop-shadow-2xl floating"
                 />
               </div>
-
-              {/* Cinnamoroll */}
               <div 
                 className="absolute z-20" 
                 style={{
-                  transform: 'translate(130px, 100px)' // стабильное положение
+                  transform: 'translate(130px, 100px)'
                 }}
               >
                 <img 
@@ -59,7 +82,6 @@ function Hero({ onGetStarted }) {
                 />
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -69,3 +91,5 @@ function Hero({ onGetStarted }) {
     return null;
   }
 }
+
+export default Hero;
