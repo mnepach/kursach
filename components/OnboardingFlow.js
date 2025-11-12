@@ -7,7 +7,6 @@ function OnboardingFlow({ onComplete }) {
     total: 0
   });
 
-  // Примеры уроков для начинающих (английский)
   const beginnerLessons = [
     {
       type: 'listen',
@@ -76,9 +75,7 @@ function OnboardingFlow({ onComplete }) {
       total: lessonResults.total + 1
     });
     
-    setTimeout(() => {
-      handleNext();
-    }, 1500);
+    handleNext();
   };
 
   const handleRegister = () => {
@@ -86,11 +83,9 @@ function OnboardingFlow({ onComplete }) {
   };
 
   const handleDownload = () => {
-    // Открыть модалку Download или перейти на страницу загрузки
     document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Рендер текущего шага
   switch (currentStep) {
     case 'languageSelection':
       return <LanguageSelection onNext={handleNext} />;

@@ -1,16 +1,21 @@
 function SelectWordByImage({ lesson, onAnswer }) {
   const [selected, setSelected] = React.useState(null);
+  const [checked, setChecked] = React.useState(false);
+  const [isCorrect, setIsCorrect] = React.useState(false);
 
   const handleSelect = (option) => {
+    if (checked) return;
     setSelected(option);
-    setTimeout(() => {
-      const isCorrect = option.text === lesson.correctAnswer;
-      onAnswer(isCorrect);
-    }, 500);
   };
 
-  const handleSkip = () => {
-    onAnswer(false);
+  const handleCheck = () => {
+    if (checked) {
+      onAnswer(isCorrect);
+    } else {
+      const correct = selected.text === lesson.correctAnswer;
+      setIsCorrect(correct);
+      setChecked(true);
+    }
   };
 
   return (
@@ -25,16 +30,19 @@ function SelectWordByImage({ lesson, onAnswer }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {lesson.options.map((option, index) => (
             <button
               key={index}
               onClick={() => handleSelect(option)}
+              disabled={checked}
               className={`card text-center transition-all ${
                 selected?.text === option.text 
-                  ? option.text === lesson.correctAnswer
-                    ? 'ring-4 ring-green-500 bg-green-50'
-                    : 'ring-4 ring-red-500 bg-red-50'
+                  ? checked
+                    ? option.text === lesson.correctAnswer
+                      ? 'ring-4 ring-green-500 bg-green-50'
+                      : 'ring-4 ring-red-500 bg-red-50'
+                    : 'ring-4 ring-[var(--primary-color)]'
                   : ''
               }`}
             >
@@ -47,10 +55,17 @@ function SelectWordByImage({ lesson, onAnswer }) {
         </div>
 
         <button 
-          onClick={handleSkip}
-          className="w-full py-4 mt-6 bg-transparent border-2 border-gray-400 text-gray-600 rounded-xl font-bold hover:bg-gray-50 transition-all"
+          onClick={handleCheck}
+          disabled={!selected}
+          className={`w-full py-4 rounded-xl font-bold transition-all ${
+            !selected
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : checked
+                ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
+                : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+          }`}
         >
-          ДАЛЕЕ
+          {checked ? 'Далее' : 'Проверить'}
         </button>
       </div>
     </div>

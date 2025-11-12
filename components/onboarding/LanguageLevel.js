@@ -20,27 +20,27 @@ function LanguageLevel({ onNext, selectedLanguage }) {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
+    <div className="min-h-screen gradient-bg flex items-center justify-center p-4">
       <div className="max-w-3xl w-full">
-        <div className="flex items-start gap-6 mb-12">
+        <div className="flex items-start gap-4 mb-8">
           <img 
-            src="../trickle/assets/icon.jpg" 
+            src="../trickle/assets/hello.png" 
             alt="Hello Kitty"
-            className="w-24 h-24 rounded-full shadow-lg"
+            className="w-20 h-20 rounded-full shadow-lg object-cover flex-shrink-0"
           />
-          <div className="bg-white rounded-3xl px-8 py-6 shadow-xl flex-1">
-            <p className="text-2xl font-bold text-[var(--text-dark)]">
+          <div className="bg-white rounded-3xl px-6 py-4 shadow-xl flex-1">
+            <p className="text-xl font-bold text-[var(--text-dark)]">
               Насколько хорошо вы знаете {selectedLanguage?.name?.toLowerCase()}?
             </p>
           </div>
         </div>
         
-        <div className="space-y-4 mb-8">
+        <div className="space-y-3 mb-6">
           {levels.map((level, index) => (
             <button
               key={index}
               onClick={() => handleSelect(level)}
-              className={`card w-full flex items-center gap-4 text-left transition-all ${
+              className={`card w-full flex items-center gap-4 text-left transition-all py-3 ${
                 selected?.level === level.level ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
             >
@@ -48,13 +48,13 @@ function LanguageLevel({ onNext, selectedLanguage }) {
                 {[...Array(5)].map((_, i) => (
                   <div 
                     key={i}
-                    className={`w-3 h-12 rounded ${
+                    className={`w-2 h-10 rounded ${
                       i < level.bars ? 'bg-[var(--primary-color)]' : 'bg-gray-200'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-lg font-medium text-[var(--text-dark)] flex-1">
+              <span className="text-base font-medium text-[var(--text-dark)] flex-1">
                 {level.text}
               </span>
             </button>

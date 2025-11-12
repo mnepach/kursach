@@ -1,8 +1,12 @@
 function ListenAndArrange({ lesson, onAnswer }) {
   const [selectedWords, setSelectedWords] = React.useState([]);
   const [availableWords, setAvailableWords] = React.useState([...lesson.words]);
+  const [checked, setChecked] = React.useState(false);
+  const [isCorrect, setIsCorrect] = React.useState(false);
 
   const handleWordClick = (word, fromAvailable) => {
+    if (checked) return;
+    
     if (fromAvailable) {
       setSelectedWords([...selectedWords, word]);
       setAvailableWords(availableWords.filter(w => w !== word));
@@ -13,17 +17,17 @@ function ListenAndArrange({ lesson, onAnswer }) {
   };
 
   const handleCheck = () => {
-    const userAnswer = selectedWords.join(' ');
-    const isCorrect = userAnswer === lesson.correctAnswer;
-    onAnswer(isCorrect);
-  };
-
-  const handleSkip = () => {
-    onAnswer(false);
+    if (checked) {
+      onAnswer(isCorrect);
+    } else {
+      const userAnswer = selectedWords.join(' ');
+      const correct = userAnswer === lesson.correctAnswer;
+      setIsCorrect(correct);
+      setChecked(true);
+    }
   };
 
   const playAudio = () => {
-    // В реальном приложении здесь будет воспроизведение аудио
     console.log('Playing audio:', lesson.audio);
   };
 
@@ -46,7 +50,7 @@ function ListenAndArrange({ lesson, onAnswer }) {
           </button>
         </div>
 
-        <div className="card mb-6 min-h-[100px] bg-gray-50">
+        <div className={`card mb-6 min-h-[100px] ${checked ? (isCorrect ? 'bg-green-50 border-2 border-green-500' : 'bg-red-50 border-2 border-red-500') : 'bg-gray-50'}`}>
           <div className="flex flex-wrap gap-2">
             {selectedWords.length === 0 ? (
               <p className="text-gray-400 text-lg">Выберите слова снизу...</p>
@@ -55,7 +59,12 @@ function ListenAndArrange({ lesson, onAnswer }) {
                 <button
                   key={index}
                   onClick={() => handleWordClick(word, false)}
-                  className="px-4 py-2 bg-[var(--primary-color)] text-white rounded-xl font-medium hover:bg-[var(--accent-color)] transition-all"
+                  disabled={checked}
+                  className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                    checked 
+                      ? (isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white')
+                      : 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
+                  }`}
                 >
                   {word}
                 </button>
@@ -70,7 +79,8 @@ function ListenAndArrange({ lesson, onAnswer }) {
               <button
                 key={index}
                 onClick={() => handleWordClick(word, true)}
-                className="px-4 py-2 bg-white border-2 border-gray-300 rounded-xl font-medium hover:border-[var(--primary-color)] transition-all"
+                disabled={checked}
+                className="px-4 py-2 bg-white border-2 border-gray-300 rounded-xl font-medium hover:border-[var(--primary-color)] transition-all disabled:opacity-50"
               >
                 {word}
               </button>
@@ -81,22 +91,17 @@ function ListenAndArrange({ lesson, onAnswer }) {
         <button 
           onClick={handleCheck}
           disabled={selectedWords.length === 0}
-          className={`w-full py-4 rounded-xl font-bold transition-all mb-3 ${
-            selectedWords.length > 0
-              ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]' 
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          className={`w-full py-4 rounded-xl font-bold transition-all ${
+            selectedWords.length === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : checked
+                ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
+                : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
           }`}
         >
-          Проверить
-        </button>
-
-        <button 
-          onClick={handleSkip}
-          className="w-full py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-xl font-bold hover:bg-gray-50 transition-all"
-        >
-          ДАЛЕЕ
+          {checked ? 'Далее' : 'Проверить'}
         </button>
       </div>
     </div>
   );
-}   
+}

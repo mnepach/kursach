@@ -28,9 +28,9 @@ function LearningMethod({ onNext }) {
       <div className="max-w-3xl w-full">
         <div className="flex items-start gap-6 mb-12">
           <img 
-            src="../trickle/assets/icon.jpg" 
+            src="../trickle/assets/hello.png" 
             alt="Hello Kitty"
-            className="w-24 h-24 rounded-full shadow-lg"
+            className="w-24 h-24 rounded-full shadow-lg object-cover"
           />
           <div className="bg-white rounded-3xl px-8 py-6 shadow-xl flex-1">
             <p className="text-2xl font-bold text-[var(--text-dark)]">

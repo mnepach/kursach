@@ -14,12 +14,15 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
           Конец урока!
         </h1>
         
-        <div className="bg-white rounded-3xl p-8 shadow-xl mb-8 inline-block">
-          <div className="flex items-center gap-4">
-            <div className="text-5xl">🎯</div>
+        <div className="bg-green-50 border-4 border-green-500 rounded-3xl p-8 shadow-xl mb-8 inline-block">
+          <div className="flex items-center gap-6">
+            <div className="text-6xl">🎯</div>
             <div className="text-left">
-              <div className="text-gray-600 text-sm mb-1">ОТЛИЧНО</div>
-              <div className="text-6xl font-bold text-[var(--primary-color)]">{percentage}%</div>
+              <div className="text-green-700 text-lg font-bold mb-2">ОТЛИЧНО</div>
+              <div className="text-7xl font-bold text-green-600">{percentage}%</div>
+              <div className="text-green-700 text-sm mt-2">
+                Правильно: {correctAnswers} из {totalQuestions}
+              </div>
             </div>
           </div>
         </div>
@@ -28,7 +31,7 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
           onClick={onNext} 
           className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
         >
-          ДАЛЕЕ
+          Далее
         </button>
       </div>
     </div>

@@ -1,11 +1,11 @@
 function Features() {
   const features = [
-    { icon: 'gamepad-2', title: 'Геймификация', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь с друзьями' },
-    { icon: 'brain', title: 'Умные уроки', description: 'Адаптивная программа обучения подстраивается под ваш уровень' },
-    { icon: 'users', title: 'Милые персонажи', description: 'Учитесь вместе с героями Sanrio' },
-    { icon: 'trophy', title: 'Достижения', description: 'Отслеживайте прогресс и получайте награды' },
-    { icon: 'calendar', title: 'Ежедневные цели', description: 'Формируйте привычки с заданиями' },
-    { icon: 'globe', title: 'Множество языков', description: 'Изучайте английский, испанский и другие' }
+    { imageSrc: '../trickle/assets/bubble.png', title: 'Геймификация', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь с друзьями' },
+    { imageSrc: '../trickle/assets/books.png', title: 'Умные уроки', description: 'Адаптивная программа обучения подстраивается под ваш уровень' },
+    { imageSrc: '../trickle/assets/cutedog.png', title: 'Милые персонажи', description: 'Учитесь вместе с героями Sanrio' },
+    { imageSrc: '../trickle/assets/achieve.png', title: 'Достижения', description: 'Отслеживайте прогресс и получайте награды' }, 
+    { imageSrc: '../trickle/assets/star.png', title: 'Ежедневные цели', description: 'Формируйте привычки с заданиями' },
+    { imageSrc: '../trickle/assets/study1.png', title: 'Множество языков', description: 'Изучайте английский, испанский и другие' }
   ];
 
   return (
@@ -22,19 +22,36 @@ function Features() {
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }} className="grid-cols-3">
           {features.map((feature, index) => (
-            <div key={index} className="card" style={{ padding: '1.5rem' }}>
-              <div style={{ 
-                width: '4rem', 
-                height: '4rem', 
-                background: 'var(--secondary-color)', 
-                borderRadius: '1rem', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                marginBottom: '1rem'
-              }}>
-                <i className={`lucide-${feature.icon}`} style={{ fontSize: '2rem', color: 'var(--primary-color)' }}></i>
+            <div 
+              key={index} 
+              className="card" 
+              style={{ 
+                padding: '1.5rem', 
+                textAlign: 'left'
+              }}
+            >
+              
+              <div 
+                style={{ 
+                  width: '7rem', 
+                  height: '7rem', 
+                  marginBottom: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <img 
+                  src={feature.imageSrc} 
+                  alt={feature.title} 
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'contain',
+                  }}
+                />
               </div>
+
               <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--text-dark)', marginBottom: '0.5rem' }}>
                 {feature.title}
               </h3>

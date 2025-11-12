@@ -5,7 +5,7 @@ function FirstAchievement({ onNext, selectedLanguage }) {
         <img 
           src="../trickle/assets/hello.png" 
           alt="Hello Kitty"
-          className="w-48 h-48 mx-auto mb-8"
+          className="w-48 h-48 mx-auto mb-8 object-cover"
         />
         
         <div className="flex items-center justify-center gap-4 mb-8">
@@ -25,7 +25,7 @@ function FirstAchievement({ onNext, selectedLanguage }) {
           onClick={onNext} 
           className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
         >
-          ДАЛЕЕ
+          Далее
         </button>
       </div>
     </div>

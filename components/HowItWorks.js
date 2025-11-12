@@ -1,9 +1,9 @@
 function HowItWorks() {
   const steps = [
-    { icon: 'user-plus', title: 'Регистрация', description: 'Создайте аккаунт за 30 секунд и выберите свой первый язык' },
-    { icon: 'target', title: 'Поставьте цель', description: 'Определите свой уровень и установите ежедневные задачи' },
-    { icon: 'gamepad-2', title: 'Играйте и учитесь', description: 'Проходите увлекательные уроки с персонажами Sanrio' },
-    { icon: 'trophy', title: 'Отслеживайте прогресс', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь' }
+    { image: '../trickle/assets/mail.png', title: 'Регистрация', description: 'Создайте аккаунт за 30 секунд и выберите свой первый язык' },
+    { image: '../trickle/assets/target.png', title: 'Поставьте цель', description: 'Определите свой уровень и установите ежедневные задачи' },
+    { image: '../trickle/assets/game.png', title: 'Играйте и учитесь', description: 'Проходите увлекательные уроки с персонажами Sanrio' },
+    { image: '../trickle/assets/achive.png', title: 'Отслеживайте прогресс', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь' }
   ];
 
   return (
@@ -20,31 +20,31 @@ function HowItWorks() {
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }} className="grid-cols-4">
           {steps.map((step, index) => (
-            <div key={index} className="card" style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '5rem', 
-                height: '5rem', 
-                background: 'var(--secondary-color)', 
-                borderRadius: '1.5rem', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1.5rem'
-              }}>
-                <i className={`lucide-${step.icon}`} style={{ fontSize: '2rem', color: 'var(--primary-color)' }}></i>
+            <div key={index} className="card" style={{ textAlign: 'center', position: 'relative' }}>
+              <div 
+                style={{ 
+                  width: '8rem', 
+                  height: '8rem', 
+                  borderRadius: '1.5rem', 
+                  margin: '0 auto 1.5rem', 
+                  position: 'relative',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                }}
+              >
+                <img 
+                  src={step.image} 
+                  alt={step.title}
+                  style={{ 
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    pointerEvents: 'none'
+                  }}
+                />
               </div>
-              <div style={{ 
-                width: '2rem', 
-                height: '2rem', 
-                background: 'var(--primary-color)', 
-                color: 'white', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1rem',
-                fontWeight: 'bold'
-              }}>{index + 1}</div>
+              
               <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text-dark)', marginBottom: '0.75rem' }}>
                 {step.title}
               </h3>
