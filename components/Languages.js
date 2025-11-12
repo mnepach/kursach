@@ -2,12 +2,8 @@ function Languages() {
   const languages = [
     { name: 'Английский', flag: '../trickle/assets/england.png', learners: '5M+', level: 'A1-C2' },
     { name: 'Испанский', flag: '../trickle/assets/spain.png', learners: '3M+', level: 'A1-C2' },
-    { name: 'Французский', flag: '../trickle/assets/france.png', learners: '2M+', level: 'A1-C1' },
-    { name: 'Немецкий', flag: '../trickle/assets/germany.png', learners: '1.5M+', level: 'A1-C1' },
-    { name: 'Итальянский', flag: '../trickle/assets/italy.png', learners: '1M+', level: 'A1-B2' },
     { name: 'Японский', flag: '../trickle/assets/japan.png', learners: '2M+', level: 'A1-B2' },
-    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+', level: 'A1-B2' },
-    { name: 'Китайский', flag: '../trickle/assets/china.png', learners: '1M+', level: 'A1-B1' }
+    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+', level: 'A1-B2' }
   ];
 
   return (
@@ -58,3 +54,5 @@ function Languages() {
     </section>
   );
 }
+
+export default Languages; 

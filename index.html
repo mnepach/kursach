@@ -164,6 +164,16 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
+        header button:hover, header .logo-container:hover {
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .logo-container {
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
         .stat-number {
             font-size: 3.5rem;
             font-weight: bold;
@@ -219,10 +229,8 @@
     <script type="text/babel" src="components/lessons/LessonComplete.js"></script>
     <script type="text/babel" src="components/onboarding/FirstAchievement.js"></script>
     <script type="text/babel" src="components/SaveProgressPrompt.js"></script>
-    <script type="text/babel" src="components/RegisterModal.js"></script>
     
     <script type="text/babel" src="components/OnboardingFlow.js"></script>
-    
     <script type="text/babel" src="app.js"></script>
 </body>
 </html>

@@ -6,20 +6,20 @@ function WelcomeCharacter({ onNext }) {
         <div className="flex items-end justify-center w-full max-w-lg mb-4">
           
           <img 
-            src="../trickle/assets/hello.jpg" 
+            src="../trickle/assets/hello.png" 
             alt="Hello Kitty"
-            className="w-64 h-64 object-contain sideways" 
+            className="w-96 h-96 object-contain sideways" 
           />
 
           <div className="relative ml-4 mb-10">
             <div 
-              className="bg-white rounded-3xl p-4 shadow-xl border-4 border-[var(--primary-color)]"
-              style={{ minWidth: '220px', maxWidth: '300px' }}
+              className="bg-white rounded-3xl p-6 shadow-2xl border-4 border-[var(--primary-color)]"
+              style={{ minWidth: '280px', maxWidth: '350px' }}
             >
-              <p className="text-xl font-bold text-[var(--text-dark)]">
+              <p className="text-2xl font-bold text-[var(--text-dark)] mb-2">
                 Привет! Я Hello Kitty 👋
               </p>
-              <p className="text-[var(--text-dark)] mt-1">
+              <p className="text-[var(--text-dark)] text-lg">
                 Я буду твоим проводником в мире LinguaPlay! Нажми "Далее", чтобы продолжить.
               </p>
             </div>
@@ -38,3 +38,5 @@ function WelcomeCharacter({ onNext }) {
     </div>
   );
 }
+
+export default WelcomeCharacter;

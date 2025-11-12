@@ -5,7 +5,7 @@ function FirstAchievement({ onNext, selectedLanguage }) {
         <img 
           src="../trickle/assets/hello.png" 
           alt="Hello Kitty"
-          className="w-48 h-48 mx-auto mb-8 object-cover"
+          className="w-64 h-64 mx-auto mb-8 object-contain"
         />
         
         <div className="flex items-center justify-center gap-4 mb-8">
@@ -18,7 +18,7 @@ function FirstAchievement({ onNext, selectedLanguage }) {
         </div>
         
         <h1 className="text-3xl font-bold text-[var(--text-dark)] mb-8">
-          Вы получили свою первую<br />оценку Duolingo в курсе<br />{selectedLanguage?.name?.toLowerCase() || 'английского'}!
+          Вы получили свою первую<br />оценку LinguaPlay в курсе<br />{selectedLanguage?.name?.toLowerCase() || 'английского'}!
         </h1>
         
         <button 
@@ -31,3 +31,5 @@ function FirstAchievement({ onNext, selectedLanguage }) {
     </div>
   );
 }
+
+export default FirstAchievement;

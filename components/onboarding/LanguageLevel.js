@@ -26,10 +26,11 @@ function LanguageLevel({ onNext, selectedLanguage }) {
           <img 
             src="../trickle/assets/hello.png" 
             alt="Hello Kitty"
-            className="w-20 h-20 object-cover flex-shrink-0 bounce"
+            className="w-28 h-28 object-contain flex-shrink-0 bounce"
           />
-          <div className="bg-white rounded-3xl px-6 py-4 shadow-xl flex-1 relative">
-            <div className="absolute top-1/2 left-0 transform -translate-x-full -translate-y-1/2 w-0 h-0 border-t-[12px] border-b-[12px] border-r-[18px] border-t-transparent border-b-transparent border-r-white"></div>
+          <div className="bg-white rounded-3xl px-6 py-5 shadow-2xl flex-1 relative border-2 border-gray-200">
+            <div className="absolute top-1/2 left-0 transform -translate-x-full -translate-y-1/2 w-0 h-0 border-t-[16px] border-b-[16px] border-r-[24px] border-t-transparent border-b-transparent border-r-gray-200"></div>
+            <div className="absolute top-1/2 left-0 transform -translate-x-[calc(100%-4px)] -translate-y-1/2 w-0 h-0 border-t-[14px] border-b-[14px] border-r-[22px] border-t-transparent border-b-transparent border-r-white"></div>
             <p className="text-xl font-bold text-[var(--text-dark)]">
               Насколько хорошо вы знаете {selectedLanguage?.name?.toLowerCase()}?
             </p>
@@ -77,3 +78,5 @@ function LanguageLevel({ onNext, selectedLanguage }) {
     </div>
   );
 }
+
+export default LanguageLevel;

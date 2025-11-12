@@ -7,7 +7,11 @@ function Header({ onAuthClick, isLoggedIn }) {
     <header>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div 
+            className="logo-container"
+            onClick={() => scrollToSection('hero')} 
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
             <div style={{ 
               width: '2.5rem', 
               height: '2.5rem', 

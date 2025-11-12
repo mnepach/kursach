@@ -4,12 +4,8 @@ function LanguageSelection({ onNext }) {
   const languages = [
     { name: 'Английский', flag: '../trickle/assets/england.png', learners: '5M+' },
     { name: 'Испанский', flag: '../trickle/assets/spain.png', learners: '3M+' },
-    { name: 'Французский', flag: '../trickle/assets/france.png', learners: '2M+' },
-    { name: 'Немецкий', flag: '../trickle/assets/germany.png', learners: '1.5M+' },
-    { name: 'Итальянский', flag: '../trickle/assets/italy.png', learners: '1M+' },
     { name: 'Японский', flag: '../trickle/assets/japan.png', learners: '2M+' },
-    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+' },
-    { name: 'Китайский', flag: '../trickle/assets/china.png', learners: '1M+' }
+    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+' }
   ];
 
   const handleSelect = (language) => {
@@ -61,3 +57,5 @@ function LanguageSelection({ onNext }) {
     </div>
   );
 }
+
+export default LanguageSelection;

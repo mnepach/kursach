@@ -37,7 +37,35 @@ function App() {
   const [showOnboarding, setShowOnboarding] = React.useState(false);
 
   const handleGetStarted = () => {
-    setShowOnboarding(true);
+    const onboardingScripts = [
+      'components/onboarding/LanguageSelection.js',
+      'components/onboarding/WelcomeCharacter.js',
+      'components/onboarding/HowDidYouHear.js',
+      'components/onboarding/LearningGoal.js',
+      'components/onboarding/LanguageLevel.js',
+      'components/onboarding/DailyGoal.js',
+      'components/onboarding/LearningMethod.js',
+      'components/lessons/ListenAndArrange.js',
+      'components/lessons/SelectWordByImage.js',
+      'components/lessons/TranslateToTarget.js',
+      'components/lessons/TranslateToRussian.js',
+      'components/lessons/LessonComplete.js',
+      'components/onboarding/FirstAchievement.js',
+      'components/SaveProgressPrompt.js'
+    ];
+
+    Promise.all(onboardingScripts.map(src => {
+      return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.type = 'text/babel';
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = resolve;
+        document.body.appendChild(script);
+      });
+    })).then(() => {
+      setShowOnboarding(true);
+    });
   };
 
   const handleOnboardingComplete = (userData) => {

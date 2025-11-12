@@ -7,7 +7,7 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
         <img 
           src="../trickle/assets/clap.png" 
           alt="Congratulations"
-          className="w-48 h-48 mx-auto mb-8"
+          className="w-64 h-64 mx-auto mb-8 object-contain"
         />
         
         <h1 className="text-4xl font-bold text-[var(--text-dark)] mb-12">
@@ -37,3 +37,5 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
     </div>
   );
 }
+
+export default LessonComplete;
