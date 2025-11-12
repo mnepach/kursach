@@ -5,7 +5,11 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
         <div className="card">
-          <div className="text-8xl mb-8">👏</div>
+          <img 
+            src="../trickle/assets/clap.png" 
+            alt="Congratulations"
+            className="w-48 h-48 mx-auto mb-8"
+          />
           
           <h1 className="text-4xl font-bold text-[var(--text-dark)] mb-4">
             Урок завершён!

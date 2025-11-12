@@ -2,14 +2,14 @@ function LanguageSelection({ onNext }) {
   const [selectedLanguage, setSelectedLanguage] = React.useState(null);
 
   const languages = [
-    { name: 'Английский', flag: '🇬🇧', learners: '5M+' },
-    { name: 'Испанский', flag: '🇪🇸', learners: '3M+' },
-    { name: 'Французский', flag: '🇫🇷', learners: '2M+' },
-    { name: 'Немецкий', flag: '🇩🇪', learners: '1.5M+' },
-    { name: 'Итальянский', flag: '🇮🇹', learners: '1M+' },
-    { name: 'Японский', flag: '🇯🇵', learners: '2M+' },
-    { name: 'Корейский', flag: '🇰🇷', learners: '1.5M+' },
-    { name: 'Китайский', flag: '🇨🇳', learners: '1M+' }
+    { name: 'Английский', flag: '../trickle/assets/england.png', learners: '5M+' },
+    { name: 'Испанский', flag: '../trickle/assets/spain.png', learners: '3M+' },
+    { name: 'Французский', flag: '../trickle/assets/france.png', learners: '2M+' },
+    { name: 'Немецкий', flag: '../trickle/assets/germany.png', learners: '1.5M+' },
+    { name: 'Итальянский', flag: '../trickle/assets/italy.png', learners: '1M+' },
+    { name: 'Японский', flag: '../trickle/assets/japan.png', learners: '2M+' },
+    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+' },
+    { name: 'Китайский', flag: '../trickle/assets/china.png', learners: '1M+' }
   ];
 
   const handleSelect = (language) => {
@@ -28,21 +28,33 @@ function LanguageSelection({ onNext }) {
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {languages.map((lang, index) => (
-            <button
+            <div
               key={index}
               onClick={() => handleSelect(lang)}
-              className={`card text-center cursor-pointer transition-all ${
+              className={`card language-card text-center cursor-pointer transition-all duration-300 ${
                 selectedLanguage?.name === lang.name ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
+              style={{
+                transition: 'transform 0.3s ease',
+                transformStyle: 'preserve-3d',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = 'rotateX(10deg) rotateY(10deg)')}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)')}
             >
-              <div className="text-6xl mb-4">{lang.flag}</div>
+              <div className="language-flag" style={{ marginBottom: '1rem' }}>
+                <img 
+                  src={lang.flag} 
+                  alt={lang.name}
+                  style={{ width: '100px', height: '100px', objectFit: 'contain', margin: '0 auto', display: 'block' }}
+                />
+              </div>
               <h3 className="text-xl font-bold text-[var(--text-dark)] mb-2">
                 {lang.name}
               </h3>
               <p className="text-sm text-[var(--text-light)]">
                 {lang.learners} учеников
               </p>
-            </button>
+            </div>
           ))}
         </div>
       </div>

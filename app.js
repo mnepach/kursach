@@ -32,6 +32,7 @@ class ErrorBoundary extends React.Component {
 
 function App() {
   const [showAuthModal, setShowAuthModal] = React.useState(false);
+  const [showRegisterModal, setShowRegisterModal] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
 
@@ -42,7 +43,7 @@ function App() {
   const handleOnboardingComplete = (userData) => {
     setShowOnboarding(false);
     if (userData.registered) {
-      setShowAuthModal(true);
+      setShowRegisterModal(true);
     }
   };
 
@@ -70,6 +71,20 @@ function App() {
           onLogin={() => {
             setIsLoggedIn(true);
             setShowAuthModal(false);
+          }}
+        />
+      )}
+
+      {showRegisterModal && (
+        <RegisterModal 
+          onClose={() => setShowRegisterModal(false)}
+          onRegister={() => {
+            setIsLoggedIn(true);
+            setShowRegisterModal(false);
+          }}
+          onSwitchToLogin={() => {
+            setShowRegisterModal(false);
+            setShowAuthModal(true);
           }}
         />
       )}
