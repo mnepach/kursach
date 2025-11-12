@@ -4,51 +4,32 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
   return (
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
-        <div className="card">
-          <img 
-            src="../trickle/assets/clap.png" 
-            alt="Congratulations"
-            className="w-48 h-48 mx-auto mb-8"
-          />
-          
-          <h1 className="text-4xl font-bold text-[var(--text-dark)] mb-4">
-            Урок завершён!
-          </h1>
-          
-          <p className="text-2xl text-[var(--text-light)] mb-8">
-            Отличная работа!
-          </p>
-          
-          <div className="bg-gradient-blue rounded-2xl p-8 mb-8">
-            <div className="grid grid-cols-3 gap-6 text-white">
-              <div>
-                <div className="text-4xl font-bold mb-2">{correctAnswers}</div>
-                <div className="text-sm opacity-90">Правильно</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold mb-2">{totalQuestions - correctAnswers}</div>
-                <div className="text-sm opacity-90">Ошибок</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold mb-2">{percentage}%</div>
-                <div className="text-sm opacity-90">Точность</div>
-              </div>
+        <img 
+          src="../trickle/assets/clap.png" 
+          alt="Congratulations"
+          className="w-48 h-48 mx-auto mb-8"
+        />
+        
+        <h1 className="text-4xl font-bold text-[var(--text-dark)] mb-12">
+          Конец урока!
+        </h1>
+        
+        <div className="bg-white rounded-3xl p-8 shadow-xl mb-8 inline-block">
+          <div className="flex items-center gap-4">
+            <div className="text-5xl">🎯</div>
+            <div className="text-left">
+              <div className="text-gray-600 text-sm mb-1">ОТЛИЧНО</div>
+              <div className="text-6xl font-bold text-[var(--primary-color)]">{percentage}%</div>
             </div>
           </div>
-          
-          <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-6 mb-8">
-            <p className="text-xl font-bold text-yellow-900 mb-2">
-              🌟 Вы заработали 50 XP!
-            </p>
-            <p className="text-yellow-700">
-              Продолжайте в том же духе!
-            </p>
-          </div>
-          
-          <button onClick={onNext} className="btn-primary w-full">
-            Продолжить
-          </button>
         </div>
+        
+        <button 
+          onClick={onNext} 
+          className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
+        >
+          ДАЛЕЕ
+        </button>
       </div>
     </div>
   );

@@ -53,6 +53,7 @@ function OnboardingFlow({ onComplete }) {
       'learningMethod',
       'lessons',
       'lessonComplete',
+      'firstAchievement',
       'saveProgress'
     ];
     
@@ -134,6 +135,14 @@ function OnboardingFlow({ onComplete }) {
           onNext={handleNext}
           correctAnswers={lessonResults.correct}
           totalQuestions={lessonResults.total}
+        />
+      );
+
+    case 'firstAchievement':
+      return (
+        <FirstAchievement 
+          onNext={handleNext}
+          selectedLanguage={userData.selectedLanguage}
         />
       );
     

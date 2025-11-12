@@ -9,7 +9,7 @@ function WelcomeCharacter({ onNext }) {
             </p>
           </div>
           <img 
-            src="../trickle/assets/hello.jpg" 
+            src="../trickle/assets/icon.jpg" 
             alt="Hello Kitty"
             className="w-64 h-64 mx-auto rounded-full shadow-2xl mt-16"
           />

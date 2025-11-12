@@ -18,6 +18,10 @@ function ListenAndArrange({ lesson, onAnswer }) {
     onAnswer(isCorrect);
   };
 
+  const handleSkip = () => {
+    onAnswer(false);
+  };
+
   const playAudio = () => {
     // В реальном приложении здесь будет воспроизведение аудио
     console.log('Playing audio:', lesson.audio);
@@ -77,7 +81,7 @@ function ListenAndArrange({ lesson, onAnswer }) {
         <button 
           onClick={handleCheck}
           disabled={selectedWords.length === 0}
-          className={`w-full py-4 rounded-xl font-bold transition-all ${
+          className={`w-full py-4 rounded-xl font-bold transition-all mb-3 ${
             selectedWords.length > 0
               ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]' 
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
@@ -85,7 +89,14 @@ function ListenAndArrange({ lesson, onAnswer }) {
         >
           Проверить
         </button>
+
+        <button 
+          onClick={handleSkip}
+          className="w-full py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-xl font-bold hover:bg-gray-50 transition-all"
+        >
+          ДАЛЕЕ
+        </button>
       </div>
     </div>
   );
-}
+}   

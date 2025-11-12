@@ -24,7 +24,7 @@ function LanguageLevel({ onNext, selectedLanguage }) {
       <div className="max-w-3xl w-full">
         <div className="flex items-start gap-6 mb-12">
           <img 
-            src="../trickle/assets/hello.jpg" 
+            src="../trickle/assets/icon.jpg" 
             alt="Hello Kitty"
             className="w-24 h-24 rounded-full shadow-lg"
           />

@@ -9,6 +9,10 @@ function SelectWordByImage({ lesson, onAnswer }) {
     }, 500);
   };
 
+  const handleSkip = () => {
+    onAnswer(false);
+  };
+
   return (
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-4xl w-full">
@@ -41,6 +45,13 @@ function SelectWordByImage({ lesson, onAnswer }) {
             </button>
           ))}
         </div>
+
+        <button 
+          onClick={handleSkip}
+          className="w-full py-4 mt-6 bg-transparent border-2 border-gray-400 text-gray-600 rounded-xl font-bold hover:bg-gray-50 transition-all"
+        >
+          ДАЛЕЕ
+        </button>
       </div>
     </div>
   );
