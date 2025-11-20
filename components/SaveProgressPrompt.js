@@ -1,4 +1,9 @@
 function SaveProgressPrompt({ onRegister, onDownload }) {
+  const handleLater = () => {
+    // Переход на главную страницу при нажатии "Позже"
+    onDownload();
+  };
+
   return (
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
@@ -21,7 +26,7 @@ function SaveProgressPrompt({ onRegister, onDownload }) {
             Создать аккаунт
           </button>
           
-          <button onClick={onDownload} className="w-full max-w-md mx-auto block py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all">
+          <button onClick={handleLater} className="w-full max-w-md mx-auto block py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all">
             Позже
           </button>
         </div>

@@ -35,6 +35,40 @@ function App() {
   const [showRegisterModal, setShowRegisterModal] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
+  const [sectionsLoaded, setSectionsLoaded] = React.useState({
+    hero: true,
+    howItWorks: false,
+    features: false,
+    languages: false,
+    testimonials: false,
+    stats: false,
+    download: false
+  });
+
+  // Intersection Observer для ленивой загрузки секций
+  React.useEffect(() => {
+    if (showOnboarding) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionName = entry.target.dataset.section;
+            if (sectionName && !sectionsLoaded[sectionName]) {
+              setSectionsLoaded(prev => ({ ...prev, [sectionName]: true }));
+            }
+          }
+        });
+      },
+      { rootMargin: '200px' }
+    );
+
+    // Наблюдаем за всеми секциями
+    const sections = document.querySelectorAll('[data-section]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [showOnboarding, sectionsLoaded]);
 
   const handleGetStarted = () => {
     setShowOnboarding(true);
@@ -44,6 +78,9 @@ function App() {
     setShowOnboarding(false);
     if (userData.registered) {
       setShowRegisterModal(true);
+    } else {
+      // Возврат на главную страницу
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -58,12 +95,66 @@ function App() {
         isLoggedIn={isLoggedIn}
       />
       <Hero onGetStarted={handleGetStarted} />
-      <HowItWorks />
-      <Features />
-      <Languages />
-      <Testimonials />
-      <Stats />
-      <Download />
+      
+      <div data-section="howItWorks">
+        {sectionsLoaded.howItWorks ? (
+          <HowItWorks />
+        ) : (
+          <section className="snap-section" style={{ background: 'white' }}>
+            <div className="loader"></div>
+          </section>
+        )}
+      </div>
+
+      <div data-section="features">
+        {sectionsLoaded.features ? (
+          <Features />
+        ) : (
+          <section className="snap-section gradient-bg">
+            <div className="loader"></div>
+          </section>
+        )}
+      </div>
+
+      <div data-section="languages">
+        {sectionsLoaded.languages ? (
+          <Languages />
+        ) : (
+          <section className="snap-section" style={{ background: 'white' }}>
+            <div className="loader"></div>
+          </section>
+        )}
+      </div>
+
+      <div data-section="testimonials">
+        {sectionsLoaded.testimonials ? (
+          <Testimonials />
+        ) : (
+          <section className="snap-section gradient-bg">
+            <div className="loader"></div>
+          </section>
+        )}
+      </div>
+
+      <div data-section="stats">
+        {sectionsLoaded.stats ? (
+          <Stats />
+        ) : (
+          <section className="snap-section" style={{ background: 'white' }}>
+            <div className="loader"></div>
+          </section>
+        )}
+      </div>
+
+      <div data-section="download">
+        {sectionsLoaded.download ? (
+          <Download />
+        ) : (
+          <section className="snap-section gradient-bg">
+            <div className="loader"></div>
+          </section>
+        )}
+      </div>
       
       {showAuthModal && (
         <AuthModal 

@@ -10,7 +10,8 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
+    <link rel="preload" href="https://unpkg.com/lucide-static@0.516.0/font/lucide.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://unpkg.com/lucide-static@0.516.0/font/lucide.css" rel="stylesheet"></noscript>
 
     <style>
         :root {
@@ -190,12 +191,30 @@
             transform: scale(1.2) rotate(10deg);
         }
 
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border: 8px solid var(--secondary-color);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .snap-section > div {
                 padding: 2rem 1rem !important;
             }
             .grid-cols-2, .grid-cols-3, .grid-cols-4 {
                 grid-template-columns: 1fr !important;
+            }
+            .testimonial-card {
+                min-width: 280px;
             }
         }
     </style>
@@ -204,13 +223,14 @@
     <div id="root"></div>
 
     <script type="text/babel" src="components/Header.js"></script>
+    <script type="text/babel" src="components/LazyImage.js"></script>
     <script type="text/babel" src="components/Hero.js"></script>
-    <script type="text/babel" src="components/HowItWorks.js"></script>
-    <script type="text/babel" src="components/Features.js"></script>
-    <script type="text/babel" src="components/Languages.js"></script>
-    <script type="text/babel" src="components/Testimonials.js"></script>
-    <script type="text/babel" src="components/Stats.js"></script>
-    <script type="text/babel" src="components/Download.js"></script>
+    <script type="text/babel" src="components/HowItWorks.js" defer></script>
+    <script type="text/babel" src="components/Features.js" defer></script>
+    <script type="text/babel" src="components/Languages.js" defer></script>
+    <script type="text/babel" src="components/Testimonials.js" defer></script>
+    <script type="text/babel" src="components/Stats.js" defer></script>
+    <script type="text/babel" src="components/Download.js" defer></script>
     <script type="text/babel" src="components/AuthModal.js"></script>
     <script type="text/babel" src="components/RegisterModal.js"></script>
     

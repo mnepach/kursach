@@ -32,7 +32,7 @@ function Languages() {
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)')}
             >
               <div className="language-flag" style={{ marginBottom: '1rem' }}>
-                <img
+                <LazyImage
                   src={lang.flag}
                   alt={lang.name}
                   style={{ width: '100px', height: '100px', objectFit: 'contain', margin: '0 auto', display: 'block' }}
@@ -55,4 +55,4 @@ function Languages() {
   );
 }
 
-export default Languages; 
+export default Languages;
