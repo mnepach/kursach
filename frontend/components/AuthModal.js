@@ -4,12 +4,57 @@ function AuthModal({ onClose, onLogin }) {
     const [showDashboard, setShowDashboard] = React.useState(false);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [userName, setUserName] = React.useState('Анна Петрова');
-    const [planType, setPlanType] = React.useState('free');
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState('');
+    const [userData, setUserData] = React.useState(null);
+    const [progressData, setProgressData] = React.useState([]);
 
-    const handleSubmit = (e) => {
+    React.useEffect(() => {
+      if (showDashboard && api.token) {
+        loadUserData();
+      }
+    }, [showDashboard]);
+
+    const loadUserData = async () => {
+      try {
+        const [profileRes, statsRes] = await Promise.all([
+          api.getProfile(),
+          api.getOverallStats()
+        ]);
+        
+        setUserData(profileRes.user);
+        setProgressData(statsRes.stats.languages || []);
+      } catch (error) {
+        console.error('Ошибка загрузки данных:', error);
+      }
+    };
+
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      setShowDashboard(true);
+      setError('');
+      setLoading(true);
+
+      try {
+        if (isLogin) {
+          const response = await api.login({ email, password });
+          setUserData(response.user);
+          setShowDashboard(true);
+          onLogin();
+        } else {
+          const response = await api.register({ 
+            email, 
+            password, 
+            name: email.split('@')[0] 
+          });
+          setUserData(response.user);
+          setShowDashboard(true);
+          onLogin();
+        }
+      } catch (err) {
+        setError(err.message || 'Ошибка при входе');
+      } finally {
+        setLoading(false);
+      }
     };
 
     const handleClose = () => {
@@ -17,7 +62,14 @@ function AuthModal({ onClose, onLogin }) {
       onClose();
     };
 
-    if (showDashboard) {
+    const handleLogout = () => {
+      api.logout();
+      handleClose();
+    };
+
+    if (showDashboard && userData) {
+      const planType = userData.subscription?.planType || 'free';
+      
       return (
         <div 
           className="fixed inset-0 flex items-center justify-center z-50 p-4" 
@@ -32,15 +84,15 @@ function AuthModal({ onClose, onLogin }) {
               <div className="flex justify-between items-start mb-10">
                 <div className="flex items-center gap-6">
                   <div className="w-24 h-24 bg-gradient-blue rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl">
-                       <img 
-                       src="../trickle/assets/icon.jpg" 
-                        alt="User avatar"
-                        className="w-full h-full object-cover rounded-full"
-                     />
+                    <img 
+                      src={userData.avatar || "../trickle/assets/icon.jpg"}
+                      alt="User avatar"
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-[var(--text-dark)] mb-1">{userName}</h2>
-                    <p className="text-[var(--text-light)]">{email || 'anna@example.com'}</p>
+                    <h2 className="text-3xl font-bold text-[var(--text-dark)] mb-1">{userData.name}</h2>
+                    <p className="text-[var(--text-light)]">{userData.email}</p>
                   </div>
                 </div>
                 <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 transition-colors">
@@ -52,7 +104,7 @@ function AuthModal({ onClose, onLogin }) {
                 <div className="flex justify-between items-center mb-4">
                   <div>
                     <h3 className={`text-2xl font-bold ${planType === 'free' ? 'text-[var(--text-dark)]' : 'text-white'} mb-1`}>
-                      {planType === 'free' ? 'Бесплатный план' : 'Премиум план'}
+                      {planType === 'free' ? 'Бесплатный план' : planType === 'basic' ? 'Базовый план' : 'Премиум план'}
                     </h3>
                     <p className={`${planType === 'free' ? 'text-gray-600' : 'text-white/90'}`}>
                       {planType === 'free' ? 'Базовые возможности обучения' : 'Безлимитный доступ ко всем функциям'}
@@ -72,44 +124,53 @@ function AuthModal({ onClose, onLogin }) {
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-orange-50 rounded-2xl p-6">
                   <div className="icon-flame text-4xl text-orange-500 mb-3"></div>
-                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">15</div>
+                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">
+                    {userData.statistics?.streak || 0}
+                  </div>
                   <div className="text-sm text-[var(--text-light)]">Дней подряд</div>
                 </div>
                 <div className="bg-yellow-50 rounded-2xl p-6">
                   <div className="icon-trophy text-4xl text-yellow-600 mb-3"></div>
-                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">1,250</div>
+                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">
+                    {userData.statistics?.experience || 0}
+                  </div>
                   <div className="text-sm text-[var(--text-light)]">Очков опыта</div>
                 </div>
                 <div className="bg-blue-50 rounded-2xl p-6">
                   <div className="icon-star text-4xl text-[var(--primary-color)] mb-3"></div>
-                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">8</div>
+                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">
+                    {userData.statistics?.achievements || 0}
+                  </div>
                   <div className="text-sm text-[var(--text-light)]">Достижений</div>
                 </div>
               </div>
               
               <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-4">Прогресс обучения</h3>
               <div className="space-y-6 mb-8">
-                <div>
-                  <div className="flex justify-between mb-3">
-                    <span className="font-bold text-lg">Английский язык</span>
-                    <span className="text-[var(--primary-color)] font-bold">75%</span>
-                  </div>
-                  <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-[var(--primary-color)] rounded-full transition-all" style={{ width: '75%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-3">
-                    <span className="font-bold text-lg">Испанский язык</span>
-                    <span className="text-[var(--primary-color)] font-bold">45%</span>
-                  </div>
-                  <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-[var(--primary-color)] rounded-full transition-all" style={{ width: '45%' }}></div>
-                  </div>
-                </div>
+                {progressData.length > 0 ? (
+                  progressData.map((lang, index) => (
+                    <div key={index}>
+                      <div className="flex justify-between mb-3">
+                        <span className="font-bold text-lg">{lang.language}</span>
+                        <span className="text-[var(--primary-color)] font-bold">{lang.progress}%</span>
+                      </div>
+                      <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-[var(--primary-color)] rounded-full transition-all" 
+                          style={{ width: `${lang.progress}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-[var(--text-light)]">Начните изучение языка, чтобы увидеть прогресс</p>
+                )}
               </div>
               
-              <button onClick={handleClose} className="w-full py-4 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors">
+              <button 
+                onClick={handleLogout} 
+                className="w-full py-4 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors"
+              >
                 Выйти из аккаунта
               </button>
             </div>
@@ -130,6 +191,12 @@ function AuthModal({ onClose, onLogin }) {
             </button>
           </div>
           
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl">
+              {error}
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
@@ -140,6 +207,7 @@ function AuthModal({ onClose, onLogin }) {
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                 placeholder="your@email.com"
                 required
+                disabled={loading}
               />
             </div>
             
@@ -152,11 +220,16 @@ function AuthModal({ onClose, onLogin }) {
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                 placeholder="••••••••"
                 required
+                disabled={loading}
               />
             </div>
             
-            <button type="submit" className="btn-primary w-full">
-              {isLogin ? 'Войти' : 'Зарегистрироваться'}
+            <button 
+              type="submit" 
+              className="btn-primary w-full"
+              disabled={loading}
+            >
+              {loading ? 'Загрузка...' : (isLogin ? 'Войти' : 'Зарегистрироваться')}
             </button>
           </form>
           
@@ -164,6 +237,7 @@ function AuthModal({ onClose, onLogin }) {
             <button 
               onClick={() => setIsLogin(!isLogin)}
               className="text-[var(--primary-color)] hover:underline"
+              disabled={loading}
             >
               {isLogin ? 'Нет аккаунта? Зарегистрируйтесь' : 'Уже есть аккаунт? Войдите'}
             </button>

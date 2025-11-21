@@ -1,10 +1,12 @@
-function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
+function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [name, setName] = React.useState('');
   const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -18,7 +20,27 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
       return;
     }
 
-    onRegister();
+    if (!name.trim()) {
+      setError('Введите ваше имя');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await api.register({
+        email,
+        password,
+        name,
+        onboardingData: onboardingData || {}
+      });
+      
+      onRegister();
+    } catch (err) {
+      setError(err.message || 'Ошибка при регистрации');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +57,19 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Имя</label>
+            <input 
+              type="text" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+              placeholder="Ваше имя"
+              required
+              disabled={loading}
+            />
+          </div>
+
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
             <input 
               type="email" 
@@ -43,6 +78,7 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
               placeholder="your@email.com"
               required
+              disabled={loading}
             />
           </div>
           
@@ -55,6 +91,7 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
               placeholder="••••••••"
               required
+              disabled={loading}
             />
           </div>
 
@@ -67,6 +104,7 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
               placeholder="••••••••"
               required
+              disabled={loading}
             />
           </div>
 
@@ -76,8 +114,12 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
             </div>
           )}
           
-          <button type="submit" className="btn-primary w-full">
-            Зарегистрироваться
+          <button 
+            type="submit" 
+            className="btn-primary w-full"
+            disabled={loading}
+          >
+            {loading ? 'Регистрация...' : 'Зарегистрироваться'}
           </button>
         </form>
         
@@ -85,6 +127,7 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin }) {
           <button 
             onClick={onSwitchToLogin}
             className="text-[var(--primary-color)] hover:underline"
+            disabled={loading}
           >
             Уже есть аккаунт? Войти
           </button>

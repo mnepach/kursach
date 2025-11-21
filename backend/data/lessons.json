@@ -1,0 +1,256 @@
+{
+  "english": [
+    {
+      "language": "Английский",
+      "level": "A1",
+      "lessonNumber": 1,
+      "title": "Greetings and Introduction",
+      "description": "Learn basic greetings",
+      "exercises": [
+        {
+          "type": "listen",
+          "audio": "hello.mp3",
+          "words": ["Hello", "my", "name", "is", "Anna"],
+          "correctAnswer": "Hello my name is Anna"
+        },
+        {
+          "type": "selectImage",
+          "word": "Apple",
+          "options": [
+            {"emoji": "🍎", "text": "Apple"},
+            {"emoji": "🍌", "text": "Banana"},
+            {"emoji": "🍊", "text": "Orange"}
+          ],
+          "correctAnswer": "Apple"
+        },
+        {
+          "type": "translateToTarget",
+          "russianText": "Привет",
+          "targetLanguage": "английский",
+          "options": ["Hello", "Goodbye", "Thanks"],
+          "correctAnswer": "Hello"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "Good morning",
+          "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+          "correctAnswer": "Доброе утро"
+        }
+      ]
+    },
+    {
+      "language": "Английский",
+      "level": "A1",
+      "lessonNumber": 2,
+      "title": "Numbers 1-10",
+      "description": "Learn numbers from one to ten",
+      "exercises": [
+        {
+          "type": "translateToTarget",
+          "russianText": "Один",
+          "targetLanguage": "английский",
+          "options": ["One", "Two", "Three"],
+          "correctAnswer": "One"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "Five",
+          "options": ["Три", "Пять", "Семь"],
+          "correctAnswer": "Пять"
+        },
+        {
+          "type": "listen",
+          "audio": "numbers.mp3",
+          "words": ["One", "two", "three"],
+          "correctAnswer": "One two three"
+        }
+      ]
+    }
+  ],
+  "spanish": [
+    {
+      "language": "Испанский",
+      "level": "A1",
+      "lessonNumber": 1,
+      "title": "Saludos básicos",
+      "description": "Aprende saludos básicos",
+      "exercises": [
+        {
+          "type": "listen",
+          "audio": "hola.mp3",
+          "words": ["Hola", "me", "llamo", "Ana"],
+          "correctAnswer": "Hola me llamo Ana"
+        },
+        {
+          "type": "selectImage",
+          "word": "Manzana",
+          "options": [
+            {"emoji": "🍎", "text": "Manzana"},
+            {"emoji": "🍌", "text": "Plátano"},
+            {"emoji": "🍊", "text": "Naranja"}
+          ],
+          "correctAnswer": "Manzana"
+        },
+        {
+          "type": "translateToTarget",
+          "russianText": "Привет",
+          "targetLanguage": "испанский",
+          "options": ["Hola", "Adiós", "Gracias"],
+          "correctAnswer": "Hola"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "Buenos días",
+          "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+          "correctAnswer": "Доброе утро"
+        }
+      ]
+    },
+    {
+      "language": "Испанский",
+      "level": "A1",
+      "lessonNumber": 2,
+      "title": "Números 1-10",
+      "description": "Aprende los números del uno al diez",
+      "exercises": [
+        {
+          "type": "translateToTarget",
+          "russianText": "Один",
+          "targetLanguage": "испанский",
+          "options": ["Uno", "Dos", "Tres"],
+          "correctAnswer": "Uno"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "Cinco",
+          "options": ["Три", "Пять", "Семь"],
+          "correctAnswer": "Пять"
+        }
+      ]
+    }
+  ],
+  "japanese": [
+    {
+      "language": "Японский",
+      "level": "A1",
+      "lessonNumber": 1,
+      "title": "基本的な挨拶",
+      "description": "基本的な挨拶を学ぶ",
+      "exercises": [
+        {
+          "type": "listen",
+          "audio": "konnichiwa.mp3",
+          "words": ["こんにちは", "私", "は", "アンナ", "です"],
+          "correctAnswer": "こんにちは 私 は アンナ です"
+        },
+        {
+          "type": "selectImage",
+          "word": "りんご",
+          "options": [
+            {"emoji": "🍎", "text": "りんご"},
+            {"emoji": "🍌", "text": "バナナ"},
+            {"emoji": "🍊", "text": "オレンジ"}
+          ],
+          "correctAnswer": "りんご"
+        },
+        {
+          "type": "translateToTarget",
+          "russianText": "Привет",
+          "targetLanguage": "японский",
+          "options": ["こんにちは", "さようなら", "ありがとう"],
+          "correctAnswer": "こんにちは"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "おはようございます",
+          "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+          "correctAnswer": "Доброе утро"
+        }
+      ]
+    },
+    {
+      "language": "Японский",
+      "level": "A1",
+      "lessonNumber": 2,
+      "title": "数字 1-10",
+      "description": "1から10までの数字を学ぶ",
+      "exercises": [
+        {
+          "type": "translateToTarget",
+          "russianText": "Один",
+          "targetLanguage": "японский",
+          "options": ["いち", "に", "さん"],
+          "correctAnswer": "いち"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "ご",
+          "options": ["Три", "Пять", "Семь"],
+          "correctAnswer": "Пять"
+        }
+      ]
+    }
+  ],
+  "korean": [
+    {
+      "language": "Корейский",
+      "level": "A1",
+      "lessonNumber": 1,
+      "title": "기본 인사",
+      "description": "기본 인사를 배우다",
+      "exercises": [
+        {
+          "type": "listen",
+          "audio": "annyeong.mp3",
+          "words": ["안녕하세요", "제", "이름은", "안나", "입니다"],
+          "correctAnswer": "안녕하세요 제 이름은 안나 입니다"
+        },
+        {
+          "type": "selectImage",
+          "word": "사과",
+          "options": [
+            {"emoji": "🍎", "text": "사과"},
+            {"emoji": "🍌", "text": "바나나"},
+            {"emoji": "🍊", "text": "오렌지"}
+          ],
+          "correctAnswer": "사과"
+        },
+        {
+          "type": "translateToTarget",
+          "russianText": "Привет",
+          "targetLanguage": "корейский",
+          "options": ["안녕하세요", "안녕히 가세요", "감사합니다"],
+          "correctAnswer": "안녕하세요"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "좋은 아침",
+          "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+          "correctAnswer": "Доброе утро"
+        }
+      ]
+    },
+    {
+      "language": "Корейский",
+      "level": "A1",
+      "lessonNumber": 2,
+      "title": "숫자 1-10",
+      "description": "1부터 10까지의 숫자를 배우다",
+      "exercises": [
+        {
+          "type": "translateToTarget",
+          "russianText": "Один",
+          "targetLanguage": "корейский",
+          "options": ["하나", "둘", "셋"],
+          "correctAnswer": "하나"
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "다섯",
+          "options": ["Три", "Пять", "Семь"],
+          "correctAnswer": "Пять"
+        }
+      ]
+    }
+  ]
+}

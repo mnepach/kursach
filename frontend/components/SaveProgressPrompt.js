@@ -1,4 +1,4 @@
-function SaveProgressPrompt({ onRegister, onDownload }) {
+function  SaveProgressPrompt({ onRegister, onDownload }) {
   const handleLater = () => {
     // Переход на главную страницу при нажатии "Позже"
     onDownload();
