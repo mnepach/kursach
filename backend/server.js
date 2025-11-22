@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth');
 const subscriptionRoutes = require('./routes/subscription');
 const lessonsRoutes = require('./routes/lessons');
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // Database connection
+connectDB();
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/linguaplay', {
   useNewUrlParser: true,
   useUnifiedTopology: true

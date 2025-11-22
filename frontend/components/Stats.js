@@ -1,9 +1,9 @@
 function Stats() {
   const stats = [
-    { number: '10M+', label: 'Активных пользователей', icon: '../trickle/assets/users.png' },
-    { number: '30+', label: 'Языков доступно', icon: '../trickle/assets/study.png' },
-    { number: '500K+', label: 'Уроков пройдено ежедневно', icon: '../trickle/assets/lesson.png' },
-    { number: '95%', label: 'Довольных пользователей', icon: '../trickle/assets/smile.png' }
+    { number: '10M+', label: 'Активных пользователей', icon: './trickle/assets/users.png' },
+    { number: '30+', label: 'Языков доступно', icon: './trickle/assets/study.png' },
+    { number: '500K+', label: 'Уроков пройдено ежедневно', icon: './trickle/assets/lesson.png' },
+    { number: '95%', label: 'Довольных пользователей', icon: './trickle/assets/smile.png' }
   ];
 
   return (

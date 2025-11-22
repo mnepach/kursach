@@ -8,7 +8,7 @@ function  SaveProgressPrompt({ onRegister, onDownload }) {
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
         <img 
-          src="../trickle/assets/kitty.png" 
+          src="./trickle/assets/kitty.png" 
           alt="Kitty"
           className="w-48 h-48 mx-auto mb-8"
         />

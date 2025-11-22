@@ -1,11 +1,11 @@
 function Features() {
   const features = [
-    { imageSrc: '../trickle/assets/bubble.png', title: 'Геймификация', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь с друзьями' },
-    { imageSrc: '../trickle/assets/books.png', title: 'Умные уроки', description: 'Адаптивная программа обучения подстраивается под ваш уровень' },
-    { imageSrc: '../trickle/assets/cutedog.png', title: 'Милые персонажи', description: 'Учитесь вместе с героями Sanrio' },
-    { imageSrc: '../trickle/assets/achieve.png', title: 'Достижения', description: 'Отслеживайте прогресс и получайте награды' }, 
-    { imageSrc: '../trickle/assets/star.png', title: 'Ежедневные цели', description: 'Формируйте привычки с заданиями' },
-    { imageSrc: '../trickle/assets/study1.png', title: 'Множество языков', description: 'Изучайте английский, испанский и другие' }
+    { imageSrc: './trickle/assets/bubble.png', title: 'Геймификация', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь с друзьями' },
+    { imageSrc: './trickle/assets/books.png', title: 'Умные уроки', description: 'Адаптивная программа обучения подстраивается под ваш уровень' },
+    { imageSrc: './trickle/assets/cutedog.png', title: 'Милые персонажи', description: 'Учитесь вместе с героями Sanrio' },
+    { imageSrc: './trickle/assets/achieve.png', title: 'Достижения', description: 'Отслеживайте прогресс и получайте награды' }, 
+    { imageSrc: './trickle/assets/star.png', title: 'Ежедневные цели', description: 'Формируйте привычки с заданиями' },
+    { imageSrc: './trickle/assets/study1.png', title: 'Множество языков', description: 'Изучайте английский, испанский и другие' }
   ];
 
   return (

@@ -1,9 +1,9 @@
 function Languages() {
   const languages = [
-    { name: 'Английский', flag: '../trickle/assets/england.png', learners: '5M+', level: 'A1-C2' },
-    { name: 'Испанский', flag: '../trickle/assets/spain.png', learners: '3M+', level: 'A1-C2' },
-    { name: 'Японский', flag: '../trickle/assets/japan.png', learners: '2M+', level: 'A1-B2' },
-    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+', level: 'A1-B2' }
+    { name: 'Английский', flag: './trickle/assets/england.png', learners: '5M+', level: 'A1-C2' },
+    { name: 'Испанский', flag: './trickle/assets/spain.png', learners: '3M+', level: 'A1-C2' },
+    { name: 'Японский', flag: './trickle/assets/japan.png', learners: '2M+', level: 'A1-B2' },
+    { name: 'Корейский', flag: './trickle/assets/korea.png', learners: '1.5M+', level: 'A1-B2' }
   ];
 
   return (

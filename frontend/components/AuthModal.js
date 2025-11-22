@@ -74,7 +74,7 @@ function AuthModal({ onClose, onLogin }) {
         <div 
           className="fixed inset-0 flex items-center justify-center z-50 p-4" 
           style={{
-            backgroundImage: 'url(../trickle/assets/background.jpg)',
+            backgroundImage: 'url(./trickle/assets/background.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
@@ -85,7 +85,7 @@ function AuthModal({ onClose, onLogin }) {
                 <div className="flex items-center gap-6">
                   <div className="w-24 h-24 bg-gradient-blue rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl">
                     <img 
-                      src={userData.avatar || "../trickle/assets/icon.jpg"}
+                      src={userData.avatar || "./trickle/assets/icon.jpg"}
                       alt="User avatar"
                       className="w-full h-full object-cover rounded-full"
                     />

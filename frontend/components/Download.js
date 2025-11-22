@@ -43,7 +43,7 @@ function Download() {
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
               <img 
-                src="../trickle/assets/appstore.png" 
+                src="./trickle/assets/appstore.png" 
                 alt="App Store"
                 style={{ width: '2.5rem', height: '2.5rem' }}
               />
@@ -76,7 +76,7 @@ function Download() {
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
               <img 
-                src="../trickle/assets/playmarket.png" 
+                src="./trickle/assets/playmarket.png" 
                 alt="Google Play"
                 style={{ width: '2.5rem', height: '2.5rem' }}
               />

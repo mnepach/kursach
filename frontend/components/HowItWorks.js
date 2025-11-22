@@ -1,9 +1,9 @@
 function HowItWorks() {
   const steps = [
-    { image: '../trickle/assets/mail.png', title: 'Регистрация', description: 'Создайте аккаунт за 30 секунд и выберите свой первый язык' },
-    { image: '../trickle/assets/target.png', title: 'Поставьте цель', description: 'Определите свой уровень и установите ежедневные задачи' },
-    { image: '../trickle/assets/game.png', title: 'Играйте и учитесь', description: 'Проходите увлекательные уроки с персонажами Sanrio' },
-    { image: '../trickle/assets/achive.png', title: 'Отслеживайте прогресс', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь' }
+    { image: './trickle/assets/mail.png', title: 'Регистрация', description: 'Создайте аккаунт за 30 секунд и выберите свой первый язык' },
+    { image: './trickle/assets/target.png', title: 'Поставьте цель', description: 'Определите свой уровень и установите ежедневные задачи' },
+    { image: './trickle/assets/game.png', title: 'Играйте и учитесь', description: 'Проходите увлекательные уроки с персонажами Sanrio' },
+    { image: './trickle/assets/achive.png', title: 'Отслеживайте прогресс', description: 'Зарабатывайте очки, открывайте достижения и соревнуйтесь' }
   ];
 
   return (

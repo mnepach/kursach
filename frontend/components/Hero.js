@@ -83,7 +83,7 @@ function Hero({ onGetStarted }) {
             <div className="relative flex justify-center items-center">
               <div className="z-10">
                 <img 
-                  src="../trickle/assets/kitty.png" 
+                  src="./trickle/assets/kitty.png" 
                   alt="Kitty character"
                   className="w-80 h-auto mx-auto drop-shadow-2xl floating"
                 />
@@ -95,7 +95,7 @@ function Hero({ onGetStarted }) {
                 }}
               >
                 <img 
-                  src="../trickle/assets/cinamonroll.png" 
+                  src="./trickle/assets/cinamonroll.png" 
                   alt="Cinnamoroll character"
                   className="w-64 h-auto drop-shadow-2xl floating"
                   style={{ animationDelay: '0.8s' }}
