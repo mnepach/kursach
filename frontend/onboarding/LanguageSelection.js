@@ -2,10 +2,10 @@ function LanguageSelection({ onNext }) {
   const [selectedLanguage, setSelectedLanguage] = React.useState(null);
 
   const languages = [
-    { name: 'Английский', flag: '../trickle/assets/england.png', learners: '5M+' },
-    { name: 'Испанский', flag: '../trickle/assets/spain.png', learners: '3M+' },
-    { name: 'Японский', flag: '../trickle/assets/japan.png', learners: '2M+' },
-    { name: 'Корейский', flag: '../trickle/assets/korea.png', learners: '1.5M+' }
+    { name: 'Английский', flag: './trickle/assets/england.png', learners: '5M+' },
+    { name: 'Испанский', flag: './trickle/assets/spain.png', learners: '3M+' },
+    { name: 'Японский', flag: './trickle/assets/japan.png', learners: '2M+' },
+    { name: 'Корейский', flag: './trickle/assets/korea.png', learners: '1.5M+' }
   ];
 
   const handleSelect = (language) => {

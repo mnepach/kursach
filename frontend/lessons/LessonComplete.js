@@ -5,7 +5,7 @@ function LessonComplete({ onNext, correctAnswers, totalQuestions }) {
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
         <img 
-          src="../trickle/assets/clap.png" 
+          src="./trickle/assets/clap.png" 
           alt="Congratulations"
           className="w-64 h-64 mx-auto mb-8 object-contain"
         />

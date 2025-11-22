@@ -28,7 +28,7 @@ function LearningMethod({ onNext }) {
       <div className="max-w-3xl w-full">
         <div className="flex items-start gap-6 mb-12">
           <img 
-            src="../trickle/assets/hello.png" 
+            src="./trickle/assets/hello.png" 
             alt="Hello Kitty"
             className="w-32 h-32 object-contain bounce"
           />

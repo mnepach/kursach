@@ -3,7 +3,7 @@ function FirstAchievement({ onNext, selectedLanguage }) {
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
         <img 
-          src="../trickle/assets/hello.png" 
+          src="./trickle/assets/hello.png" 
           alt="Hello Kitty"
           className="w-64 h-64 mx-auto mb-8 object-contain"
         />
