@@ -10,7 +10,6 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
     { id: 'length', text: 'Минимум 6 символов', check: () => password.length >= 6 },
     { id: 'digit', text: 'Цифры', check: () => /\d/.test(password) },
     { id: 'lowercase', text: 'Строчные буквы', check: () => /[a-zа-я]/.test(password) },
-    { id: 'uppercase', text: 'Заглавные буквы', check: () => /[A-ZА-Я]/.test(password) },
     { id: 'special', text: 'Спецсимволы', check: () => /[!@#$%^&*(),.?":{}|<>]/.test(password) }
   ];
 
@@ -46,7 +45,6 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
         name,
         onboardingData: onboardingData || {}
       });
-      
       onRegister();
     } catch (err) {
       setError(err.message || 'Ошибка при регистрации');
@@ -57,21 +55,19 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white rounded-3xl max-w-md w-full p-8 relative" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[var(--text-dark)]">
-            Регистрация
-          </h2>
+          <h2 className="text-2xl font-bold text-[var(--text-dark)]">Регистрация</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
             <div className="icon-x text-2xl"></div>
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Имя</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
@@ -83,8 +79,8 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
@@ -93,10 +89,10 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
               disabled={loading}
             />
           </div>
-          
-          <div>
+
+          <div className="relative">
             <label className="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
-            <input 
+            <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -107,45 +103,9 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
             />
           </div>
 
-          {password && (
-            <div className="space-y-3">
-              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div 
-                  className="h-full transition-all duration-300"
-                  style={{ 
-                    width: `${progress}%`,
-                    backgroundColor: allRequirementsMet ? '#10B981' : '#EF4444'
-                  }}
-                ></div>
-              </div>
-              
-              <div className="space-y-2">
-                {requirements.map(req => {
-                  const isMet = req.check();
-                  return (
-                    <div key={req.id} className="flex items-center gap-2">
-                      <div 
-                        className="w-5 h-5 rounded flex items-center justify-center text-white text-xs"
-                        style={{ backgroundColor: isMet ? '#10B981' : '#EF4444' }}
-                      >
-                        {isMet ? '✓' : '✕'}
-                      </div>
-                      <span 
-                        className="text-sm"
-                        style={{ color: isMet ? '#10B981' : '#EF4444' }}
-                      >
-                        {req.text}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Подтверждение пароля</label>
-            <input 
+            <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -161,9 +121,9 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
               {error}
             </div>
           )}
-          
-          <button 
-            type="submit" 
+
+          <button
+            type="submit"
             className="btn-primary w-full"
             disabled={loading || !allRequirementsMet}
             style={{
@@ -174,9 +134,9 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
             {loading ? 'Регистрация...' : 'Зарегистрироваться'}
           </button>
         </form>
-        
+
         <div className="mt-6 text-center">
-          <button 
+          <button
             onClick={onSwitchToLogin}
             className="text-[var(--primary-color)] hover:underline"
             disabled={loading}
@@ -184,6 +144,44 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
             Уже есть аккаунт? Войти
           </button>
         </div>
+
+        {password && (
+          <div className="absolute top-[240px] right-[-260px] bg-white shadow-lg border border-gray-200 rounded-xl p-5 w-60 z-20 animate-fade-in">
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 w-5 h-5 bg-white rotate-45"></div>
+
+            <p className="text-sm font-medium mb-2">Надёжность пароля</p>
+
+            <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-3">
+              <div
+                className="h-full transition-all duration-300"
+                style={{
+                  width: `${progress}%`,
+                  backgroundColor: allRequirementsMet ? '#10B981' : '#EF4444'
+                }}
+              ></div>
+            </div>
+
+            {requirements.map(req => {
+              const isMet = req.check();
+              return (
+                <div key={req.id} className="flex items-center gap-2 mb-1">
+                  <div
+                    className="w-4 h-4 rounded flex items-center justify-center text-white text-[10px]"
+                    style={{ backgroundColor: isMet ? '#10B981' : '#EF4444' }}
+                  >
+                    {isMet ? '✓' : '✕'}
+                  </div>
+                  <span
+                    className="text-xs"
+                    style={{ color: isMet ? '#10B981' : '#EF4444' }}
+                  >
+                    {req.text}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 function AuthModal({ onClose, onLogin }) {
   try {
-    const [isLogin, setIsLogin] = React.useState(true);
     const [showDashboard, setShowDashboard] = React.useState(false);
+    const [showRegister, setShowRegister] = React.useState(false);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -29,27 +29,15 @@ function AuthModal({ onClose, onLogin }) {
       }
     };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+    const handleSubmit = async () => {
       setError('');
       setLoading(true);
 
       try {
-        if (isLogin) {
-          const response = await api.login({ email, password });
-          setUserData(response.user);
-          setShowDashboard(true);
-          onLogin();
-        } else {
-          const response = await api.register({ 
-            email, 
-            password, 
-            name: email.split('@')[0] 
-          });
-          setUserData(response.user);
-          setShowDashboard(true);
-          onLogin();
-        }
+        const response = await api.login({ email, password });
+        setUserData(response.user);
+        setShowDashboard(true);
+        onLogin();
       } catch (err) {
         setError(err.message || 'Ошибка при входе');
       } finally {
@@ -66,6 +54,19 @@ function AuthModal({ onClose, onLogin }) {
       api.logout();
       handleClose();
     };
+
+    if (showRegister) {
+      return (
+        <RegisterModal 
+          onClose={onClose}
+          onRegister={() => {
+            setShowRegister(false);
+            onLogin();
+          }}
+          onSwitchToLogin={() => setShowRegister(false)}
+        />
+      );
+    }
 
     if (showDashboard && userData) {
       const planType = userData.subscription?.planType || 'free';
@@ -184,7 +185,7 @@ function AuthModal({ onClose, onLogin }) {
         <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-[var(--text-dark)]">
-              {isLogin ? 'Вход' : 'Регистрация'}
+              Вход
             </h2>
             <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
               <div className="icon-x text-2xl"></div>
@@ -197,7 +198,7 @@ function AuthModal({ onClose, onLogin }) {
             </div>
           )}
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <input 
@@ -206,7 +207,6 @@ function AuthModal({ onClose, onLogin }) {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                 placeholder="your@email.com"
-                required
                 disabled={loading}
               />
             </div>
@@ -219,27 +219,26 @@ function AuthModal({ onClose, onLogin }) {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                 placeholder="••••••••"
-                required
                 disabled={loading}
               />
             </div>
             
             <button 
-              type="submit" 
+              onClick={handleSubmit}
               className="btn-primary w-full"
               disabled={loading}
             >
-              {loading ? 'Загрузка...' : (isLogin ? 'Войти' : 'Зарегистрироваться')}
+              {loading ? 'Загрузка...' : 'Войти'}
             </button>
-          </form>
+          </div>
           
           <div className="mt-6 text-center">
             <button 
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => setShowRegister(true)}
               className="text-[var(--primary-color)] hover:underline"
               disabled={loading}
             >
-              {isLogin ? 'Нет аккаунта? Зарегистрируйтесь' : 'Уже есть аккаунт? Войдите'}
+              Нет аккаунта? Зарегистрируйтесь
             </button>
           </div>
         </div>
