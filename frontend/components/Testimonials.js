@@ -11,22 +11,15 @@ function Testimonials() {
   ];
 
   const [currentPage, setCurrentPage] = React.useState(0);
-  const [isAnimating, setIsAnimating] = React.useState(false);
 
   const totalPages = Math.ceil(testimonials.length / 3);
 
   const scrollLeft = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
     setCurrentPage(prev => prev === 0 ? totalPages - 1 : prev - 1);
-    setTimeout(() => setIsAnimating(false), 300);
   };
 
   const scrollRight = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
     setCurrentPage(prev => prev === totalPages - 1 ? 0 : prev + 1);
-    setTimeout(() => setIsAnimating(false), 300);
   };
 
   const startIndex = currentPage * 3;
@@ -74,8 +67,7 @@ function Testimonials() {
               gap: "2rem",
               maxWidth: "1100px",
               margin: "0 auto",
-              opacity: isAnimating ? 0 : 1,
-              transition: "opacity 0.3s ease"
+              transition: "opacity 0.5s ease"
             }}
           >
             {visible.map((t, i) => (
@@ -146,19 +138,13 @@ function Testimonials() {
             {Array.from({ length: totalPages }).map((_, idx) => (
               <div
                 key={idx}
-                onClick={() => {
-                  if (!isAnimating) {
-                    setIsAnimating(true);
-                    setCurrentPage(idx);
-                    setTimeout(() => setIsAnimating(false), 300);
-                  }
-                }}
+                onClick={() => setCurrentPage(idx)}
                 style={{
                   width: "12px",
                   height: "12px",
                   borderRadius: "50%",
                   background: currentPage === idx ? "var(--primary-color)" : "#E2E8F0",
-                  transition: "0.3s",
+                  transition: "0.5s",
                   cursor: "pointer"
                 }}
               ></div>

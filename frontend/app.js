@@ -35,6 +35,7 @@ function App() {
   const [showRegisterModal, setShowRegisterModal] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
+  const [hideHeader, setHideHeader] = React.useState(false);
   const [sectionsLoaded, setSectionsLoaded] = React.useState({
     hero: true,
     howItWorks: false,
@@ -44,6 +45,13 @@ function App() {
     stats: false,
     download: false
   });
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (showOnboarding) return;
@@ -81,16 +89,33 @@ function App() {
     }
   };
 
+  const handleAuthClick = () => {
+    setShowAuthModal(true);
+    setHideHeader(true);
+  };
+
+  const handleAuthClose = () => {
+    setShowAuthModal(false);
+    setHideHeader(false);
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    setHideHeader(true);
+  };
+
   if (showOnboarding) {
     return <OnboardingFlow onComplete={handleOnboardingComplete} />;
   }
 
   return (
     <div className="snap-container">
-      <Header 
-        onAuthClick={() => setShowAuthModal(true)} 
-        isLoggedIn={isLoggedIn}
-      />
+      {!hideHeader && (
+        <Header 
+          onAuthClick={handleAuthClick} 
+          isLoggedIn={isLoggedIn}
+        />
+      )}
 
       <Hero onGetStarted={handleGetStarted} />
       
@@ -120,11 +145,8 @@ function App() {
       
       {showAuthModal && (
         <AuthModal 
-          onClose={() => setShowAuthModal(false)}
-          onLogin={() => {
-            setIsLoggedIn(true);
-            setShowAuthModal(false);
-          }}
+          onClose={handleAuthClose}
+          onLogin={handleLogin}
         />
       )}
 

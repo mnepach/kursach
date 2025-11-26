@@ -5,6 +5,8 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
   const [name, setName] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const requirements = [
     { id: 'length', text: 'Минимум 6 символов', check: () => password.length >= 6 },
@@ -16,6 +18,9 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
   const completedRequirements = requirements.filter(req => req.check()).length;
   const progress = (completedRequirements / requirements.length) * 100;
   const allRequirementsMet = completedRequirements === requirements.length;
+
+  const passwordsMatch = password && confirmPassword && password === confirmPassword;
+  const passwordsDontMatch = password && confirmPassword && password !== confirmPassword;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +64,10 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-dark)]">Регистрация</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <div className="icon-x text-2xl"></div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         </div>
 
@@ -92,28 +100,89 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
 
           <div className="relative">
             <label className="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
-              placeholder="••••••••"
-              required
-              disabled={loading}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] pr-12"
+                placeholder="••••••••"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-sm font-medium text-gray-700 mb-2">Подтверждение пароля</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
-              placeholder="••••••••"
-              required
-              disabled={loading}
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 pr-12 ${
+                  passwordsMatch 
+                    ? 'border-green-500 focus:ring-green-500' 
+                    : passwordsDontMatch 
+                    ? 'border-red-500 focus:ring-red-500'
+                    : 'border-gray-300 focus:ring-[var(--primary-color)]'
+                }`}
+                placeholder="••••••••"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showConfirmPassword ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                )}
+              </button>
+            </div>
+            {passwordsMatch && (
+              <p className="text-green-600 text-sm mt-1 flex items-center gap-1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Пароли совпадают
+              </p>
+            )}
+            {passwordsDontMatch && (
+              <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                Пароли не совпадают
+              </p>
+            )}
           </div>
 
           {error && (
@@ -125,10 +194,10 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
           <button
             type="submit"
             className="btn-primary w-full"
-            disabled={loading || !allRequirementsMet}
+            disabled={loading || !allRequirementsMet || !passwordsMatch}
             style={{
-              opacity: (loading || !allRequirementsMet) ? 0.5 : 1,
-              cursor: (loading || !allRequirementsMet) ? 'not-allowed' : 'pointer'
+              opacity: (loading || !allRequirementsMet || !passwordsMatch) ? 0.5 : 1,
+              cursor: (loading || !allRequirementsMet || !passwordsMatch) ? 'not-allowed' : 'pointer'
             }}
           >
             {loading ? 'Регистрация...' : 'Зарегистрироваться'}

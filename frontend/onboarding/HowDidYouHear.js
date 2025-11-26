@@ -2,12 +2,12 @@ function HowDidYouHear({ onNext }) {
   const [selected, setSelected] = React.useState(null);
 
   const options = [
-    { icon: 'users', text: 'От друзей и знакомых' },
-    { icon: 'search', text: 'Поиск в интернете' },
-    { icon: 'socialnetworks', text: 'Социальные сети' },
-    { icon: 'newspaper', text: 'Реклама' },
-    { icon: 'store', text: 'Магазин приложений' },
-    { icon: 'youtube', text: 'Другое' },
+    { icon: './trickle/assets/icons/users.svg', text: 'От друзей и знакомых' },
+    { icon: './trickle/assets/icons/search.svg', text: 'Поиск в интернете' },
+    { icon: './trickle/assets/icons/socialnetworks.svg', text: 'Социальные сети' },
+    { icon: './trickle/assets/icons/newspaper.svg', text: 'Реклама' },
+    { icon: './trickle/assets/icons/store.svg', text: 'Магазин приложений' },
+    { icon: './trickle/assets/icons/other.svg', text: 'Другое' },
   ];
 
   const handleSelect = (option) => {
@@ -48,7 +48,11 @@ function HowDidYouHear({ onNext }) {
               }`}
             >
               <div className="w-14 h-14 bg-[var(--secondary-color)] rounded-xl flex items-center justify-center">
-                <i className={`lucide-${option.icon} text-2xl text-[var(--primary-color)]`}></i>
+                <img 
+                  src={option.icon}
+                  alt={option.text}
+                  className="w-8 h-8 object-contain"
+                />
               </div>
               <span className="text-lg font-medium text-[var(--text-dark)]">{option.text}</span>
             </button>

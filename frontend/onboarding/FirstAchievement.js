@@ -3,20 +3,20 @@ function FirstAchievement({ onNext, selectedLanguage }) {
     <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
       <div className="max-w-2xl w-full text-center">
 
-        <div className="flex items-center justify-center gap-6 mb-8">
+        <div className="flex items-center justify-center gap-8 mb-8">
           <img
             src="./trickle/assets/exitement1.gif"
             alt="Hello Kitty"
-            className="w-64 h-64 object-contain"
+            className="w-96 h-96 object-contain"
           />
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-4">
             <img
               src={selectedLanguage?.flag}
               alt={selectedLanguage?.name}
-              className="w-16 h-16 object-contain rounded-lg shadow-md"
+              className="w-24 h-24 object-contain rounded-lg shadow-md"
             />
-            <div className="text-6xl font-bold text-[var(--primary-color)]">
+            <div className="text-8xl font-bold text-[var(--primary-color)]">
               5
             </div>
           </div>
