@@ -6,17 +6,29 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
+  const requirements = [
+    { id: 'length', text: 'Минимум 6 символов', check: () => password.length >= 6 },
+    { id: 'digit', text: 'Цифры', check: () => /\d/.test(password) },
+    { id: 'lowercase', text: 'Строчные буквы', check: () => /[a-zа-я]/.test(password) },
+    { id: 'uppercase', text: 'Заглавные буквы', check: () => /[A-ZА-Я]/.test(password) },
+    { id: 'special', text: 'Спецсимволы', check: () => /[!@#$%^&*(),.?":{}|<>]/.test(password) }
+  ];
+
+  const completedRequirements = requirements.filter(req => req.check()).length;
+  const progress = (completedRequirements / requirements.length) * 100;
+  const allRequirementsMet = completedRequirements === requirements.length;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
+    if (!allRequirementsMet) {
+      setError('Пароль не соответствует всем требованиям');
       return;
     }
 
-    if (password.length < 6) {
-      setError('Пароль должен содержать минимум 6 символов');
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
       return;
     }
 
@@ -95,6 +107,42 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
             />
           </div>
 
+          {password && (
+            <div className="space-y-3">
+              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full transition-all duration-300"
+                  style={{ 
+                    width: `${progress}%`,
+                    backgroundColor: allRequirementsMet ? '#10B981' : '#EF4444'
+                  }}
+                ></div>
+              </div>
+              
+              <div className="space-y-2">
+                {requirements.map(req => {
+                  const isMet = req.check();
+                  return (
+                    <div key={req.id} className="flex items-center gap-2">
+                      <div 
+                        className="w-5 h-5 rounded flex items-center justify-center text-white text-xs"
+                        style={{ backgroundColor: isMet ? '#10B981' : '#EF4444' }}
+                      >
+                        {isMet ? '✓' : '✕'}
+                      </div>
+                      <span 
+                        className="text-sm"
+                        style={{ color: isMet ? '#10B981' : '#EF4444' }}
+                      >
+                        {req.text}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Подтверждение пароля</label>
             <input 
@@ -117,7 +165,11 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
           <button 
             type="submit" 
             className="btn-primary w-full"
-            disabled={loading}
+            disabled={loading || !allRequirementsMet}
+            style={{
+              opacity: (loading || !allRequirementsMet) ? 0.5 : 1,
+              cursor: (loading || !allRequirementsMet) ? 'not-allowed' : 'pointer'
+            }}
           >
             {loading ? 'Регистрация...' : 'Зарегистрироваться'}
           </button>

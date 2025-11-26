@@ -59,7 +59,7 @@ function App() {
           }
         });
       },
-      { rootMargin: '200px' }
+      { rootMargin: '100px' }
     );
 
     const sections = document.querySelectorAll('[data-section]');
@@ -95,27 +95,27 @@ function App() {
       <Hero onGetStarted={handleGetStarted} />
       
       <div data-section="howItWorks">
-        {sectionsLoaded.howItWorks ? <HowItWorks /> : <section className="snap-section" style={{ background: 'white' }}><div className="loader"></div></section>}
+        {sectionsLoaded.howItWorks ? <HowItWorks /> : <section className="snap-section" style={{ background: 'white' }}></section>}
       </div>
 
       <div data-section="features">
-        {sectionsLoaded.features ? <Features /> : <section className="snap-section gradient-bg"><div className="loader"></div></section>}
+        {sectionsLoaded.features ? <Features /> : <section className="snap-section gradient-bg"></section>}
       </div>
 
       <div data-section="languages">
-        {sectionsLoaded.languages ? <Languages /> : <section className="snap-section" style={{ background: 'white' }}><div className="loader"></div></section>}
+        {sectionsLoaded.languages ? <Languages /> : <section className="snap-section" style={{ background: 'white' }}></section>}
       </div>
 
       <div data-section="testimonials">
-        {sectionsLoaded.testimonials ? <Testimonials /> : <section className="snap-section gradient-bg"><div className="loader"></div></section>}
+        {sectionsLoaded.testimonials ? <Testimonials /> : <section className="snap-section gradient-bg"></section>}
       </div>
 
       <div data-section="stats">
-        {sectionsLoaded.stats ? <Stats /> : <section className="snap-section" style={{ background: 'white' }}><div className="loader"></div></section>}
+        {sectionsLoaded.stats ? <Stats /> : <section className="snap-section" style={{ background: 'white' }}></section>}
       </div>
 
       <div data-section="download">
-        {sectionsLoaded.download ? <Download /> : <section className="snap-section gradient-bg"><div className="loader"></div></section>}
+        {sectionsLoaded.download ? <Download /> : <section className="snap-section gradient-bg"></section>}
       </div>
       
       {showAuthModal && (
