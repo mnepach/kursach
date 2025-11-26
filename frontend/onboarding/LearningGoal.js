@@ -2,12 +2,12 @@ function LearningGoal({ onNext }) {
   const [selected, setSelected] = React.useState(null);
 
   const goals = [
-    { icon: 'plane', text: 'Для путешествий' },
-    { icon: 'briefcase', text: 'Для работы и карьеры' },
-    { icon: 'graduation-cap', text: 'Для учёбы' },
-    { icon: 'heart', text: 'Для общения с близкими' },
-    { icon: 'book-open', text: 'Для общего развития' },
-    { icon: 'film', text: 'Для фильмов и книг' }
+    { icon: './trickle/assets/icons/plane.svg', text: 'Для путешествий' },
+    { icon: './trickle/assets/icons/briefcase.svg', text: 'Для работы и карьеры' },
+    { icon: './trickle/assets/icons/graduation-cap.svg', text: 'Для учёбы' },
+    { icon: './trickle/assets/icons/heart.svg', text: 'Для общения с близкими' },
+    { icon: './trickle/assets/icons/book.svg', text: 'Для общего развития' },
+    { icon: './trickle/assets/icons/film.svg', text: 'Для фильмов и книг' }
   ];
 
   const handleSelect = (goal) => {
@@ -47,8 +47,12 @@ function LearningGoal({ onNext }) {
                 selected?.text === goal.text ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
             >
-              <div className="w-14 h-14 bg-[var(--secondary-color)] rounded-xl flex items-center justify-center">
-                <i className={`lucide-${goal.icon} text-2xl text-[var(--primary-color)]`}></i>
+              <div className="w-14 h-14 bg-[var(--secondary-color)] rounded-xl flex items-center justify-center overflow-hidden">
+                <img 
+                  src={goal.icon} 
+                  alt={goal.text} 
+                  className="w-8 h-8 object-contain"
+                />
               </div>
               <span className="text-lg font-medium text-[var(--text-dark)]">{goal.text}</span>
             </button>

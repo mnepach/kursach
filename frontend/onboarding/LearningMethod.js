@@ -4,13 +4,13 @@ function LearningMethod({ onNext }) {
   const methods = [
     { 
       id: 'basics',
-      icon: 'book-open', 
+      img: './trickle/assets/ladder.png',
       title: 'Начать с основ',
       description: 'Изучайте язык с самого начала, шаг за шагом'
     },
     { 
       id: 'test',
-      icon: 'clipboard-check', 
+      img: './trickle/assets/discover.png',
       title: 'Определить уровень',
       description: 'Пройдите тест и начните с подходящего уровня'
     }
@@ -50,8 +50,12 @@ function LearningMethod({ onNext }) {
                 selected?.id === method.id ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
             >
-              <div className="w-20 h-20 bg-[var(--secondary-color)] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <i className={`lucide-${method.icon} text-4xl text-[var(--primary-color)]`}></i>
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-[var(--secondary-color)] overflow-hidden">
+                <img 
+                  src={method.img} 
+                  alt={method.title} 
+                  className="w-16 h-16 object-contain"
+                />
               </div>
               <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-3">
                 {method.title}
