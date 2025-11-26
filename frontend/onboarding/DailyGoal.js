@@ -25,7 +25,7 @@ function DailyGoal({ onNext }) {
       <div className="max-w-3xl w-full">
         <div className="flex items-start gap-4 mb-8">
           <img 
-            src="./trickle/assets/hello.png" 
+            src="./trickle/assets/mascot3.png" 
             alt="Hello Kitty"
             className="w-28 h-28 object-contain flex-shrink-0 bounce"
           />
@@ -57,8 +57,12 @@ function DailyGoal({ onNext }) {
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-[var(--secondary-color)] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <i className="lucide-clock text-xl text-[var(--primary-color)]"></i>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <img 
+                    src="./trickle/assets/icons/clock_32px.svg"
+                    alt="clock icon"
+                    className="w-9 h-9 object-contain"
+                  />  
                 </div>
                 <span className="text-lg font-bold text-[var(--text-dark)]">
                   {goal.minutes} минут в день

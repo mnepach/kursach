@@ -4,10 +4,10 @@ function HowDidYouHear({ onNext }) {
   const options = [
     { icon: 'users', text: 'От друзей и знакомых' },
     { icon: 'search', text: 'Поиск в интернете' },
-    { icon: 'instagram', text: 'Социальные сети' },
-    { icon: 'youtube', text: 'YouTube' },
+    { icon: 'socialnetworks', text: 'Социальные сети' },
     { icon: 'newspaper', text: 'Реклама' },
-    { icon: 'store', text: 'Магазин приложений' }
+    { icon: 'store', text: 'Магазин приложений' },
+    { icon: 'youtube', text: 'Другое' },
   ];
 
   const handleSelect = (option) => {
@@ -25,7 +25,7 @@ function HowDidYouHear({ onNext }) {
       <div className="max-w-3xl w-full">
         <div className="flex items-start gap-6 mb-12">
           <img 
-            src="./trickle/assets/hello.png" 
+            src="./trickle/assets/mascot3.png" 
             alt="Hello Kitty"
             className="w-32 h-32 object-contain bounce"
           />

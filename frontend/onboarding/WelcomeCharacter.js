@@ -6,9 +6,9 @@ function WelcomeCharacter({ onNext }) {
         <div className="flex items-end justify-center w-full max-w-lg mb-4">
           
           <img 
-            src="./trickle/assets/hello.png" 
+            src="./trickle/assets/mascot.gif" 
             alt="Hello Kitty"
-            className="w-96 h-96 object-contain sideways" 
+            className="w-96 h-96" 
           />
 
           <div className="relative ml-4 mb-10">

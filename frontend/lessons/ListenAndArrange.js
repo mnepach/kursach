@@ -6,7 +6,6 @@ function ListenAndArrange({ lesson, onAnswer }) {
 
   const handleWordClick = (word, fromAvailable) => {
     if (checked) return;
-    
     if (fromAvailable) {
       setSelectedWords([...selectedWords, word]);
       setAvailableWords(availableWords.filter(w => w !== word));
@@ -46,7 +45,11 @@ function ListenAndArrange({ lesson, onAnswer }) {
             onClick={playAudio}
             className="w-20 h-20 bg-[var(--primary-color)] rounded-full flex items-center justify-center mx-auto mb-8 hover:bg-[var(--accent-color)] transition-all"
           >
-            <i className="lucide-volume-2 text-4xl text-white"></i>
+            <img 
+              src="./trickle/assets/icons/speaker_32px_ffffff.svg"
+              alt="speaker"
+              className="w-10 h-10"
+            />
           </button>
         </div>
 
@@ -103,3 +106,5 @@ function ListenAndArrange({ lesson, onAnswer }) {
     </div>
   );
 }
+
+export default ListenAndArrange;

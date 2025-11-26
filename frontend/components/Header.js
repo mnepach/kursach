@@ -1,4 +1,4 @@
-function Header({ onAuthClick, isLoggedIn }) {
+function Header({ onAuthClick, isLoggedIn }) { 
   const [hoveredItem, setHoveredItem] = React.useState(null);
 
   const scrollToSection = (id) => {
@@ -20,25 +20,27 @@ function Header({ onAuthClick, isLoggedIn }) {
     <header>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
+
           <div 
             className="logo-container"
             onClick={() => scrollToSection('hero')} 
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           >
-            <div style={{ 
-              width: '2.5rem', 
-              height: '2.5rem', 
-              background: 'var(--primary-color)', 
-              borderRadius: '50%', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center' 
-            }}>
-              <i className="lucide-sparkles" style={{ color: 'white', fontSize: '1.5rem' }}></i>
-            </div>
-            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>LinguaPlay</span>
+            <img 
+              src="./trickle/assets/icons/kitty.svg" 
+              alt="Logo"
+              style={{
+                width: '4rem',
+                height: '4rem',
+                objectFit: 'contain'
+              }}
+            />
+
+            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
+              LinguaPlay
+            </span>
           </div>
-          
+
           <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
             <button 
               onClick={() => scrollToSection('hero')} 
@@ -84,6 +86,7 @@ function Header({ onAuthClick, isLoggedIn }) {
               {isLoggedIn ? 'Личный кабинет' : 'Войти'}
             </button>
           </nav>
+
         </div>
       </div>
     </header>
