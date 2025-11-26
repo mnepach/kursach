@@ -45,6 +45,7 @@ function App() {
     stats: false,
     download: false
   });
+  const [onboardingData, setOnboardingData] = React.useState(null);
 
   React.useEffect(() => {
     const token = localStorage.getItem('token');
@@ -77,10 +78,17 @@ function App() {
   }, [showOnboarding, sectionsLoaded]);
 
   const handleGetStarted = () => {
-    setShowOnboarding(true);
+    const token = localStorage.getItem('token');
+    if (token) {
+      setShowAuthModal(true);
+      setHideHeader(true);
+    } else {
+      setShowOnboarding(true);
+    }
   };
 
   const handleOnboardingComplete = (userData) => {
+    setOnboardingData(userData);
     setShowOnboarding(false);
     if (userData.registered) {
       setShowRegisterModal(true);
@@ -90,8 +98,14 @@ function App() {
   };
 
   const handleAuthClick = () => {
-    setShowAuthModal(true);
-    setHideHeader(true);
+    const token = localStorage.getItem('token');
+    if (token) {
+      setShowAuthModal(true);
+      setHideHeader(true);
+    } else {
+      setShowAuthModal(true);
+      setHideHeader(true);
+    }
   };
 
   const handleAuthClose = () => {
@@ -161,6 +175,8 @@ function App() {
             setShowRegisterModal(false);
             setShowAuthModal(true);
           }}
+          onboardingData={onboardingData}
+          selectedPlan={onboardingData?.selectedPlan}
         />
       )}
     </div>

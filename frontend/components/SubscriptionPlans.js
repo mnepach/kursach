@@ -1,4 +1,4 @@
-function SubscriptionPlans({ onClose, onUpgrade }) {
+function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   const [plans, setPlans] = React.useState([]);
   const [selectedPlan, setSelectedPlan] = React.useState(null);
   const [showPayment, setShowPayment] = React.useState(false);
@@ -20,7 +20,7 @@ function SubscriptionPlans({ onClose, onUpgrade }) {
   };
 
   const handleSelectPlan = (plan) => {
-    if (plan.id === 'free') {
+    if (plan.id === 'free' || plan.id === currentPlan) {
       return;
     }
     setSelectedPlan(plan);
@@ -29,7 +29,11 @@ function SubscriptionPlans({ onClose, onUpgrade }) {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-[10000]" style={{background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'}}>
+      <div className="fixed inset-0 flex items-center justify-center z-[10000]" style={{
+        backgroundImage: 'url(./trickle/assets/profile_background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
         <div className="loader"></div>
       </div>
     );
@@ -39,14 +43,25 @@ function SubscriptionPlans({ onClose, onUpgrade }) {
     return (
       <PaymentModal 
         plan={selectedPlan}
-        onClose={() => setShowPayment(false)}
-        onSuccess={onUpgrade}
+        onClose={() => {
+          setShowPayment(false);
+          setSelectedPlan(null);
+        }}
+        onSuccess={() => {
+          setShowPayment(false);
+          setSelectedPlan(null);
+          onUpgrade();
+        }}
       />
     );
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[10000] p-4" style={{background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'}} onClick={onClose}>
+    <div className="fixed inset-0 flex items-center justify-center z-[10000] p-4" style={{
+      backgroundImage: 'url(./trickle/assets/profile_background.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }} onClick={onClose}>
       <div className="bg-white rounded-3xl max-w-6xl w-full p-8 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-[var(--text-dark)]">Выберите план</h2>
@@ -59,61 +74,68 @@ function SubscriptionPlans({ onClose, onUpgrade }) {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              className={`card relative ${plan.id === 'premium' ? 'ring-4 ring-[var(--primary-color)]' : ''}`}
-            >
-              {plan.id === 'premium' && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[var(--primary-color)] text-white px-4 py-1 rounded-full text-sm font-bold">
-                  Популярный
-                </div>
-              )}
-
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-2">{plan.name}</h3>
-                <p className="text-[var(--text-light)] mb-4">{plan.description}</p>
-                
-                <div className="mb-4">
-                  {plan.price === 0 ? (
-                    <div className="text-4xl font-bold text-[var(--text-dark)]">Бесплатно</div>
-                  ) : (
-                    <>
-                      <div className="text-4xl font-bold text-[var(--text-dark)]">
-                        {plan.price} ₽
-                      </div>
-                      <div className="text-sm text-[var(--text-light)]">в месяц</div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <ul className="space-y-3 mb-6">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" className="flex-shrink-0 mt-0.5">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span className="text-[var(--text-dark)]">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => handleSelectPlan(plan)}
-                disabled={plan.id === 'free'}
-                className={`w-full py-3 rounded-xl font-bold transition-all ${
-                  plan.id === 'free'
-                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                    : plan.id === 'premium'
-                    ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
-                    : 'bg-white border-2 border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-[var(--secondary-color)]'
-                }`}
+          {plans.map((plan, index) => {
+            const isCurrentPlan = plan.id === currentPlan;
+            const isFree = plan.id === 'free';
+            
+            return (
+              <div
+                key={index}
+                className={`card relative ${plan.id === 'premium' ? 'ring-4 ring-[var(--primary-color)]' : ''}`}
               >
-                {plan.id === 'free' ? 'Текущий план' : 'Выбрать план'}
-              </button>
-            </div>
-          ))}
+                {plan.id === 'premium' && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[var(--primary-color)] text-white px-4 py-1 rounded-full text-sm font-bold">
+                    Популярный
+                  </div>
+                )}
+
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-2">{plan.name}</h3>
+                  <p className="text-[var(--text-light)] mb-4">{plan.description}</p>
+                  
+                  <div className="mb-4">
+                    {plan.price === 0 ? (
+                      <div className="text-4xl font-bold text-[var(--text-dark)]">Бесплатно</div>
+                    ) : (
+                      <>
+                        <div className="text-4xl font-bold text-[var(--text-dark)]">
+                          {plan.price} ₽
+                        </div>
+                        <div className="text-sm text-[var(--text-light)]">в месяц</div>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <ul className="space-y-3 mb-6">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" className="flex-shrink-0 mt-0.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      <span className="text-[var(--text-dark)]">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleSelectPlan(plan)}
+                  disabled={isFree || isCurrentPlan}
+                  className={`w-full py-3 rounded-xl font-bold transition-all ${
+                    isCurrentPlan
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      : isFree
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      : plan.id === 'premium'
+                      ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
+                      : 'bg-white border-2 border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-[var(--secondary-color)]'
+                  }`}
+                >
+                  {isCurrentPlan ? 'Текущий план' : isFree ? 'Базовый план' : 'Выбрать план'}
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -210,7 +232,6 @@ function PaymentModal({ plan, onClose, onSuccess }) {
     try {
       await api.upgradeSubscription(plan.id, paymentMethod);
       onSuccess();
-      onClose();
     } catch (err) {
       setError(err.message || 'Ошибка при оплате');
     } finally {
@@ -219,7 +240,11 @@ function PaymentModal({ plan, onClose, onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[10001] p-4" style={{background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'}} onClick={onClose}>
+    <div className="fixed inset-0 flex items-center justify-center z-[10001] p-4" style={{
+      backgroundImage: 'url(./trickle/assets/profile_background.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }} onClick={onClose}>
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-dark)]">Оплата подписки</h2>
@@ -331,4 +356,4 @@ function PaymentModal({ plan, onClose, onSuccess }) {
       </div>
     </div>
   );
-}
+} 

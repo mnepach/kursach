@@ -1,4 +1,4 @@
-function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData }) {
+function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData, selectedPlan }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
@@ -48,7 +48,8 @@ function RegisterModal({ onClose, onRegister, onSwitchToLogin, onboardingData })
         email,
         password,
         name,
-        onboardingData: onboardingData || {}
+        onboardingData: onboardingData || {},
+        selectedPlan: selectedPlan || 'free'
       });
       onRegister();
     } catch (err) {

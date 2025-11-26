@@ -16,7 +16,11 @@ function LanguageSelection({ onNext }) {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
+    <div className="min-h-screen flex items-center justify-center p-8" style={{
+      backgroundImage: 'url(./trickle/assets/onboarding_background.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
       <div className="max-w-4xl w-full">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-[var(--text-dark)] mb-12">
           Я хочу изучать...

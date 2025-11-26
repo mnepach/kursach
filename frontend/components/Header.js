@@ -16,6 +16,11 @@ function Header({ onAuthClick, isLoggedIn }) {
     transition: 'all 0.3s ease'
   });
 
+  const getAuthButtonText = () => {
+    const token = localStorage.getItem('token');
+    return token ? 'Личный кабинет' : 'Войти';
+  };
+
   return (
     <header>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
@@ -83,7 +88,7 @@ function Header({ onAuthClick, isLoggedIn }) {
               Отзывы
             </button>
             <button onClick={onAuthClick} className="btn-primary" style={{ padding: '0.75rem 1.5rem' }}>
-              {isLoggedIn ? 'Личный кабинет' : 'Войти'}
+              {getAuthButtonText()}
             </button>
           </nav>
 

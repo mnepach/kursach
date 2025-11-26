@@ -4,7 +4,7 @@ function WelcomeCharacter({ onNext }) {
       <div className="max-w-4xl w-full flex-1 flex flex-col items-center justify-end">
         
         <div className="flex items-end justify-center w-full max-w-lg mb-4">
-          
+
           <img 
             src="./trickle/assets/mascot.gif" 
             alt="Hello Kitty"

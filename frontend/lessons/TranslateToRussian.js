@@ -19,7 +19,11 @@ function TranslateToRussian({ lesson, onAnswer }) {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
+    <div className="min-h-screen flex items-center justify-center p-8" style={{
+      backgroundImage: 'url(./trickle/assets/onboarding_background.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
       <div className="max-w-3xl w-full">
         <div className="card mb-8">
           <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-4">

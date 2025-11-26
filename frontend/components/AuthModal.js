@@ -75,6 +75,7 @@ function AuthModal({ onClose, onLogin }) {
       setEmail('');
       setPassword('');
       onClose();
+      window.location.reload();
     };
 
     if (showRegister) {
@@ -91,10 +92,11 @@ function AuthModal({ onClose, onLogin }) {
       );
     }
 
-    if (showPlans) {
+    if (showPlans && userData) {
       return (
         <SubscriptionPlans 
           onClose={() => setShowPlans(false)}
+          currentPlan={userData.subscription?.planType || 'free'}
           onUpgrade={async () => {
             setShowPlans(false);
             await loadUserData();
@@ -123,7 +125,9 @@ function AuthModal({ onClose, onLogin }) {
         <div 
           className="fixed inset-0 flex items-center justify-center z-[9999] p-4" 
           style={{
-            background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'
+            backgroundImage: 'url(./trickle/assets/profile_background.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
           }}
           onClick={handleClose}
         >

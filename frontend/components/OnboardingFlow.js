@@ -7,6 +7,13 @@ function OnboardingFlow({ onComplete }) {
     total: 0
   });
 
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = '/';
+    }
+  }, []);
+
   const beginnerLessons = [
     {
       type: 'listen',
@@ -77,8 +84,8 @@ function OnboardingFlow({ onComplete }) {
     handleNext();
   };
 
-  const handleRegister = () => {
-    onComplete({ ...userData, registered: true });
+  const handleRegister = (selectedPlan) => {
+    onComplete({ ...userData, registered: true, selectedPlan });
   };
 
   const handleLater = () => {

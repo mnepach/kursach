@@ -1,4 +1,3 @@
-// API Service для взаимодействия с бэкендом
 const API_URL = 'http://localhost:5000/api';
 
 class ApiService {
@@ -45,7 +44,6 @@ class ApiService {
     }
   }
 
-  // Auth
   async register(userData) {
     const data = await this.request('/auth/register', {
       method: 'POST',
@@ -79,7 +77,6 @@ class ApiService {
     this.clearToken();
   }
 
-  // Subscription
   async getPlans() {
     return await this.request('/subscription/plans');
   }
@@ -101,7 +98,6 @@ class ApiService {
     });
   }
 
-  // Lessons
   async getLessons(language, level = null) {
     const query = level ? `?level=${level}` : '';
     return await this.request(`/lessons/${language}${query}`);
@@ -115,7 +111,6 @@ class ApiService {
     return await this.request(`/lessons/${language}/levels`);
   }
 
-  // Progress
   async getProgress() {
     return await this.request('/progress');
   }
