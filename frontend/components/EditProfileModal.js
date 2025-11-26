@@ -3,7 +3,7 @@ function EditProfileModal({ userData, onClose, onSave }) {
   const [avatar, setAvatar] = React.useState(userData.avatar || '');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
-  const [previewUrl, setPreviewUrl] = React.useState(userData.avatar || './trickle/assets/icon.jpg');
+  const [previewUrl, setPreviewUrl] = React.useState(userData.avatar || './trickle/assets/default-avatar.png');
   const fileInputRef = React.useRef(null);
 
   const handleFileSelect = (e) => {
@@ -49,7 +49,15 @@ function EditProfileModal({ userData, onClose, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[10000] p-4" style={{background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'}} onClick={onClose}>
+    <div 
+      className="fixed inset-0 flex items-center justify-center z-[10000] p-4" 
+      style={{
+        backgroundImage: 'url(./trickle/assets/profile_background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }} 
+      onClick={onClose}
+    >
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-dark)]">Редактировать профиль</h2>

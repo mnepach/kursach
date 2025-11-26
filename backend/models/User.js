@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: '../trickle/assets/icon.jpg'
+    default: './trickle/assets/default-avatar.png'
   },
   subscription: {
     type: mongoose.Schema.Types.ObjectId,
@@ -49,13 +49,16 @@ const userSchema = new mongoose.Schema({
       default: 0
     }
   },
+  hasCompletedOnboarding: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-// Хеширование пароля перед сохранением
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
@@ -68,7 +71,6 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Метод для сравнения паролей
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };

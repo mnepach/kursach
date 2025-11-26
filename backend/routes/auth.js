@@ -7,7 +7,6 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// Регистрация
 router.post('/register', [
   body('email').isEmail().withMessage('Некорректный email'),
   body('password').isLength({ min: 6 }).withMessage('Пароль должен содержать минимум 6 символов'),
@@ -19,39 +18,43 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name, onboardingData } = req.body;
+    const { email, password, name, onboardingData, selectedPlan } = req.body;
 
-    // Проверяем, существует ли пользователь
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
     }
 
-    // Создаем нового пользователя
     user = new User({
       email,
       password,
       name,
-      onboardingData: onboardingData || {}
+      onboardingData: onboardingData || {},
+      hasCompletedOnboarding: !!onboardingData
     });
 
     await user.save();
 
-    // Создаем бесплатную подписку
-    const planFeatures = Subscription.getPlanFeatures('free');
+    const planType = selectedPlan || 'free';
+    const planFeatures = Subscription.getPlanFeatures(planType);
     const subscription = new Subscription({
       user: user._id,
-      planType: 'free',
-      features: planFeatures
+      planType: planType,
+      features: planFeatures,
+      price: planFeatures.price
     });
+
+    if (planType !== 'free') {
+      const endDate = new Date();
+      endDate.setDate(endDate.getDate() + 30);
+      subscription.endDate = endDate;
+    }
 
     await subscription.save();
 
-    // Связываем подписку с пользователем
     user.subscription = subscription._id;
     await user.save();
 
-    // Генерируем токен
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
@@ -66,7 +69,8 @@ router.post('/register', [
         name: user.name,
         avatar: user.avatar,
         subscription: subscription,
-        statistics: user.statistics
+        statistics: user.statistics,
+        hasCompletedOnboarding: user.hasCompletedOnboarding
       }
     });
   } catch (error) {
@@ -75,7 +79,6 @@ router.post('/register', [
   }
 });
 
-// Вход
 router.post('/login', [
   body('email').isEmail().withMessage('Некорректный email'),
   body('password').notEmpty().withMessage('Пароль обязателен')
@@ -88,19 +91,16 @@ router.post('/login', [
 
     const { email, password } = req.body;
 
-    // Находим пользователя
     const user = await User.findOne({ email }).populate('subscription');
     if (!user) {
       return res.status(400).json({ message: 'Неверный email или пароль' });
     }
 
-    // Проверяем пароль
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Неверный email или пароль' });
     }
 
-    // Генерируем токен
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
@@ -115,7 +115,8 @@ router.post('/login', [
         name: user.name,
         avatar: user.avatar,
         subscription: user.subscription,
-        statistics: user.statistics
+        statistics: user.statistics,
+        hasCompletedOnboarding: user.hasCompletedOnboarding
       }
     });
   } catch (error) {
@@ -124,7 +125,6 @@ router.post('/login', [
   }
 });
 
-// Получить профиль пользователя
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     res.json({
@@ -135,7 +135,8 @@ router.get('/me', authMiddleware, async (req, res) => {
         avatar: req.user.avatar,
         subscription: req.user.subscription,
         statistics: req.user.statistics,
-        onboardingData: req.user.onboardingData
+        onboardingData: req.user.onboardingData,
+        hasCompletedOnboarding: req.user.hasCompletedOnboarding
       }
     });
   } catch (error) {
@@ -144,14 +145,16 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
-// Обновить профиль
 router.put('/profile', authMiddleware, async (req, res) => {
   try {
     const { name, avatar, onboardingData } = req.body;
     
     if (name) req.user.name = name;
     if (avatar) req.user.avatar = avatar;
-    if (onboardingData) req.user.onboardingData = { ...req.user.onboardingData, ...onboardingData };
+    if (onboardingData) {
+      req.user.onboardingData = { ...req.user.onboardingData, ...onboardingData };
+      req.user.hasCompletedOnboarding = true;
+    }
     
     await req.user.save();
     
@@ -162,7 +165,8 @@ router.put('/profile', authMiddleware, async (req, res) => {
         name: req.user.name,
         avatar: req.user.avatar,
         statistics: req.user.statistics,
-        onboardingData: req.user.onboardingData
+        onboardingData: req.user.onboardingData,
+        hasCompletedOnboarding: req.user.hasCompletedOnboarding
       }
     });
   } catch (error) {
