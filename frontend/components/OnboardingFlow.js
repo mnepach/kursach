@@ -41,7 +41,7 @@ function OnboardingFlow({ onComplete }) {
 
   const handleNext = (data = {}) => {
     setUserData({ ...userData, ...data });
-    
+
     const steps = [
       'languageSelection',
       'welcomeCharacter',
@@ -55,9 +55,9 @@ function OnboardingFlow({ onComplete }) {
       'firstAchievement',
       'saveProgress'
     ];
-    
+
     const currentIndex = steps.indexOf(currentStep);
-    
+
     if (currentStep === 'lessons') {
       if (currentLesson < beginnerLessons.length - 1) {
         setCurrentLesson(currentLesson + 1);
@@ -74,7 +74,6 @@ function OnboardingFlow({ onComplete }) {
       correct: lessonResults.correct + (isCorrect ? 1 : 0),
       total: lessonResults.total + 1
     });
-    
     handleNext();
   };
 
@@ -82,35 +81,34 @@ function OnboardingFlow({ onComplete }) {
     onComplete({ ...userData, registered: true });
   };
 
-  const handleDownload = () => {
-    document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' });
+  const handleLater = () => {
+    onComplete({ ...userData, registered: false });
   };
 
   switch (currentStep) {
     case 'languageSelection':
       return <LanguageSelection onNext={handleNext} />;
-    
+
     case 'welcomeCharacter':
       return <WelcomeCharacter onNext={handleNext} />;
-    
+
     case 'howDidYouHear':
       return <HowDidYouHear onNext={handleNext} />;
-    
+
     case 'learningGoal':
       return <LearningGoal onNext={handleNext} />;
-    
+
     case 'languageLevel':
       return <LanguageLevel onNext={handleNext} selectedLanguage={userData.selectedLanguage} />;
-    
+
     case 'dailyGoal':
       return <DailyGoal onNext={handleNext} />;
-    
+
     case 'learningMethod':
       return <LearningMethod onNext={handleNext} />;
-    
+
     case 'lessons':
       const lesson = beginnerLessons[currentLesson];
-      
       switch (lesson.type) {
         case 'listen':
           return <ListenAndArrange lesson={lesson} onAnswer={handleLessonAnswer} />;
@@ -123,7 +121,7 @@ function OnboardingFlow({ onComplete }) {
         default:
           return null;
       }
-    
+
     case 'lessonComplete':
       return (
         <LessonComplete 
@@ -140,16 +138,18 @@ function OnboardingFlow({ onComplete }) {
           selectedLanguage={userData.selectedLanguage}
         />
       );
-    
+
     case 'saveProgress':
       return (
         <SaveProgressPrompt 
           onRegister={handleRegister}
-          onDownload={handleDownload}
+          onLater={handleLater}
         />
       );
-    
+
     default:
       return null;
   }
 }
+
+export default OnboardingFlow;

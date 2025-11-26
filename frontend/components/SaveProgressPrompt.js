@@ -1,7 +1,10 @@
-function  SaveProgressPrompt({ onRegister, onDownload }) {
+function SaveProgressPrompt({ onRegister, onLater }) {
+  const handleRegister = () => {
+    onRegister();
+  };
+
   const handleLater = () => {
-    // Переход на главную страницу при нажатии "Позже"
-    onDownload();
+    onLater();
   };
 
   return (
@@ -22,11 +25,17 @@ function  SaveProgressPrompt({ onRegister, onDownload }) {
         </p>
         
         <div className="space-y-4">
-          <button onClick={onRegister} className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all">
+          <button 
+            onClick={handleRegister} 
+            className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
+          >
             Создать аккаунт
           </button>
           
-          <button onClick={handleLater} className="w-full max-w-md mx-auto block py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all">
+          <button 
+            onClick={handleLater} 
+            className="w-full max-w-md mx-auto block py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all"
+          >
             Позже
           </button>
         </div>
@@ -34,3 +43,5 @@ function  SaveProgressPrompt({ onRegister, onDownload }) {
     </div>
   );
 }
+
+export default SaveProgressPrompt;
