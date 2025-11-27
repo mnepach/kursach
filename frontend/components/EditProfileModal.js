@@ -126,14 +126,14 @@ function EditProfileModal({ userData, onClose, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-500 mb-2">Email</label>
             <input
               type="email"
               value={userData.email}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 cursor-not-allowed"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-100 text-gray-500 cursor-not-allowed"
               disabled
             />
-            <p className="text-xs text-[var(--text-light)] mt-1">Email нельзя изменить</p>
+            <p className="text-xs text-gray-400 mt-1">Email нельзя изменить</p>
           </div>
 
           {error && (
