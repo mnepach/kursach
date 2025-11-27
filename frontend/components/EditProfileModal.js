@@ -24,8 +24,12 @@ function EditProfileModal({ userData, onClose, onSave }) {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      setPreviewUrl(event.target.result);
-      setAvatar(event.target.result);
+      const base64String = event.target.result;
+      setPreviewUrl(base64String);
+      setAvatar(base64String);
+    };
+    reader.onerror = () => {
+      setError('Ошибка при чтении файла');
     };
     reader.readAsDataURL(file);
   };
@@ -82,6 +86,9 @@ function EditProfileModal({ userData, onClose, onSave }) {
                   src={previewUrl}
                   alt="Avatar preview"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = './trickle/assets/default-avatar.png';
+                  }}
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">

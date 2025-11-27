@@ -19,11 +19,16 @@ function TranslateToRussian({ lesson, onAnswer }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8" style={{
-      backgroundImage: 'url(./trickle/assets/onboarding_background.png)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }}>
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-8"
+      style={{
+        backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <div className="flex-1"></div>
+
       <div className="max-w-3xl w-full">
         <div className="card mb-8">
           <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-4">
@@ -56,7 +61,9 @@ function TranslateToRussian({ lesson, onAnswer }) {
             </button>
           ))}
         </div>
+      </div>
 
+      <div className="w-full max-w-3xl border-t border-gray-200 pt-6">
         <button 
           onClick={handleCheck}
           disabled={!selected}

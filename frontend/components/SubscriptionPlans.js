@@ -4,6 +4,7 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   const [showPayment, setShowPayment] = React.useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState('');
 
   React.useEffect(() => {
     loadPlans();
@@ -13,8 +14,10 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
     try {
       const response = await api.getPlans();
       setPlans(response.plans);
+      setError('');
     } catch (error) {
       console.error('Ошибка загрузки планов:', error);
+      setError('Не удалось загрузить планы подписки');
     } finally {
       setLoading(false);
     }
@@ -34,18 +37,20 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
 
   const handleCancelSubscription = async () => {
     setLoading(true);
+    setError('');
     try {
       await api.cancelSubscription();
       setShowCancelConfirm(false);
       onUpgrade();
     } catch (error) {
       console.error('Ошибка отмены подписки:', error);
+      setError('Не удалось отменить подписку');
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
+  if (loading && plans.length === 0) {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-[10000]" style={{
         backgroundImage: 'url(./trickle/assets/profile_background.png)',
@@ -77,6 +82,11 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
           <p className="text-[var(--text-light)] mb-6">
             Вы уверены, что хотите отменить подписку и перейти на бесплатный план? Вы потеряете доступ к премиум-функциям.
           </p>
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
+              {error}
+            </div>
+          )}
           <div className="flex gap-3">
             <button
               onClick={() => setShowCancelConfirm(false)}
@@ -137,6 +147,12 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
             </svg>
           </button>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl">
+            {error}
+          </div>
+        )}
 
         <div className="grid md:grid-cols-3 gap-6">
           {plans.map((plan, index) => {

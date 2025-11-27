@@ -21,7 +21,16 @@ function DailyGoal({ onNext }) {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-4">
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-8"
+      style={{
+        backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <div className="flex-1"></div>
+
       <div className="max-w-3xl w-full">
         <div className="flex items-start gap-4 mb-8">
           <img 
@@ -74,7 +83,9 @@ function DailyGoal({ onNext }) {
             </button>
           ))}
         </div>
-        
+      </div>
+      
+      <div className="w-full max-w-3xl border-t border-gray-200 pt-6">
         <button 
           onClick={handleNext}
           disabled={!selected}

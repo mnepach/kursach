@@ -33,7 +33,16 @@ function SaveProgressPrompt({ onRegister, onLater }) {
 
   if (showPlanSelection) {
     return (
-      <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
+      <div 
+        className="min-h-screen flex flex-col items-center justify-between p-8"
+        style={{
+          backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="flex-1"></div>
+
         <div className="max-w-4xl w-full">
           <h1 className="text-4xl font-bold text-[var(--text-dark)] text-center mb-4">
             Выберите свой план
@@ -70,7 +79,9 @@ function SaveProgressPrompt({ onRegister, onLater }) {
               </button>
             ))}
           </div>
+        </div>
 
+        <div className="w-full max-w-4xl border-t border-gray-200 pt-6">
           <button
             onClick={handlePlanSelected}
             className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
@@ -83,7 +94,16 @@ function SaveProgressPrompt({ onRegister, onLater }) {
   }
 
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-8"
+      style={{
+        backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <div className="flex-1"></div>
+
       <div className="max-w-2xl w-full text-center">
         <img 
           src="./trickle/assets/kitty.png" 
@@ -98,18 +118,20 @@ function SaveProgressPrompt({ onRegister, onLater }) {
         <p className="text-xl text-[var(--text-light)] mb-8">
           Создайте аккаунт, чтобы сохранить<br />прогресс и продолжить заниматься<br />бесплатно.
         </p>
-        
-        <div className="space-y-4">
+      </div>
+      
+      <div className="w-full max-w-2xl border-t border-gray-200 pt-6">
+        <div className="space-y-4 max-w-md mx-auto">
           <button 
             onClick={handleRegister} 
-            className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
+            className="w-full py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
           >
             Создать аккаунт
           </button>
           
           <button 
             onClick={onLater} 
-            className="w-full max-w-md mx-auto block py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all"
+            className="w-full py-4 bg-transparent border-2 border-gray-400 text-gray-600 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all"
           >
             Позже
           </button>

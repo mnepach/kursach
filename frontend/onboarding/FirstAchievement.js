@@ -1,8 +1,16 @@
 function FirstAchievement({ onNext, selectedLanguage }) {
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-8">
-      <div className="max-w-2xl w-full text-center">
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-8"
+      style={{
+        backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <div className="flex-1"></div>
 
+      <div className="max-w-2xl w-full text-center">
         <div className="flex items-center justify-center gap-8 mb-8">
           <img
             src="./trickle/assets/exitement1.gif"
@@ -30,7 +38,9 @@ function FirstAchievement({ onNext, selectedLanguage }) {
             : 'Английского'}
           !
         </h1>
+      </div>
 
+      <div className="w-full max-w-2xl border-t border-gray-200 pt-6">
         <button
           onClick={onNext}
           className="w-full max-w-md mx-auto block py-4 bg-[var(--primary-color)] text-white rounded-2xl font-bold text-xl hover:bg-[var(--accent-color)] transition-all"
