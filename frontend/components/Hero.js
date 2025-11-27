@@ -1,13 +1,26 @@
 function Hero({ onGetStarted }) {
   const [scrollY, setScrollY] = React.useState(0);
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
 
   React.useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
 
+    const handleMouseMove = (e) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20
+      });
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   try {
@@ -32,7 +45,8 @@ function Hero({ onGetStarted }) {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: 0.7,
-            transform: `translateY(${scrollY * 0.5}px)`,
+            transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+            transition: 'transform 0.1s ease-out',
             zIndex: 0
           }}
         ></div>

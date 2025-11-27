@@ -32,9 +32,9 @@ function ListenAndArrange({ lesson, onAnswer }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8" style={{
-      backgroundImage: 'url(./trickle/assets/onboarding_background.png)',
+      backgroundImage: 'url(./trickle/assets/5.jpg)',
       backgroundSize: 'cover',
-      backgroundPosition: 'center'
+      backgroundPosition: 'bottom center'
     }}>
       <div className="max-w-3xl w-full">
         <div className="card mb-8">

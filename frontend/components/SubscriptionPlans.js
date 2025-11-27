@@ -2,6 +2,7 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   const [plans, setPlans] = React.useState([]);
   const [selectedPlan, setSelectedPlan] = React.useState(null);
   const [showPayment, setShowPayment] = React.useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -20,11 +21,28 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   };
 
   const handleSelectPlan = (plan) => {
-    if (plan.id === 'free' || plan.id === currentPlan) {
+    if (plan.id === currentPlan) {
+      return;
+    }
+    if (plan.id === 'free') {
+      setShowCancelConfirm(true);
       return;
     }
     setSelectedPlan(plan);
     setShowPayment(true);
+  };
+
+  const handleCancelSubscription = async () => {
+    setLoading(true);
+    try {
+      await api.cancelSubscription();
+      setShowCancelConfirm(false);
+      onUpgrade();
+    } catch (error) {
+      console.error('Ошибка отмены подписки:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -32,9 +50,50 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
       <div className="fixed inset-0 flex items-center justify-center z-[10000]" style={{
         backgroundImage: 'url(./trickle/assets/profile_background.png)',
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        imageRendering: 'crisp-edges'
       }}>
         <div className="loader"></div>
+      </div>
+    );
+  }
+
+  if (showCancelConfirm) {
+    return (
+      <div 
+        className="fixed inset-0 flex items-center justify-center z-[10001] p-4" 
+        style={{
+          backgroundImage: 'url(./trickle/assets/profile_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          imageRendering: 'crisp-edges'
+        }}
+      >
+        <BubbleAnimation />
+        <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
+          <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-4">Отменить подписку?</h2>
+          <p className="text-[var(--text-light)] mb-6">
+            Вы уверены, что хотите отменить подписку и перейти на бесплатный план? Вы потеряете доступ к премиум-функциям.
+          </p>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setShowCancelConfirm(false)}
+              className="flex-1 py-3 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors"
+              disabled={loading}
+            >
+              Отмена
+            </button>
+            <button
+              onClick={handleCancelSubscription}
+              className="flex-1 py-3 bg-red-500 text-white rounded-xl font-bold hover:bg-red-600 transition-colors"
+              disabled={loading}
+            >
+              {loading ? 'Отмена...' : 'Подтвердить'}
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -57,11 +116,17 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[10000] p-4" style={{
-      backgroundImage: 'url(./trickle/assets/profile_background.png)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }} onClick={onClose}>
+    <div 
+      className="fixed inset-0 flex items-center justify-center z-[10000] p-4" 
+      style={{
+        backgroundImage: 'url(./trickle/assets/profile_background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        imageRendering: 'crisp-edges'
+      }}
+    >
+      <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-6xl w-full p-8 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-[var(--text-dark)]">Выберите план</h2>
@@ -76,7 +141,6 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
         <div className="grid md:grid-cols-3 gap-6">
           {plans.map((plan, index) => {
             const isCurrentPlan = plan.id === currentPlan;
-            const isFree = plan.id === 'free';
             
             return (
               <div
@@ -120,18 +184,22 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
 
                 <button
                   onClick={() => handleSelectPlan(plan)}
-                  disabled={isFree || isCurrentPlan}
+                  disabled={isCurrentPlan}
                   className={`w-full py-3 rounded-xl font-bold transition-all ${
                     isCurrentPlan
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                      : isFree
-                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       : plan.id === 'premium'
                       ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]'
+                      : plan.id === 'free' && currentPlan !== 'free'
+                      ? 'bg-red-500 text-white hover:bg-red-600'
                       : 'bg-white border-2 border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-[var(--secondary-color)]'
                   }`}
                 >
-                  {isCurrentPlan ? 'Текущий план' : isFree ? 'Базовый план' : 'Выбрать план'}
+                  {isCurrentPlan 
+                    ? 'Текущий план' 
+                    : plan.id === 'free' && currentPlan !== 'free'
+                    ? 'Отменить подписку'
+                    : 'Выбрать план'}
                 </button>
               </div>
             );
@@ -240,11 +308,17 @@ function PaymentModal({ plan, onClose, onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[10001] p-4" style={{
-      backgroundImage: 'url(./trickle/assets/profile_background.png)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }} onClick={onClose}>
+    <div 
+      className="fixed inset-0 flex items-center justify-center z-[10001] p-4" 
+      style={{
+        backgroundImage: 'url(./trickle/assets/profile_background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        imageRendering: 'crisp-edges'
+      }}
+    >
+      <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-dark)]">Оплата подписки</h2>
@@ -356,4 +430,79 @@ function PaymentModal({ plan, onClose, onSuccess }) {
       </div>
     </div>
   );
-} 
+}
+
+function BubbleAnimation() {
+  return (
+    <>
+      <style>
+        {`
+          @keyframes float-up {
+            0% {
+              transform: translateY(100vh) translateX(0) scale(1);
+              opacity: 0.7;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(-100px) translateX(var(--float-x)) scale(1.2);
+              opacity: 0;
+            }
+          }
+
+          .bubble {
+            position: fixed;
+            bottom: -100px;
+            width: var(--size);
+            height: var(--size);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.4));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: float-up var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            box-shadow: 
+              inset 0 0 20px rgba(255, 255, 255, 0.5),
+              0 0 20px rgba(96, 165, 250, 0.3);
+          }
+
+          .bubble::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent);
+            border-radius: 50%;
+          }
+
+          .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 20%;
+            width: 20%;
+            height: 20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 50%;
+          }
+        `}
+      </style>
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="bubble"
+          style={{
+            '--size': `${Math.random() * 60 + 40}px`,
+            '--duration': `${Math.random() * 5 + 8}s`,
+            '--delay': `${Math.random() * 5}s`,
+            '--float-x': `${(Math.random() - 0.5) * 200}px`,
+            left: `${Math.random() * 100}%`
+          }}
+        />
+      ))}
+    </>
+  );
+}

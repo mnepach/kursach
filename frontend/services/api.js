@@ -62,6 +62,20 @@ class ApiService {
     return data;
   }
 
+  async forgotPassword(email) {
+    return await this.request('/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email })
+    });
+  }
+
+  async resetPassword(token, password) {
+    return await this.request('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ token, password })
+    });
+  }
+
   async getProfile() {
     return await this.request('/auth/me');
   }

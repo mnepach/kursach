@@ -4,7 +4,6 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// Получить все доступные планы
 router.get('/plans', (req, res) => {
   const plans = [
     {
@@ -61,7 +60,6 @@ router.get('/plans', (req, res) => {
   res.json({ plans });
 });
 
-// Получить текущую подписку
 router.get('/current', authMiddleware, async (req, res) => {
   try {
     res.json({ subscription: req.user.subscription });
@@ -71,7 +69,6 @@ router.get('/current', authMiddleware, async (req, res) => {
   }
 });
 
-// Обновить подписку (оформить новый план)
 router.post('/upgrade', authMiddleware, async (req, res) => {
   try {
     const { planType, paymentMethod } = req.body;
@@ -86,22 +83,22 @@ router.post('/upgrade', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Подписка не найдена' });
     }
     
-    // Получаем возможности нового плана
     const planFeatures = Subscription.getPlanFeatures(planType);
     
-    // Обновляем подписку
     subscription.planType = planType;
     subscription.features = planFeatures;
     subscription.paymentMethod = paymentMethod;
     subscription.price = planFeatures.price;
     
-    // Устанавливаем дату окончания (30 дней для платных планов)
     if (planType !== 'free') {
       const endDate = new Date();
       endDate.setDate(endDate.getDate() + 30);
       subscription.endDate = endDate;
+      subscription.status = 'active';
     } else {
       subscription.endDate = null;
+      subscription.status = 'active';
+      subscription.paymentMethod = null;
     }
     
     await subscription.save();
@@ -116,7 +113,6 @@ router.post('/upgrade', authMiddleware, async (req, res) => {
   }
 });
 
-// Отменить подписку
 router.post('/cancel', authMiddleware, async (req, res) => {
   try {
     const subscription = await Subscription.findById(req.user.subscription);
@@ -125,11 +121,18 @@ router.post('/cancel', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Подписка не найдена' });
     }
     
+    const planFeatures = Subscription.getPlanFeatures('free');
+    subscription.planType = 'free';
+    subscription.features = planFeatures;
+    subscription.price = planFeatures.price;
     subscription.status = 'cancelled';
+    subscription.endDate = null;
+    subscription.paymentMethod = null;
+    
     await subscription.save();
     
     res.json({
-      message: 'Подписка отменена',
+      message: 'Подписка отменена, переход на бесплатный план',
       subscription
     });
   } catch (error) {

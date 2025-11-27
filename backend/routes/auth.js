@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
+const crypto = require('crypto');
 const User = require('../models/User');
 const Subscription = require('../models/Subscription');
 const authMiddleware = require('../middleware/auth');
@@ -122,6 +123,69 @@ router.post('/login', [
   } catch (error) {
     console.error('Ошибка входа:', error);
     res.status(500).json({ message: 'Ошибка сервера при входе' });
+  }
+});
+
+router.post('/forgot-password', [
+  body('email').isEmail().withMessage('Некорректный email')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Пользователь с таким email не найден' });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000;
+    await user.save();
+
+    console.log(`Reset token для ${email}: ${resetToken}`);
+
+    res.json({ message: 'Письмо с инструкциями отправлено на email' });
+  } catch (error) {
+    console.error('Ошибка сброса пароля:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
+  }
+});
+
+router.post('/reset-password', [
+  body('token').notEmpty().withMessage('Токен обязателен'),
+  body('password').isLength({ min: 6 }).withMessage('Пароль должен содержать минимум 6 символов')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { token, password } = req.body;
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Токен недействителен или истёк' });
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({ message: 'Пароль успешно изменён' });
+  } catch (error) {
+    console.error('Ошибка смены пароля:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
   }
 });
 

@@ -20,7 +20,7 @@ function SelectWordByImage({ lesson, onAnswer }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8" style={{
-      backgroundImage: 'url(./trickle/assets/onboarding_background.png)',
+      backgroundImage: 'url(./trickle/assets/2.gif)',
       backgroundSize: 'cover',
       backgroundPosition: 'center'
     }}>

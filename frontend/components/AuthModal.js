@@ -4,6 +4,7 @@ function AuthModal({ onClose, onLogin }) {
     const [showRegister, setShowRegister] = React.useState(false);
     const [showPlans, setShowPlans] = React.useState(false);
     const [showEditProfile, setShowEditProfile] = React.useState(false);
+    const [showForgotPassword, setShowForgotPassword] = React.useState(false);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -64,6 +65,7 @@ function AuthModal({ onClose, onLogin }) {
       setShowRegister(false);
       setShowPlans(false);
       setShowEditProfile(false);
+      setShowForgotPassword(false);
       onClose();
     };
 
@@ -88,6 +90,15 @@ function AuthModal({ onClose, onLogin }) {
             onLogin();
           }}
           onSwitchToLogin={() => setShowRegister(false)}
+        />
+      );
+    }
+
+    if (showForgotPassword) {
+      return (
+        <ForgotPasswordModal
+          onClose={() => setShowForgotPassword(false)}
+          onBack={() => setShowForgotPassword(false)}
         />
       );
     }
@@ -127,10 +138,12 @@ function AuthModal({ onClose, onLogin }) {
           style={{
             backgroundImage: 'url(./trickle/assets/profile_background.png)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            imageRendering: 'crisp-edges'
           }}
-          onClick={handleClose}
         >
+          <BubbleAnimation />
           <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="p-8 md:p-12">
               <div className="flex justify-between items-start mb-10">
@@ -256,7 +269,17 @@ function AuthModal({ onClose, onLogin }) {
     }
 
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4" style={{background: 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%)'}} onClick={handleClose}>
+      <div 
+        className="fixed inset-0 flex items-center justify-center z-50 p-4" 
+        style={{
+          backgroundImage: 'url(./trickle/assets/profile_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          imageRendering: 'crisp-edges'
+        }}
+      >
+        <BubbleAnimation />
         <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-[var(--text-dark)]">
@@ -321,6 +344,14 @@ function AuthModal({ onClose, onLogin }) {
                 </button>
               </div>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="text-sm text-[var(--primary-color)] hover:underline"
+            >
+              Забыли пароль?
+            </button>
             
             <button 
               type="submit"
@@ -347,4 +378,202 @@ function AuthModal({ onClose, onLogin }) {
     console.error('AuthModal component error:', error);
     return null;
   }
+}
+
+function BubbleAnimation() {
+  return (
+    <>
+      <style>
+        {`
+          @keyframes float-up {
+            0% {
+              transform: translateY(100vh) translateX(0) scale(1);
+              opacity: 0.7;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(-100px) translateX(var(--float-x)) scale(1.2);
+              opacity: 0;
+            }
+          }
+
+          .bubble {
+            position: fixed;
+            bottom: -100px;
+            width: var(--size);
+            height: var(--size);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.4));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: float-up var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            box-shadow: 
+              inset 0 0 20px rgba(255, 255, 255, 0.5),
+              0 0 20px rgba(96, 165, 250, 0.3);
+          }
+
+          .bubble::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent);
+            border-radius: 50%;
+          }
+
+          .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 20%;
+            width: 20%;
+            height: 20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 50%;
+          }
+        `}
+      </style>
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="bubble"
+          style={{
+            '--size': `${Math.random() * 60 + 40}px`,
+            '--duration': `${Math.random() * 5 + 8}s`,
+            '--delay': `${Math.random() * 5}s`,
+            '--float-x': `${(Math.random() - 0.5) * 200}px`,
+            left: `${Math.random() * 100}%`
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+function ForgotPasswordModal({ onClose, onBack }) {
+  const [email, setEmail] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      await api.forgotPassword(email);
+      setSuccess(true);
+    } catch (err) {
+      setError(err.message || 'Ошибка при отправке письма');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (success) {
+    return (
+      <div 
+        className="fixed inset-0 flex items-center justify-center z-[10000] p-4" 
+        style={{
+          backgroundImage: 'url(./trickle/assets/profile_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          imageRendering: 'crisp-edges'
+        }}
+      >
+        <BubbleAnimation />
+        <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
+          <div className="text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-2">Письмо отправлено!</h2>
+            <p className="text-[var(--text-light)] mb-6">
+              Мы отправили инструкции по восстановлению пароля на ваш email.
+            </p>
+            <button onClick={onClose} className="btn-primary w-full">
+              Понятно
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="fixed inset-0 flex items-center justify-center z-[10000] p-4" 
+      style={{
+        backgroundImage: 'url(./trickle/assets/profile_background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        imageRendering: 'crisp-edges'
+      }}
+    >
+      <BubbleAnimation />
+      <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-[var(--text-dark)]">Восстановление пароля</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <p className="text-[var(--text-light)] mb-6">
+          Введите email, привязанный к вашему аккаунту, и мы отправим инструкции по восстановлению пароля.
+        </p>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+              placeholder="your@email.com"
+              required
+              disabled={loading}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn-primary w-full"
+            disabled={loading}
+          >
+            {loading ? 'Отправка...' : 'Отправить'}
+          </button>
+
+          <button
+            type="button"
+            onClick={onBack}
+            className="w-full text-[var(--primary-color)] hover:underline"
+            disabled={loading}
+          >
+            Вернуться к входу
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }

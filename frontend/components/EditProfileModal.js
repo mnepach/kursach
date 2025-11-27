@@ -54,10 +54,12 @@ function EditProfileModal({ userData, onClose, onSave }) {
       style={{
         backgroundImage: 'url(./trickle/assets/profile_background.png)',
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }} 
-      onClick={onClose}
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        imageRendering: 'crisp-edges'
+      }}
     >
+      <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-dark)]">Редактировать профиль</h2>
@@ -153,5 +155,80 @@ function EditProfileModal({ userData, onClose, onSave }) {
         </form>
       </div>
     </div>
+  );
+}
+
+function BubbleAnimation() {
+  return (
+    <>
+      <style>
+        {`
+          @keyframes float-up {
+            0% {
+              transform: translateY(100vh) translateX(0) scale(1);
+              opacity: 0.7;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(-100px) translateX(var(--float-x)) scale(1.2);
+              opacity: 0;
+            }
+          }
+
+          .bubble {
+            position: fixed;
+            bottom: -100px;
+            width: var(--size);
+            height: var(--size);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.4));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: float-up var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            box-shadow: 
+              inset 0 0 20px rgba(255, 255, 255, 0.5),
+              0 0 20px rgba(96, 165, 250, 0.3);
+          }
+
+          .bubble::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent);
+            border-radius: 50%;
+          }
+
+          .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 20%;
+            width: 20%;
+            height: 20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 50%;
+          }
+        `}
+      </style>
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="bubble"
+          style={{
+            '--size': `${Math.random() * 60 + 40}px`,
+            '--duration': `${Math.random() * 5 + 8}s`,
+            '--delay': `${Math.random() * 5}s`,
+            '--float-x': `${(Math.random() - 0.5) * 200}px`,
+            left: `${Math.random() * 100}%`
+          }}
+        />
+      ))}
+    </>
   );
 }
