@@ -5,8 +5,75 @@ function EditProfileModal({ userData, onClose, onSave }) {
   const [error, setError] = React.useState('');
   const [previewUrl, setPreviewUrl] = React.useState(userData.avatar || './trickle/assets/default-avatar.png');
   const fileInputRef = React.useRef(null);
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = React.useState(0);
 
-  const handleFileSelect = (e) => {
+  React.useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20
+      });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const compressImage = (file, maxWidth = 800, quality = 0.7) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob(
+            (blob) => {
+              if (blob.size > 100 * 1024) {
+                compressImage(file, maxWidth * 0.8, quality * 0.8).then(resolve).catch(reject);
+              } else {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+              }
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileSelect = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -22,16 +89,13 @@ function EditProfileModal({ userData, onClose, onSave }) {
 
     setError('');
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64String = event.target.result;
-      setPreviewUrl(base64String);
-      setAvatar(base64String);
-    };
-    reader.onerror = () => {
-      setError('Ошибка при чтении файла');
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressedBase64 = await compressImage(file);
+      setPreviewUrl(compressedBase64);
+      setAvatar(compressedBase64);
+    } catch (err) {
+      setError('Ошибка при обработке изображения');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -60,9 +124,25 @@ function EditProfileModal({ userData, onClose, onSave }) {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        imageRendering: 'crisp-edges'
+        imageRendering: 'crisp-edges',
+        overflow: 'hidden'
       }}
     >
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url(./trickle/assets/profile_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+          transition: 'transform 0.1s ease-out',
+          zIndex: -1
+        }}
+      ></div>
       <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
@@ -126,11 +206,11 @@ function EditProfileModal({ userData, onClose, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-500 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
             <input
               type="email"
               value={userData.email}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-100 text-gray-500 cursor-not-allowed"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-400 cursor-not-allowed"
               disabled
             />
             <p className="text-xs text-gray-400 mt-1">Email нельзя изменить</p>

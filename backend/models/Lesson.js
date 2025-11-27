@@ -55,7 +55,6 @@ const lessonSchema = new mongoose.Schema({
   }
 });
 
-// Вычисляем общее количество очков при сохранении
 lessonSchema.pre('save', function(next) {
   this.totalPoints = this.exercises.reduce((sum, ex) => sum + (ex.points || 10), 0);
   next();

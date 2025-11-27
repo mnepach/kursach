@@ -56,14 +56,11 @@ progressSchema.methods.updateProgress = function(lessonId, score) {
     score
   });
   
-  // Обновляем статистику
   this.totalLessonsCompleted = this.completedLessons.length;
-  this.vocabularyLearned += 5; // Условно 5 слов за урок
+  this.vocabularyLearned += 5; 
   
-  // Рассчитываем общий прогресс (условно)
   this.overallProgress = Math.min(100, this.totalLessonsCompleted * 5);
   
-  // Обновляем дату последней активности
   this.lastActivityDate = new Date();
   
   return this.save();

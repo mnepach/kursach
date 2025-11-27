@@ -1,23 +1,62 @@
 function WelcomeCharacter({ onNext }) {
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20
+      });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div 
       className="min-h-screen flex flex-col items-center justify-between p-8"
       style={{
-        backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+          transition: 'transform 0.1s ease-out',
+          zIndex: -1
+        }}
+      ></div>
+
       <div className="flex-1"></div>
       
       <div className="max-w-4xl w-full flex items-end justify-center gap-8 mb-8">
         <img 
           src="./trickle/assets/mascot.gif" 
           alt="Hello Kitty"
-          className="w-96 h-96 object-contain rounded-full"
+          className="w-96 h-96 object-contain"
           style={{
-            WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)',
-            maskImage: 'radial-gradient(circle, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)'
+            WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 70%)',
+            maskImage: 'radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 70%)'
           }}
         />
 
@@ -39,7 +78,7 @@ function WelcomeCharacter({ onNext }) {
         </div>
       </div>
       
-      <div className="w-full max-w-4xl border-t border-gray-200 pt-6">
+      <div className="w-full max-w-4xl border-t-2 border-gray-300 pt-6">
         <button onClick={onNext} className="btn-primary ml-auto block px-12 py-4">
           Далее
         </button>

@@ -75,7 +75,6 @@ const subscriptionSchema = new mongoose.Schema({
   }
 });
 
-// Определение возможностей планов
 subscriptionSchema.statics.getPlanFeatures = function(planType) {
   const plans = {
     free: {

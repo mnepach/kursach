@@ -5,9 +5,30 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   const [showCancelConfirm, setShowCancelConfirm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState('');
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = React.useState(0);
 
   React.useEffect(() => {
     loadPlans();
+
+    const handleMouseMove = (e) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20
+      });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const loadPlans = async () => {
@@ -69,13 +90,24 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
       <div 
         className="fixed inset-0 flex items-center justify-center z-[10001] p-4" 
         style={{
-          backgroundImage: 'url(./trickle/assets/profile_background.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          imageRendering: 'crisp-edges'
+          overflow: 'hidden'
         }}
       >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'url(./trickle/assets/profile_background.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+            transition: 'transform 0.1s ease-out',
+            zIndex: -1
+          }}
+        ></div>
         <BubbleAnimation />
         <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
           <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-4">Отменить подписку?</h2>
@@ -121,6 +153,8 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
           setSelectedPlan(null);
           onUpgrade();
         }}
+        mousePos={mousePos}
+        scrollY={scrollY}
       />
     );
   }
@@ -129,13 +163,24 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
     <div 
       className="fixed inset-0 flex items-center justify-center z-[10000] p-4" 
       style={{
-        backgroundImage: 'url(./trickle/assets/profile_background.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        imageRendering: 'crisp-edges'
+        overflow: 'hidden'
       }}
     >
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url(./trickle/assets/profile_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+          transition: 'transform 0.1s ease-out',
+          zIndex: -1
+        }}
+      ></div>
       <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-6xl w-full p-8 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-8">
@@ -157,6 +202,7 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
         <div className="grid md:grid-cols-3 gap-6">
           {plans.map((plan, index) => {
             const isCurrentPlan = plan.id === currentPlan;
+            const planPrice = typeof plan.price === 'object' ? plan.price.amount : plan.price;
             
             return (
               <div
@@ -174,12 +220,12 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
                   <p className="text-[var(--text-light)] mb-4">{plan.description}</p>
                   
                   <div className="mb-4">
-                    {plan.price === 0 ? (
+                    {planPrice === 0 ? (
                       <div className="text-4xl font-bold text-[var(--text-dark)]">Бесплатно</div>
                     ) : (
                       <>
                         <div className="text-4xl font-bold text-[var(--text-dark)]">
-                          {plan.price} ₽
+                          {planPrice} ₽
                         </div>
                         <div className="text-sm text-[var(--text-light)]">в месяц</div>
                       </>
@@ -226,7 +272,7 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
   );
 }
 
-function PaymentModal({ plan, onClose, onSuccess }) {
+function PaymentModal({ plan, onClose, onSuccess, mousePos, scrollY }) {
   const [paymentMethod, setPaymentMethod] = React.useState('card');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
@@ -323,17 +369,30 @@ function PaymentModal({ plan, onClose, onSuccess }) {
     }
   };
 
+  const planPrice = typeof plan.price === 'object' ? plan.price.amount : plan.price;
+
   return (
     <div 
       className="fixed inset-0 flex items-center justify-center z-[10001] p-4" 
       style={{
-        backgroundImage: 'url(./trickle/assets/profile_background.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        imageRendering: 'crisp-edges'
+        overflow: 'hidden'
       }}
     >
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url(./trickle/assets/profile_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+          transition: 'transform 0.1s ease-out',
+          zIndex: -1
+        }}
+      ></div>
       <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
@@ -349,7 +408,7 @@ function PaymentModal({ plan, onClose, onSuccess }) {
         <div className="mb-6 p-4 bg-[var(--secondary-color)] rounded-xl">
           <div className="flex justify-between items-center mb-2">
             <span className="font-bold text-[var(--text-dark)]">{plan.name}</span>
-            <span className="text-2xl font-bold text-[var(--primary-color)]">{plan.price} ₽</span>
+            <span className="text-2xl font-bold text-[var(--primary-color)]">{planPrice} ₽</span>
           </div>
           <p className="text-sm text-[var(--text-light)]">Ежемесячная подписка</p>
         </div>
@@ -437,7 +496,7 @@ function PaymentModal({ plan, onClose, onSuccess }) {
           disabled={loading}
           className="btn-primary w-full"
         >
-          {loading ? 'Обработка...' : `Оплатить ${plan.price} ₽`}
+          {loading ? 'Обработка...' : `Оплатить ${planPrice} ₽`}
         </button>
 
         <p className="text-xs text-[var(--text-light)] text-center mt-4">
