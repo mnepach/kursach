@@ -12,11 +12,27 @@ function FirstAchievement({ onNext, selectedLanguage }) {
 
       <div className="max-w-2xl w-full text-center">
         <div className="flex items-center justify-center gap-8 mb-8">
-          <img
-            src="./trickle/assets/exitement1.gif"
-            alt="Hello Kitty"
-            className="w-96 h-96 object-contain"
-          />
+          <div 
+            style={{
+              width: '384px',
+              height: '384px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <img
+              src="./trickle/assets/exitement1.gif"
+              alt="Hello Kitty"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+          </div>
 
           <div className="flex flex-col items-center gap-4">
             <img

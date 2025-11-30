@@ -81,7 +81,7 @@ function OnboardingFlow({ onComplete }) {
       total: lessonResults.total + 1
     });
 
-    if (!isCorrect && !isRetryPhase) {
+    if (!isCorrect && !isRetryPhase && lessonData) {
       setIncorrectLessons([...incorrectLessons, lessonData]);
     }
 
@@ -168,6 +168,11 @@ function OnboardingFlow({ onComplete }) {
     case 'lessons':
       const lessonsArray = isRetryPhase ? incorrectLessons : beginnerLessons;
       const lesson = lessonsArray[currentLesson];
+      
+      if (!lesson) {
+        return null;
+      }
+
       switch (lesson.type) {
         case 'listen':
           return <ListenAndArrange lesson={lesson} onAnswer={handleLessonAnswer} />;

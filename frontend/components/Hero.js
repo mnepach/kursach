@@ -23,6 +23,18 @@ function Hero({ onGetStarted }) {
     };
   }, []);
 
+  const handleGetStartedClick = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const authButton = document.querySelector('header button[class*="btn-primary"]');
+      if (authButton) {
+        authButton.click();
+      }
+    } else {
+      onGetStarted();
+    }
+  };
+
   try {
     return (
       <section 
@@ -81,7 +93,7 @@ function Hero({ onGetStarted }) {
                   Превратите изучение языков в увлекательное приключение с милыми персонажами и интересными заданиями
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                  <button onClick={onGetStarted} className="btn-primary">
+                  <button onClick={handleGetStartedClick} className="btn-primary">
                     Начать обучение
                   </button>
                   <button 

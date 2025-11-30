@@ -163,7 +163,7 @@ function AuthModal({ onClose, onLogin }) {
 
             <div className="flex-1 grid grid-cols-2 gap-8 px-12 pb-8 overflow-hidden">
               <div className="flex flex-col">
-                <div className="flex items-center gap-6 mb-8">
+                <div className="flex items-center gap-6 mb-6">
                   <div 
                     className="w-24 h-24 bg-gradient-blue rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity relative group"
                     onClick={() => setShowEditProfile(true)}
@@ -192,7 +192,56 @@ function AuthModal({ onClose, onLogin }) {
                   </div>
                 </div>
 
-                <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 mb-6">
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="bg-orange-50 rounded-2xl p-4 text-center">
+                    <div className="text-3xl mb-2">🔥</div>
+                    <div className="text-2xl font-bold text-[var(--text-dark)] mb-1">
+                      {userData.statistics?.streak || 0}
+                    </div>
+                    <div className="text-xs text-[var(--text-light)]">Дней подряд</div>
+                  </div>
+                  <div className="bg-yellow-50 rounded-2xl p-4 text-center">
+                    <div className="text-3xl mb-2">🏆</div>
+                    <div className="text-2xl font-bold text-[var(--text-dark)] mb-1">
+                      {userData.statistics?.experience || 0}
+                    </div>
+                    <div className="text-xs text-[var(--text-light)]">Очков опыта</div>
+                  </div>
+                  <div className="bg-blue-50 rounded-2xl p-4 text-center">
+                    <div className="text-3xl mb-2">⭐</div>
+                    <div className="text-2xl font-bold text-[var(--text-dark)] mb-1">
+                      {userData.statistics?.achievements || 0}
+                    </div>
+                    <div className="text-xs text-[var(--text-light)]">Достижений</div>
+                  </div>
+                </div>
+
+                <div className={`${planType === 'free' ? 'bg-gray-100' : 'bg-gradient-blue'} rounded-2xl p-6 mb-6`}>
+                  <div className="flex justify-between items-center mb-3">
+                    <div>
+                      <h3 className={`text-xl font-bold ${planType === 'free' ? 'text-[var(--text-dark)]' : 'text-white'} mb-1`}>
+                        {planType === 'free' ? 'Бесплатный план' : planType === 'basic' ? 'Базовый план' : 'Премиум план'}
+                      </h3>
+                      <p className={`text-sm ${planType === 'free' ? 'text-gray-600' : 'text-white/90'}`}>
+                        {planType === 'free' ? 'Базовые возможности обучения' : 'Безлимитный доступ ко всем функциям'}
+                      </p>
+                    </div>
+                    {planType === 'free' && (
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400 flex-shrink-0">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                    )}
+                  </div>
+                  <button 
+                    onClick={() => setShowPlans(true)}
+                    className={`w-full py-2 rounded-xl font-bold transition-all text-sm ${planType === 'free' ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]' : 'bg-white text-[var(--primary-color)] hover:bg-gray-100'}`}
+                  >
+                    {planType === 'free' ? 'Перейти на Премиум' : 'Управление подпиской'}
+                  </button>
+                </div>
+
+                <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 mb-auto">
                   <div className="flex items-start gap-4">
                     <div className="text-3xl">📱</div>
                     <div className="flex-1">
@@ -217,31 +266,15 @@ function AuthModal({ onClose, onLogin }) {
                   </div>
                 </div>
 
-                <div className={`${planType === 'free' ? 'bg-gray-100' : 'bg-gradient-blue'} rounded-2xl p-6 mb-6`}>
-                  <div className="flex justify-between items-center mb-3">
-                    <div>
-                      <h3 className={`text-xl font-bold ${planType === 'free' ? 'text-[var(--text-dark)]' : 'text-white'} mb-1`}>
-                        {planType === 'free' ? 'Бесплатный план' : planType === 'basic' ? 'Базовый план' : 'Премиум план'}
-                      </h3>
-                      <p className={`text-sm ${planType === 'free' ? 'text-gray-600' : 'text-white/90'}`}>
-                        {planType === 'free' ? 'Базовые возможности обучения' : 'Безлимитный доступ ко всем функциям'}
-                      </p>
-                    </div>
-                    {planType === 'free' && (
-                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                    )}
-                  </div>
-                  <button 
-                    onClick={() => setShowPlans(true)}
-                    className={`w-full py-2 rounded-xl font-bold transition-all text-sm ${planType === 'free' ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]' : 'bg-white text-[var(--primary-color)] hover:bg-gray-100'}`}
-                  >
-                    {planType === 'free' ? 'Перейти на Премиум' : 'Управление подпиской'}
-                  </button>
-                </div>
+                <button 
+                  onClick={handleLogout} 
+                  className="w-full py-3 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors mt-6"
+                >
+                  Выйти из аккаунта
+                </button>
+              </div>
 
+              <div className="flex flex-col border-l-2 border-gray-200 pl-8">
                 <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-6">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">📧</div>
@@ -262,42 +295,8 @@ function AuthModal({ onClose, onLogin }) {
                   </div>
                 </div>
 
-                <button 
-                  onClick={handleLogout} 
-                  className="w-full py-3 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors"
-                >
-                  Выйти из аккаунта
-                </button>
-              </div>
-
-              <div className="flex flex-col">
-                <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-6">Ваша статистика</h3>
+                <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-6">Прогресс обучения</h3>
                 
-                <div className="grid grid-cols-3 gap-4 mb-8">
-                  <div className="bg-orange-50 rounded-2xl p-5 text-center">
-                    <div className="text-3xl mb-2">🔥</div>
-                    <div className="text-3xl font-bold text-[var(--text-dark)] mb-1">
-                      {userData.statistics?.streak || 0}
-                    </div>
-                    <div className="text-xs text-[var(--text-light)]">Дней подряд</div>
-                  </div>
-                  <div className="bg-yellow-50 rounded-2xl p-5 text-center">
-                    <div className="text-3xl mb-2">🏆</div>
-                    <div className="text-3xl font-bold text-[var(--text-dark)] mb-1">
-                      {userData.statistics?.experience || 0}
-                    </div>
-                    <div className="text-xs text-[var(--text-light)]">Очков опыта</div>
-                  </div>
-                  <div className="bg-blue-50 rounded-2xl p-5 text-center">
-                    <div className="text-3xl mb-2">⭐</div>
-                    <div className="text-3xl font-bold text-[var(--text-dark)] mb-1">
-                      {userData.statistics?.achievements || 0}
-                    </div>
-                    <div className="text-xs text-[var(--text-light)]">Достижений</div>
-                  </div>
-                </div>
-                
-                <h3 className="text-xl font-bold text-[var(--text-dark)] mb-4">Прогресс обучения</h3>
                 <div className="flex-1 space-y-5 overflow-y-auto pr-2">
                   {progressData.length > 0 ? (
                     progressData.map((lang, index) => (
@@ -336,7 +335,6 @@ function AuthModal({ onClose, onLogin }) {
           imageRendering: 'crisp-edges'
         }}
       >
-        <BubbleAnimation />
         <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-[var(--text-dark)]">
@@ -440,81 +438,6 @@ function AuthModal({ onClose, onLogin }) {
   }
 }
 
-function BubbleAnimation() {
-  return (
-    <>
-      <style>
-        {`
-          @keyframes float-up {
-            0% {
-              transform: translateY(100vh) translateX(0) scale(1);
-              opacity: 0.7;
-            }
-            50% {
-              opacity: 1;
-            }
-            100% {
-              transform: translateY(-100px) translateX(var(--float-x)) scale(1.2);
-              opacity: 0;
-            }
-          }
-
-          .bubble {
-            position: fixed;
-            bottom: -100px;
-            width: var(--size);
-            height: var(--size);
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.4));
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            animation: float-up var(--duration) ease-in-out infinite;
-            animation-delay: var(--delay);
-            box-shadow: 
-              inset 0 0 20px rgba(255, 255, 255, 0.5),
-              0 0 20px rgba(96, 165, 250, 0.3);
-          }
-
-          .bubble::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 15%;
-            width: 40%;
-            height: 40%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent);
-            border-radius: 50%;
-          }
-
-          .bubble::after {
-            content: '';
-            position: absolute;
-            bottom: 15%;
-            right: 20%;
-            width: 20%;
-            height: 20%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
-            border-radius: 50%;
-          }
-        `}
-      </style>
-      {[...Array(15)].map((_, i) => (
-        <div
-          key={i}
-          className="bubble"
-          style={{
-            '--size': `${Math.random() * 60 + 40}px`,
-            '--duration': `${Math.random() * 5 + 8}s`,
-            '--delay': `${Math.random() * 5}s`,
-            '--float-x': `${(Math.random() - 0.5) * 200}px`,
-            left: `${Math.random() * 100}%`
-          }}
-        />
-      ))}
-    </>
-  );
-}
-
 function ForgotPasswordModal({ onClose, onBack }) {
   const [email, setEmail] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -548,7 +471,6 @@ function ForgotPasswordModal({ onClose, onBack }) {
           imageRendering: 'crisp-edges'
         }}
       >
-        <BubbleAnimation />
         <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
           <div className="text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -580,7 +502,6 @@ function ForgotPasswordModal({ onClose, onBack }) {
         imageRendering: 'crisp-edges'
       }}
     >
-      <BubbleAnimation />
       <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-dark)]">Восстановление пароля</h2>

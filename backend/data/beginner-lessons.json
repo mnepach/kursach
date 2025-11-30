@@ -3,8 +3,8 @@
     {
       "type": "listen",
       "audio": "hello.mp3",
-      "words": ["Hello", "world", "!"],
-      "correctAnswer": "Hello world !",
+      "words": ["Hello", "world", "cat", "dog"],
+      "correctAnswer": "Hello world",
       "points": 10
     },
     {
@@ -36,8 +36,8 @@
     {
       "type": "listen",
       "audio": "thank_you.mp3",
-      "words": ["Thank", "you", "very", "much"],
-      "correctAnswer": "Thank you very much",
+      "words": ["Thank", "you", "hello", "bye"],
+      "correctAnswer": "Thank you",
       "points": 10
     }
   ],
@@ -45,8 +45,8 @@
     {
       "type": "listen",
       "audio": "hola.mp3",
-      "words": ["Hola", "mundo", "!"],
-      "correctAnswer": "Hola mundo !",
+      "words": ["Hola", "mundo", "gato", "perro"],
+      "correctAnswer": "Hola mundo",
       "points": 10
     },
     {
@@ -91,8 +91,8 @@
     {
       "type": "listen",
       "audio": "konnichiwa.mp3",
-      "words": ["こんにちは", "世界", "!"],
-      "correctAnswer": "こんにちは 世界 !",
+      "words": ["こんにちは", "世界", "猫", "犬"],
+      "correctAnswer": "こんにちは 世界",
       "points": 10
     },
     {
@@ -137,8 +137,8 @@
     {
       "type": "listen",
       "audio": "annyeong.mp3",
-      "words": ["안녕하세요", "세계", "!"],
-      "correctAnswer": "안녕하세요 세계 !",
+      "words": ["안녕하세요", "세계", "고양이", "강아지"],
+      "correctAnswer": "안녕하세요 세계",
       "points": 10
     },
     {
