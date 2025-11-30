@@ -10,7 +10,7 @@ function TranslateToTarget({ lesson, onAnswer }) {
 
   const handleCheck = () => {
     if (checked) {
-      onAnswer(isCorrect);
+      onAnswer(isCorrect, lesson);
     } else {
       const correct = selected === lesson.correctAnswer;
       setIsCorrect(correct);
@@ -40,27 +40,44 @@ function TranslateToTarget({ lesson, onAnswer }) {
         </div>
 
         <div className="space-y-4 mb-6">
-          {lesson.options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleSelect(option)}
-              disabled={checked}
-              className={`card w-full text-left transition-all ${
-                selected === option
-                  ? checked
-                    ? option === lesson.correctAnswer
-                      ? 'ring-4 ring-green-500 bg-green-50'
-                      : 'ring-4 ring-red-500 bg-red-50'
-                    : 'ring-4 ring-[var(--primary-color)]'
-                  : 'hover:bg-gray-50'
-              }`}
-            >
-              <p className="text-xl font-medium text-[var(--text-dark)]">
-                {option}
-              </p>
-            </button>
-          ))}
+          {lesson.options.map((option, index) => {
+            const isSelectedOption = selected === option;
+            const isCorrectOption = option === lesson.correctAnswer;
+            
+            let buttonClass = 'card w-full text-left transition-all hover:bg-gray-50';
+            
+            if (checked) {
+              if (isCorrectOption) {
+                buttonClass = 'card w-full text-left transition-all ring-4 ring-green-500 bg-green-50';
+              } else if (isSelectedOption && !isCorrect) {
+                buttonClass = 'card w-full text-left transition-all ring-4 ring-red-500 bg-red-50';
+              }
+            } else if (isSelectedOption) {
+              buttonClass = 'card w-full text-left transition-all ring-4 ring-[var(--primary-color)]';
+            }
+
+            return (
+              <button
+                key={index}
+                onClick={() => handleSelect(option)}
+                disabled={checked}
+                className={buttonClass}
+              >
+                <p className="text-xl font-medium text-[var(--text-dark)]">
+                  {option}
+                </p>
+              </button>
+            );
+          })}
         </div>
+
+        {checked && !isCorrect && (
+          <div className="card bg-green-50 border-2 border-green-500 mb-6">
+            <p className="text-lg text-green-700">
+              <strong>Правильный ответ:</strong> {lesson.correctAnswer}
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="w-full max-w-3xl border-t border-gray-200 pt-6">

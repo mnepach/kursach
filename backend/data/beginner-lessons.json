@@ -9,7 +9,7 @@
     },
     {
       "type": "selectImage",
-      "word": "Apple",
+      "word": "Яблоко",
       "options": [
         { "emoji": "🍎", "text": "Apple" },
         { "emoji": "🍌", "text": "Banana" },
@@ -32,6 +32,13 @@
       "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
       "correctAnswer": "Доброе утро",
       "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "thank_you.mp3",
+      "words": ["Thank", "you", "very", "much"],
+      "correctAnswer": "Thank you very much",
+      "points": 10
     }
   ],
   "spanish": [
@@ -44,7 +51,7 @@
     },
     {
       "type": "selectImage",
-      "word": "Manzana",
+      "word": "Яблоко",
       "options": [
         { "emoji": "🍎", "text": "Manzana" },
         { "emoji": "🍌", "text": "Plátano" },
@@ -67,6 +74,17 @@
       "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
       "correctAnswer": "Доброе утро",
       "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "Собака",
+      "options": [
+        { "emoji": "🐶", "text": "Perro" },
+        { "emoji": "🐱", "text": "Gato" },
+        { "emoji": "🐦", "text": "Pájaro" }
+      ],
+      "correctAnswer": "Perro",
+      "points": 10
     }
   ],
   "japanese": [
@@ -79,7 +97,7 @@
     },
     {
       "type": "selectImage",
-      "word": "りんご",
+      "word": "Яблоко",
       "options": [
         { "emoji": "🍎", "text": "りんご" },
         { "emoji": "🍌", "text": "バナナ" },
@@ -102,6 +120,17 @@
       "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
       "correctAnswer": "Доброе утро",
       "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "Кошка",
+      "options": [
+        { "emoji": "🐱", "text": "ねこ" },
+        { "emoji": "🐶", "text": "いぬ" },
+        { "emoji": "🐦", "text": "とり" }
+      ],
+      "correctAnswer": "ねこ",
+      "points": 10
     }
   ],
   "korean": [
@@ -114,7 +143,7 @@
     },
     {
       "type": "selectImage",
-      "word": "사과",
+      "word": "Яблоко",
       "options": [
         { "emoji": "🍎", "text": "사과" },
         { "emoji": "🍌", "text": "바나나" },
@@ -136,6 +165,17 @@
       "targetText": "좋은 아침",
       "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
       "correctAnswer": "Доброе утро",
+      "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "Вода",
+      "options": [
+        { "emoji": "💧", "text": "물" },
+        { "emoji": "🍞", "text": "빵" },
+        { "emoji": "🥛", "text": "우유" }
+      ],
+      "correctAnswer": "물",
       "points": 10
     }
   ]

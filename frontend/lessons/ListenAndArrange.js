@@ -17,7 +17,7 @@ function ListenAndArrange({ lesson, onAnswer }) {
 
   const handleCheck = () => {
     if (checked) {
-      onAnswer(isCorrect);
+      onAnswer(isCorrect, lesson);
     } else {
       const userAnswer = selectedWords.join(' ');
       const correct = userAnswer === lesson.correctAnswer;
@@ -62,7 +62,11 @@ function ListenAndArrange({ lesson, onAnswer }) {
           </button>
         </div>
 
-        <div className={`card mb-6 min-h-[100px] ${checked ? (isCorrect ? 'bg-green-50 border-2 border-green-500' : 'bg-red-50 border-2 border-red-500') : 'bg-gray-50'}`}>
+        <div className={`card mb-6 min-h-[100px] ${
+          checked 
+            ? (isCorrect ? 'bg-green-50 border-2 border-green-500' : 'bg-red-50 border-2 border-red-500') 
+            : 'bg-gray-50'
+        }`}>
           <div className="flex flex-wrap gap-2">
             {selectedWords.length === 0 ? (
               <p className="text-gray-400 text-lg">Выберите слова снизу...</p>
@@ -84,6 +88,14 @@ function ListenAndArrange({ lesson, onAnswer }) {
             )}
           </div>
         </div>
+
+        {checked && !isCorrect && (
+          <div className="card bg-green-50 border-2 border-green-500 mb-6">
+            <p className="text-lg text-green-700">
+              <strong>Правильный ответ:</strong> {lesson.correctAnswer}
+            </p>
+          </div>
+        )}
 
         <div className="card mb-8">
           <div className="flex flex-wrap gap-2">

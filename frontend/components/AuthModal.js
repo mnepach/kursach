@@ -12,12 +12,21 @@ function AuthModal({ onClose, onLogin }) {
     const [userData, setUserData] = React.useState(null);
     const [progressData, setProgressData] = React.useState([]);
     const [showPassword, setShowPassword] = React.useState(false);
+    const [initialLoading, setInitialLoading] = React.useState(true);
 
     React.useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token && !userData) {
-        loadUserData();
-      }
+      const loadInitialData = async () => {
+        const token = localStorage.getItem('token');
+        if (token && !userData) {
+          try {
+            await loadUserData();
+          } catch (error) {
+            console.error('Ошибка загрузки данных:', error);
+          }
+        }
+        setInitialLoading(false);
+      };
+      loadInitialData();
     }, []);
 
     React.useEffect(() => {
@@ -80,6 +89,14 @@ function AuthModal({ onClose, onLogin }) {
       window.location.reload();
     };
 
+    if (initialLoading) {
+      return (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-white">
+          <div className="loader"></div>
+        </div>
+      );
+    }
+
     if (showRegister) {
       return (
         <RegisterModal 
@@ -133,21 +150,20 @@ function AuthModal({ onClose, onLogin }) {
       const planType = userData.subscription?.planType || 'free';
       
       return (
-        <div 
-          className="fixed inset-0 flex items-center justify-center z-[9999] p-4" 
-          style={{
-            backgroundImage: 'url(./trickle/assets/profile_background.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            imageRendering: 'crisp-edges'
-          }}
-        >
-          <BubbleAnimation />
-          <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="p-8 md:p-12">
-              <div className="flex justify-between items-start mb-10">
-                <div className="flex items-center gap-6">
+        <div className="fixed inset-0 z-[9999] bg-white overflow-hidden">
+          <div className="h-full flex flex-col">
+            <div className="flex justify-end p-6">
+              <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            <div className="flex-1 grid grid-cols-2 gap-8 px-12 pb-8 overflow-hidden">
+              <div className="flex flex-col">
+                <div className="flex items-center gap-6 mb-8">
                   <div 
                     className="w-24 h-24 bg-gradient-blue rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity relative group"
                     onClick={() => setShowEditProfile(true)}
@@ -175,93 +191,134 @@ function AuthModal({ onClose, onLogin }) {
                     </button>
                   </div>
                 </div>
-                <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 transition-colors">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
+
+                <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 mb-6">
+                  <div className="flex items-start gap-4">
+                    <div className="text-3xl">📱</div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-[var(--text-dark)] mb-2">
+                        Продолжите обучение в приложении
+                      </h3>
+                      <p className="text-[var(--text-light)] mb-3 text-sm">
+                        Скачайте наше мобильное приложение для доступа к полному курсу уроков!
+                      </p>
+                      <button 
+                        onClick={() => {
+                          handleClose();
+                          setTimeout(() => {
+                            document.getElementById('download').scrollIntoView({ behavior: 'smooth' });
+                          }, 100);
+                        }}
+                        className="bg-[var(--primary-color)] text-white px-5 py-2 rounded-xl font-bold hover:bg-[var(--accent-color)] transition-all text-sm"
+                      >
+                        Скачать приложение
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`${planType === 'free' ? 'bg-gray-100' : 'bg-gradient-blue'} rounded-2xl p-6 mb-6`}>
+                  <div className="flex justify-between items-center mb-3">
+                    <div>
+                      <h3 className={`text-xl font-bold ${planType === 'free' ? 'text-[var(--text-dark)]' : 'text-white'} mb-1`}>
+                        {planType === 'free' ? 'Бесплатный план' : planType === 'basic' ? 'Базовый план' : 'Премиум план'}
+                      </h3>
+                      <p className={`text-sm ${planType === 'free' ? 'text-gray-600' : 'text-white/90'}`}>
+                        {planType === 'free' ? 'Базовые возможности обучения' : 'Безлимитный доступ ко всем функциям'}
+                      </p>
+                    </div>
+                    {planType === 'free' && (
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                    )}
+                  </div>
+                  <button 
+                    onClick={() => setShowPlans(true)}
+                    className={`w-full py-2 rounded-xl font-bold transition-all text-sm ${planType === 'free' ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]' : 'bg-white text-[var(--primary-color)] hover:bg-gray-100'}`}
+                  >
+                    {planType === 'free' ? 'Перейти на Премиум' : 'Управление подпиской'}
+                  </button>
+                </div>
+
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-6">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">📧</div>
+                    <div className="flex-1">
+                      <h3 className="text-base font-bold text-[var(--text-dark)] mb-1">
+                        Есть вопросы или предложения?
+                      </h3>
+                      <p className="text-[var(--text-light)] mb-2 text-sm">
+                        Напишите нам на почту, и мы обязательно вам ответим!
+                      </p>
+                      <a 
+                        href="mailto:mnepach@gmail.com"
+                        className="text-[var(--primary-color)] font-medium hover:underline text-sm"
+                      >
+                        mnepach@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={handleLogout} 
+                  className="w-full py-3 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors"
+                >
+                  Выйти из аккаунта
                 </button>
               </div>
-              
-              <div className={`${planType === 'free' ? 'bg-gray-100' : 'bg-gradient-blue'} rounded-2xl p-8 mb-8`}>
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <h3 className={`text-2xl font-bold ${planType === 'free' ? 'text-[var(--text-dark)]' : 'text-white'} mb-1`}>
-                      {planType === 'free' ? 'Бесплатный план' : planType === 'basic' ? 'Базовый план' : 'Премиум план'}
-                    </h3>
-                    <p className={`${planType === 'free' ? 'text-gray-600' : 'text-white/90'}`}>
-                      {planType === 'free' ? 'Базовые возможности обучения' : 'Безлимитный доступ ко всем функциям'}
-                    </p>
+
+              <div className="flex flex-col">
+                <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-6">Ваша статистика</h3>
+                
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <div className="bg-orange-50 rounded-2xl p-5 text-center">
+                    <div className="text-3xl mb-2">🔥</div>
+                    <div className="text-3xl font-bold text-[var(--text-dark)] mb-1">
+                      {userData.statistics?.streak || 0}
+                    </div>
+                    <div className="text-xs text-[var(--text-light)]">Дней подряд</div>
                   </div>
-                  {planType === 'free' && (
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
+                  <div className="bg-yellow-50 rounded-2xl p-5 text-center">
+                    <div className="text-3xl mb-2">🏆</div>
+                    <div className="text-3xl font-bold text-[var(--text-dark)] mb-1">
+                      {userData.statistics?.experience || 0}
+                    </div>
+                    <div className="text-xs text-[var(--text-light)]">Очков опыта</div>
+                  </div>
+                  <div className="bg-blue-50 rounded-2xl p-5 text-center">
+                    <div className="text-3xl mb-2">⭐</div>
+                    <div className="text-3xl font-bold text-[var(--text-dark)] mb-1">
+                      {userData.statistics?.achievements || 0}
+                    </div>
+                    <div className="text-xs text-[var(--text-light)]">Достижений</div>
+                  </div>
+                </div>
+                
+                <h3 className="text-xl font-bold text-[var(--text-dark)] mb-4">Прогресс обучения</h3>
+                <div className="flex-1 space-y-5 overflow-y-auto pr-2">
+                  {progressData.length > 0 ? (
+                    progressData.map((lang, index) => (
+                      <div key={index}>
+                        <div className="flex justify-between mb-2">
+                          <span className="font-bold text-base">{lang.language}</span>
+                          <span className="text-[var(--primary-color)] font-bold">{lang.progress}%</span>
+                        </div>
+                        <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-[var(--primary-color)] rounded-full transition-all" 
+                            style={{ width: `${lang.progress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-[var(--text-light)]">Начните изучение языка, чтобы увидеть прогресс</p>
                   )}
                 </div>
-                <button 
-                  onClick={() => setShowPlans(true)}
-                  className={`w-full py-3 rounded-xl font-bold transition-all ${planType === 'free' ? 'bg-[var(--primary-color)] text-white hover:bg-[var(--accent-color)]' : 'bg-white text-[var(--primary-color)] hover:bg-gray-100'}`}
-                >
-                  {planType === 'free' ? 'Перейти на Премиум' : 'Управление подпиской'}
-                </button>
               </div>
-              
-              <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-6">Ваша статистика</h3>
-              
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-orange-50 rounded-2xl p-6">
-                  <div className="text-4xl mb-3">🔥</div>
-                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">
-                    {userData.statistics?.streak || 0}
-                  </div>
-                  <div className="text-sm text-[var(--text-light)]">Дней подряд</div>
-                </div>
-                <div className="bg-yellow-50 rounded-2xl p-6">
-                  <div className="text-4xl mb-3">🏆</div>
-                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">
-                    {userData.statistics?.experience || 0}
-                  </div>
-                  <div className="text-sm text-[var(--text-light)]">Очков опыта</div>
-                </div>
-                <div className="bg-blue-50 rounded-2xl p-6">
-                  <div className="text-4xl mb-3">⭐</div>
-                  <div className="text-4xl font-bold text-[var(--text-dark)] mb-1">
-                    {userData.statistics?.achievements || 0}
-                  </div>
-                  <div className="text-sm text-[var(--text-light)]">Достижений</div>
-                </div>
-              </div>
-              
-              <h3 className="text-2xl font-bold text-[var(--text-dark)] mb-4">Прогресс обучения</h3>
-              <div className="space-y-6 mb-8">
-                {progressData.length > 0 ? (
-                  progressData.map((lang, index) => (
-                    <div key={index}>
-                      <div className="flex justify-between mb-3">
-                        <span className="font-bold text-lg">{lang.language}</span>
-                        <span className="text-[var(--primary-color)] font-bold">{lang.progress}%</span>
-                      </div>
-                      <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-[var(--primary-color)] rounded-full transition-all" 
-                          style={{ width: `${lang.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-[var(--text-light)]">Начните изучение языка, чтобы увидеть прогресс</p>
-                )}
-              </div>
-              
-              <button 
-                onClick={handleLogout} 
-                className="w-full py-4 border-2 border-gray-300 rounded-xl font-bold text-[var(--text-dark)] hover:bg-gray-50 transition-colors"
-              >
-                Выйти из аккаунта
-              </button>
             </div>
           </div>
         </div>
@@ -310,6 +367,7 @@ function AuthModal({ onClose, onLogin }) {
                 placeholder="your@email.com"
                 disabled={loading}
                 required
+                autoComplete="email"
               />
             </div>
             
@@ -324,11 +382,13 @@ function AuthModal({ onClose, onLogin }) {
                   placeholder="••••••••"
                   disabled={loading}
                   required
+                  autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  tabIndex="-1"
                 >
                   {showPassword ? (
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

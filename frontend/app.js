@@ -46,12 +46,23 @@ function App() {
     download: false
   });
   const [onboardingData, setOnboardingData] = React.useState(null);
+  const [authChecked, setAuthChecked] = React.useState(false);
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          await api.getProfile();
+          setIsLoggedIn(true);
+        } catch (error) {
+          console.error('Auth check failed:', error);
+          api.logout();
+        }
+      }
+      setAuthChecked(true);
+    };
+    checkAuth();
   }, []);
 
   React.useEffect(() => {
@@ -78,10 +89,8 @@ function App() {
   }, [showOnboarding, sectionsLoaded]);
 
   const handleGetStarted = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setShowAuthModal(true);
-      setHideHeader(true);
+    if (isLoggedIn) {
+      alert('Скачайте приложение для продолжения обучения!');
     } else {
       setShowOnboarding(true);
     }
@@ -98,8 +107,7 @@ function App() {
   };
 
   const handleAuthClick = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    if (isLoggedIn) {
       setShowAuthModal(true);
       setHideHeader(true);
     } else {
@@ -117,6 +125,14 @@ function App() {
     setIsLoggedIn(true);
     setHideHeader(true);
   };
+
+  if (!authChecked) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   if (showOnboarding) {
     return <OnboardingFlow onComplete={handleOnboardingComplete} />;

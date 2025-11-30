@@ -7,6 +7,8 @@ function OnboardingFlow({ onComplete }) {
     total: 0
   });
   const [beginnerLessons, setBeginnerLessons] = React.useState([]);
+  const [incorrectLessons, setIncorrectLessons] = React.useState([]);
+  const [isRetryPhase, setIsRetryPhase] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
 
@@ -57,21 +59,32 @@ function OnboardingFlow({ onComplete }) {
     const currentIndex = steps.indexOf(currentStep);
 
     if (currentStep === 'lessons') {
-      if (currentLesson < beginnerLessons.length - 1) {
+      const lessonsArray = isRetryPhase ? incorrectLessons : beginnerLessons;
+      if (currentLesson < lessonsArray.length - 1) {
         setCurrentLesson(currentLesson + 1);
       } else {
-        setCurrentStep('lessonComplete');
+        if (!isRetryPhase && incorrectLessons.length > 0) {
+          setIsRetryPhase(true);
+          setCurrentLesson(0);
+        } else {
+          setCurrentStep('lessonComplete');
+        }
       }
     } else if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1]);
     }
   };
 
-  const handleLessonAnswer = (isCorrect) => {
+  const handleLessonAnswer = (isCorrect, lessonData) => {
     setLessonResults({
       correct: lessonResults.correct + (isCorrect ? 1 : 0),
       total: lessonResults.total + 1
     });
+
+    if (!isCorrect && !isRetryPhase) {
+      setIncorrectLessons([...incorrectLessons, lessonData]);
+    }
+
     handleNext();
   };
 
@@ -153,7 +166,8 @@ function OnboardingFlow({ onComplete }) {
       return <LearningMethod onNext={handleNext} />;
 
     case 'lessons':
-      const lesson = beginnerLessons[currentLesson];
+      const lessonsArray = isRetryPhase ? incorrectLessons : beginnerLessons;
+      const lesson = lessonsArray[currentLesson];
       switch (lesson.type) {
         case 'listen':
           return <ListenAndArrange lesson={lesson} onAnswer={handleLessonAnswer} />;

@@ -55,8 +55,8 @@ function WelcomeCharacter({ onNext }) {
           alt="Hello Kitty"
           className="w-96 h-96 object-contain"
           style={{
-            WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 70%)',
-            maskImage: 'radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 70%)'
+            WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 75%)',
+            maskImage: 'radial-gradient(circle, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 75%)'
           }}
         />
 
