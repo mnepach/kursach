@@ -8,14 +8,13 @@ const authRoutes = require('./routes/auth');
 const subscriptionRoutes = require('./routes/subscription');
 const lessonsRoutes = require('./routes/lessons');
 const progressRoutes = require('./routes/progress');
+const beginnerLessonsRoutes = require('./routes/beginner-lessons');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Database connection
 connectDB();
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/linguaplay', {
   useNewUrlParser: true,
@@ -24,13 +23,12 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/linguapla
 .then(() => console.log('✅ MongoDB подключена'))
 .catch(err => console.error('❌ Ошибка подключения к MongoDB:', err));
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/subscription', subscriptionRoutes);
 app.use('/api/lessons', lessonsRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/beginner-lessons', beginnerLessonsRoutes); 
 
-// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'LinguaPlay API работает' });
 });

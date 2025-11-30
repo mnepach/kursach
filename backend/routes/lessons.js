@@ -6,14 +6,12 @@ const path = require('path');
 
 const router = express.Router();
 
-// Загрузить уроки из JSON в базу данных (одноразовая операция)
 router.post('/seed', async (req, res) => {
   try {
     const lessonsData = JSON.parse(
       fs.readFileSync(path.join(__dirname, '../data/lessons.json'), 'utf8')
     );
     
-    // Очищаем старые уроки
     await Lesson.deleteMany({});
     
     const allLessons = [];
@@ -33,7 +31,6 @@ router.post('/seed', async (req, res) => {
   }
 });
 
-// Получить все уроки для языка
 router.get('/:language', authMiddleware, async (req, res) => {
   try {
     const { language } = req.params;
@@ -44,7 +41,6 @@ router.get('/:language', authMiddleware, async (req, res) => {
     
     const lessons = await Lesson.find(query).sort({ lessonNumber: 1 });
     
-    // Фильтруем премиум уроки для бесплатных пользователей
     const subscription = req.user.subscription;
     const filteredLessons = lessons.filter(lesson => {
       if (!lesson.isPremium) return true;
@@ -59,7 +55,6 @@ router.get('/:language', authMiddleware, async (req, res) => {
   }
 });
 
-// Получить конкретный урок
 router.get('/:language/:lessonNumber', authMiddleware, async (req, res) => {
   try {
     const { language, lessonNumber } = req.params;
@@ -73,7 +68,6 @@ router.get('/:language/:lessonNumber', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Урок не найден' });
     }
     
-    // Проверяем доступ к премиум урокам
     const subscription = req.user.subscription;
     if (lesson.isPremium && subscription.planType === 'free') {
       return res.status(403).json({ 
@@ -88,7 +82,6 @@ router.get('/:language/:lessonNumber', authMiddleware, async (req, res) => {
   }
 });
 
-// Получить доступные уровни для языка
 router.get('/:language/levels', authMiddleware, async (req, res) => {
   try {
     const { language } = req.params;

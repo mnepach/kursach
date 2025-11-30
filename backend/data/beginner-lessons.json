@@ -1,0 +1,142 @@
+{
+  "english": [
+    {
+      "type": "listen",
+      "audio": "hello.mp3",
+      "words": ["Hello", "world", "!"],
+      "correctAnswer": "Hello world !",
+      "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "Apple",
+      "options": [
+        { "emoji": "🍎", "text": "Apple" },
+        { "emoji": "🍌", "text": "Banana" },
+        { "emoji": "🍊", "text": "Orange" }
+      ],
+      "correctAnswer": "Apple",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Привет",
+      "targetLanguage": "английский",
+      "options": ["Hello", "Goodbye", "Thanks"],
+      "correctAnswer": "Hello",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "Good morning",
+      "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+      "correctAnswer": "Доброе утро",
+      "points": 10
+    }
+  ],
+  "spanish": [
+    {
+      "type": "listen",
+      "audio": "hola.mp3",
+      "words": ["Hola", "mundo", "!"],
+      "correctAnswer": "Hola mundo !",
+      "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "Manzana",
+      "options": [
+        { "emoji": "🍎", "text": "Manzana" },
+        { "emoji": "🍌", "text": "Plátano" },
+        { "emoji": "🍊", "text": "Naranja" }
+      ],
+      "correctAnswer": "Manzana",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Привет",
+      "targetLanguage": "испанский",
+      "options": ["Hola", "Adiós", "Gracias"],
+      "correctAnswer": "Hola",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "Buenos días",
+      "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+      "correctAnswer": "Доброе утро",
+      "points": 10
+    }
+  ],
+  "japanese": [
+    {
+      "type": "listen",
+      "audio": "konnichiwa.mp3",
+      "words": ["こんにちは", "世界", "!"],
+      "correctAnswer": "こんにちは 世界 !",
+      "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "りんご",
+      "options": [
+        { "emoji": "🍎", "text": "りんご" },
+        { "emoji": "🍌", "text": "バナナ" },
+        { "emoji": "🍊", "text": "オレンジ" }
+      ],
+      "correctAnswer": "りんご",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Привет",
+      "targetLanguage": "японский",
+      "options": ["こんにちは", "さようなら", "ありがとう"],
+      "correctAnswer": "こんにちは",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "おはようございます",
+      "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+      "correctAnswer": "Доброе утро",
+      "points": 10
+    }
+  ],
+  "korean": [
+    {
+      "type": "listen",
+      "audio": "annyeong.mp3",
+      "words": ["안녕하세요", "세계", "!"],
+      "correctAnswer": "안녕하세요 세계 !",
+      "points": 10
+    },
+    {
+      "type": "selectImage",
+      "word": "사과",
+      "options": [
+        { "emoji": "🍎", "text": "사과" },
+        { "emoji": "🍌", "text": "바나나" },
+        { "emoji": "🍊", "text": "오렌지" }
+      ],
+      "correctAnswer": "사과",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Привет",
+      "targetLanguage": "корейский",
+      "options": ["안녕하세요", "안녕히 가세요", "감사합니다"],
+      "correctAnswer": "안녕하세요",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "좋은 아침",
+      "options": ["Доброе утро", "Добрый вечер", "Спокойной ночи"],
+      "correctAnswer": "Доброе утро",
+      "points": 10
+    }
+  ]
+}

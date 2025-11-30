@@ -6,6 +6,9 @@ function OnboardingFlow({ onComplete }) {
     correct: 0,
     total: 0
   });
+  const [beginnerLessons, setBeginnerLessons] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   React.useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,37 +17,25 @@ function OnboardingFlow({ onComplete }) {
     }
   }, []);
 
-  const beginnerLessons = [
-    {
-      type: 'listen',
-      audio: 'hello.mp3',
-      words: ['Привет', 'мир', '!'],
-      correctAnswer: 'Привет мир !'
-    },
-    {
-      type: 'selectImage',
-      word: 'Apple',
-      options: [
-        { emoji: '🍎', text: 'Apple' },
-        { emoji: '🍌', text: 'Banana' },
-        { emoji: '🍊', text: 'Orange' }
-      ],
-      correctAnswer: 'Apple'
-    },
-    {
-      type: 'translateToTarget',
-      russianText: 'Привет',
-      targetLanguage: 'английский',
-      options: ['Hello', 'Goodbye', 'Thanks'],
-      correctAnswer: 'Hello'
-    },
-    {
-      type: 'translateToRussian',
-      targetText: 'Good morning',
-      options: ['Доброе утро', 'Добрый вечер', 'Спокойной ночи'],
-      correctAnswer: 'Доброе утро'
+  React.useEffect(() => {
+    if (userData.selectedLanguage && currentStep === 'learningMethod') {
+      loadBeginnerLessons();
     }
-  ];
+  }, [userData.selectedLanguage, currentStep]);
+
+  const loadBeginnerLessons = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const response = await api.getBeginnerLessons(userData.selectedLanguage.name);
+      setBeginnerLessons(response.lessons);
+    } catch (err) {
+      console.error('Ошибка загрузки уроков:', err);
+      setError('Не удалось загрузить уроки. Попробуйте позже.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleNext = (data = {}) => {
     setUserData({ ...userData, ...data });
@@ -91,6 +82,53 @@ function OnboardingFlow({ onComplete }) {
   const handleLater = () => {
     onComplete({ ...userData, registered: false });
   };
+
+  if (currentStep === 'lessons' && beginnerLessons.length === 0) {
+    if (loading) {
+      return (
+        <div 
+          className="min-h-screen flex items-center justify-center"
+          style={{
+            backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="text-center">
+            <div className="loader mb-4"></div>
+            <p className="text-xl text-[var(--text-dark)]">Загружаем уроки...</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div 
+          className="min-h-screen flex items-center justify-center p-8"
+          style={{
+            backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="max-w-md w-full bg-white rounded-3xl p-8 text-center">
+            <div className="text-6xl mb-4">😕</div>
+            <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-4">
+              Что-то пошло не так
+            </h2>
+            <p className="text-[var(--text-light)] mb-6">{error}</p>
+            <button 
+              onClick={() => setCurrentStep('learningMethod')}
+              className="btn-primary w-full"
+            >
+              Попробовать снова
+            </button>
+          </div>
+        </div>
+      );
+    }
+  }
 
   switch (currentStep) {
     case 'languageSelection':
