@@ -1,18 +1,57 @@
 function FirstAchievement({ onNext, selectedLanguage }) {
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20
+      });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col items-center justify-between p-8"
       style={{
-        backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url(./trickle/assets/onboarding_background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: `translate(${mousePos.x}px, ${mousePos.y + scrollY * 0.5}px)`,
+          transition: 'transform 0.1s ease-out',
+          zIndex: -1
+        }}
+      ></div>
+
       <div className="flex-1"></div>
 
       <div className="max-w-2xl w-full text-center">
-        <div className="flex items-center justify-center gap-8 mb-8">
-          <div 
+        <div className="flex items-center justify-center gap-12 mb-8">
+          <div
             style={{
               width: '384px',
               height: '384px',
@@ -29,16 +68,19 @@ function FirstAchievement({ onNext, selectedLanguage }) {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover'
+                objectFit: 'cover',
+                WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 78%)',
+                maskImage: 'radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 78%)'
               }}
             />
           </div>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-4">
             <img
               src={selectedLanguage?.flag}
               alt={selectedLanguage?.name}
-              className="w-24 h-24 object-contain rounded-lg shadow-md"
+              className="w-20 h-20 object-contain"
+              style={{ border: 'none' }}
             />
             <div className="text-8xl font-bold text-[var(--primary-color)]">
               5

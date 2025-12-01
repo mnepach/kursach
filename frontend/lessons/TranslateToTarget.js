@@ -3,11 +3,16 @@ function TranslateToTarget({ lesson, onAnswer }) {
   const [checked, setChecked] = React.useState(false);
   const [isCorrect, setIsCorrect] = React.useState(false);
   const [shuffledOptions, setShuffledOptions] = React.useState([]);
+  const [showNotification, setShowNotification] = React.useState(false);
 
   React.useEffect(() => {
     const shuffled = [...lesson.options].sort(() => Math.random() - 0.5);
     setShuffledOptions(shuffled);
-  }, [lesson.options]);
+    setSelected(null);
+    setChecked(false);
+    setIsCorrect(false);
+    setShowNotification(false);
+  }, [lesson]);
 
   const handleSelect = (option) => {
     if (checked) return;
@@ -16,11 +21,19 @@ function TranslateToTarget({ lesson, onAnswer }) {
 
   const handleCheck = () => {
     if (checked) {
+      setShowNotification(false);
       onAnswer(isCorrect, lesson);
     } else {
       const correct = selected === lesson.correctAnswer;
       setIsCorrect(correct);
       setChecked(true);
+      setShowNotification(true);
+      
+      const audioPath = correct 
+        ? '/trickle/assets/audio/right_answer.mp3' 
+        : '/trickle/assets/audio/wrong_answer.mp3';
+      const audio = new Audio(audioPath);
+      audio.play().catch(err => console.error('Audio playback error:', err));
     }
   };
 
@@ -34,6 +47,43 @@ function TranslateToTarget({ lesson, onAnswer }) {
         paddingBottom: '140px'
       }}
     >
+      {showNotification && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: isCorrect ? '#10B981' : '#EF4444',
+            color: 'white',
+            padding: '1.5rem',
+            textAlign: 'center',
+            fontSize: '1.25rem',
+            fontWeight: 'bold',
+            zIndex: 10000,
+            animation: 'slideDown 0.3s ease-out',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+          }}
+        >
+          {isCorrect ? '✓ Правильно!' : '✗ Неправильно'}
+        </div>
+      )}
+
+      <style>
+        {`
+          @keyframes slideDown {
+            from {
+              transform: translateY(-100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateY(0);
+              opacity: 1;
+            }
+          }
+        `}
+      </style>
+
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-3xl w-full">
           <div className="card mb-8">
