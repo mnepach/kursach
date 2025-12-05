@@ -44,7 +44,6 @@ class ApiService {
     }
   }
 
-  // Auth
   async register(userData) {
     const data = await this.request('/auth/register', {
       method: 'POST',
@@ -92,7 +91,6 @@ class ApiService {
     this.clearToken();
   }
 
-  // Subscription
   async getPlans() {
     return await this.request('/subscription/plans');
   }
@@ -114,7 +112,6 @@ class ApiService {
     });
   }
 
-  // Lessons
   async getLessons(language, level = null) {
     const query = level ? `?level=${level}` : '';
     return await this.request(`/lessons/${language}${query}`);
@@ -128,12 +125,14 @@ class ApiService {
     return await this.request(`/lessons/${language}/levels`);
   }
 
-  // NEW: Beginner lessons for onboarding
   async getBeginnerLessons(language) {
     return await this.request(`/beginner-lessons/${language}`);
   }
 
-  // Progress
+  async getLevelTestLessons(language) {
+    return await this.request(`/level-test-lessons/${language}`);
+  }
+
   async getProgress() {
     return await this.request('/progress');
   }

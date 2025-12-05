@@ -1,0 +1,206 @@
+{
+  "english": [
+    {
+      "type": "translateToTarget",
+      "russianText": "Я хотел бы заказать столик на двоих",
+      "targetLanguage": "английский",
+      "options": [
+        "I would like to book a table for two",
+        "I want eat for two people",
+        "I like table two persons"
+      ],
+      "correctAnswer": "I would like to book a table for two",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "complex_sentence.mp3",
+      "words": ["The", "weather", "is", "beautiful", "today"],
+      "correctAnswer": "The weather is beautiful today",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "Could you please help me with this problem?",
+      "options": [
+        "Не могли бы вы помочь мне с этой проблемой?",
+        "Можно помочь проблему?",
+        "Помоги мне это"
+      ],
+      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Где находится ближайшая станция метро?",
+      "targetLanguage": "английский",
+      "options": [
+        "Where is the nearest metro station?",
+        "Where metro station close?",
+        "Metro where is?"
+      ],
+      "correctAnswer": "Where is the nearest metro station?",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "past_tense.mp3",
+      "words": ["I", "went", "to", "the", "store", "yesterday"],
+      "correctAnswer": "I went to the store yesterday",
+      "points": 10
+    }
+  ],
+  "spanish": [
+    {
+      "type": "translateToTarget",
+      "russianText": "Я хотел бы заказать столик на двоих",
+      "targetLanguage": "испанский",
+      "options": [
+        "Me gustaría reservar una mesa para dos",
+        "Yo quiero mesa dos personas",
+        "Mesa para dos yo"
+      ],
+      "correctAnswer": "Me gustaría reservar una mesa para dos",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "spanish_complex.mp3",
+      "words": ["El", "clima", "es", "hermoso", "hoy"],
+      "correctAnswer": "El clima es hermoso hoy",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "¿Podría ayudarme con este problema, por favor?",
+      "options": [
+        "Не могли бы вы помочь мне с этой проблемой?",
+        "Можно помочь проблему?",
+        "Помоги мне это"
+      ],
+      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Где находится ближайшая станция метро?",
+      "targetLanguage": "испанский",
+      "options": [
+        "¿Dónde está la estación de metro más cercana?",
+        "¿Dónde metro estación cerca?",
+        "¿Metro dónde es?"
+      ],
+      "correctAnswer": "¿Dónde está la estación de metro más cercana?",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "spanish_past.mp3",
+      "words": ["Fui", "a", "la", "tienda", "ayer"],
+      "correctAnswer": "Fui a la tienda ayer",
+      "points": 10
+    }
+  ],
+  "japanese": [
+    {
+      "type": "translateToTarget",
+      "russianText": "Я хотел бы заказать столик на двоих",
+      "targetLanguage": "японский",
+      "options": [
+        "二人用のテーブルを予約したいのですが",
+        "二人テーブル欲しい",
+        "テーブル二人私"
+      ],
+      "correctAnswer": "二人用のテーブルを予約したいのですが",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "japanese_complex.mp3",
+      "words": ["今日", "は", "とても", "いい", "天気", "です"],
+      "correctAnswer": "今日 は とても いい 天気 です",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "この問題について教えていただけますか？",
+      "options": [
+        "Не могли бы вы помочь мне с этой проблемой?",
+        "Можно помочь проблему?",
+        "Помоги мне это"
+      ],
+      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Где находится ближайшая станция метро?",
+      "targetLanguage": "японский",
+      "options": [
+        "一番近い地下鉄の駅はどこですか？",
+        "地下鉄駅どこ近い？",
+        "駅どこですか地下鉄？"
+      ],
+      "correctAnswer": "一番近い地下鉄の駅はどこですか？",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "japanese_past.mp3",
+      "words": ["昨日", "お店", "に", "行きました"],
+      "correctAnswer": "昨日 お店 に 行きました",
+      "points": 10
+    }
+  ],
+  "korean": [
+    {
+      "type": "translateToTarget",
+      "russianText": "Я хотел бы заказать столик на двоих",
+      "targetLanguage": "корейский",
+      "options": [
+        "두 명을 위한 테이블을 예약하고 싶습니다",
+        "두 사람 테이블 원해요",
+        "테이블 두 명 저"
+      ],
+      "correctAnswer": "두 명을 위한 테이블을 예약하고 싶습니다",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "korean_complex.mp3",
+      "words": ["오늘", "날씨가", "정말", "좋아요"],
+      "correctAnswer": "오늘 날씨가 정말 좋아요",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "이 문제에 대해 도와주시겠어요?",
+      "options": [
+        "Не могли бы вы помочь мне с этой проблемой?",
+        "Можно помочь проблему?",
+        "Помоги мне это"
+      ],
+      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "points": 10
+    },
+    {
+      "type": "translateToTarget",
+      "russianText": "Где находится ближайшая станция метро?",
+      "targetLanguage": "корейский",
+      "options": [
+        "가장 가까운 지하철역이 어디에 있나요?",
+        "지하철역 어디 가까워?",
+        "역 어디 지하철?"
+      ],
+      "correctAnswer": "가장 가까운 지하철역이 어디에 있나요?",
+      "points": 10
+    },
+    {
+      "type": "listen",
+      "audio": "korean_past.mp3",
+      "words": ["어제", "가게에", "갔어요"],
+      "correctAnswer": "어제 가게에 갔어요",
+      "points": 10
+    }
+  ]
+}

@@ -6,7 +6,7 @@ function OnboardingFlow({ onComplete }) {
     correct: 0,
     total: 0
   });
-  const [beginnerLessons, setBeginnerLessons] = React.useState([]);
+  const [lessons, setLessons] = React.useState([]);
   const [incorrectLessons, setIncorrectLessons] = React.useState([]);
   const [isRetryPhase, setIsRetryPhase] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -21,16 +21,23 @@ function OnboardingFlow({ onComplete }) {
 
   React.useEffect(() => {
     if (userData.selectedLanguage && currentStep === 'learningMethod') {
-      loadBeginnerLessons();
+      loadLessons();
     }
-  }, [userData.selectedLanguage, currentStep]);
+  }, [userData.selectedLanguage, currentStep, userData.learningMethod]);
 
-  const loadBeginnerLessons = async () => {
+  const loadLessons = async () => {
     try {
       setLoading(true);
       setError('');
-      const response = await api.getBeginnerLessons(userData.selectedLanguage.name);
-      setBeginnerLessons(response.lessons);
+      
+      let response;
+      if (userData.learningMethod?.id === 'test') {
+        response = await api.getLevelTestLessons(userData.selectedLanguage.name);
+      } else {
+        response = await api.getBeginnerLessons(userData.selectedLanguage.name);
+      }
+      
+      setLessons(response.lessons);
     } catch (err) {
       console.error('Ошибка загрузки уроков:', err);
       setError('Не удалось загрузить уроки. Попробуйте позже.');
@@ -59,7 +66,7 @@ function OnboardingFlow({ onComplete }) {
     const currentIndex = steps.indexOf(currentStep);
 
     if (currentStep === 'lessons') {
-      const lessonsArray = isRetryPhase ? incorrectLessons : beginnerLessons;
+      const lessonsArray = isRetryPhase ? incorrectLessons : lessons;
       if (currentLesson < lessonsArray.length - 1) {
         setCurrentLesson(currentLesson + 1);
       } else {
@@ -96,7 +103,7 @@ function OnboardingFlow({ onComplete }) {
     onComplete({ ...userData, registered: false });
   };
 
-  if (currentStep === 'lessons' && beginnerLessons.length === 0) {
+  if (currentStep === 'lessons' && lessons.length === 0) {
     if (loading) {
       return (
         <div 
@@ -166,7 +173,7 @@ function OnboardingFlow({ onComplete }) {
       return <LearningMethod onNext={handleNext} />;
 
     case 'lessons':
-      const lessonsArray = isRetryPhase ? incorrectLessons : beginnerLessons;
+      const lessonsArray = isRetryPhase ? incorrectLessons : lessons;
       const lesson = lessonsArray[currentLesson];
       
       if (!lesson) {

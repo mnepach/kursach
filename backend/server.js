@@ -9,6 +9,7 @@ const subscriptionRoutes = require('./routes/subscription');
 const lessonsRoutes = require('./routes/lessons');
 const progressRoutes = require('./routes/progress');
 const beginnerLessonsRoutes = require('./routes/beginner-lessons');
+const levelTestLessonsRoutes = require('./routes/level-test-lessons');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/subscription', subscriptionRoutes);
 app.use('/api/lessons', lessonsRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/beginner-lessons', beginnerLessonsRoutes); 
+app.use('/api/level-test-lessons', levelTestLessonsRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'LinguaPlay API работает' });

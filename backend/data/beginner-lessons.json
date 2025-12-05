@@ -92,7 +92,7 @@
       "type": "listen",
       "audio": "konnichiwa.mp3",
       "words": ["こんにちは", "世界", "猫", "犬"],
-      "correctAnswer": "こんにちは 世界",
+      "correctAnswer": "こんにちは",
       "points": 10
     },
     {
