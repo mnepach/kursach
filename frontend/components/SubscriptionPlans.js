@@ -90,7 +90,7 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
       <div 
         className="fixed inset-0 flex items-center justify-center z-[10001] p-4" 
         style={{
-          overflow: 'hidden'
+          overflow: 'auto'
         }}
       >
         <div
@@ -109,7 +109,7 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
           }}
         ></div>
         <BubbleAnimation />
-        <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
+        <div className="bg-white rounded-3xl max-w-md w-full p-8 my-4" onClick={(e) => e.stopPropagation()} style={{ maxHeight: '90vh', overflowY: 'auto' }}>
           <h2 className="text-2xl font-bold text-[var(--text-dark)] mb-4">Отменить подписку?</h2>
           <p className="text-[var(--text-light)] mb-6">
             Вы уверены, что хотите отменить подписку и перейти на бесплатный план? Вы потеряете доступ к премиум-функциям.

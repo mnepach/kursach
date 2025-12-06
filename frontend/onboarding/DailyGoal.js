@@ -64,6 +64,9 @@ function DailyGoal({ onNext }) {
               className={`card w-full flex items-center justify-between text-left transition-all py-3 ${
                 selected?.minutes === goal.minutes ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
+              style={{
+               boxShadow: selected?.minutes === goal.minutes ? '0 0 0 4px var(--primary-color)' : undefined
+             }}
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0">

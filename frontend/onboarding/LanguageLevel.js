@@ -54,6 +54,9 @@ function LanguageLevel({ onNext, selectedLanguage }) {
               className={`card w-full flex items-center gap-4 text-left transition-all py-3 ${
                 selected?.level === level.level ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
+              style={{
+               boxShadow: selected?.text === level.text ? '0 0 0 4px var(--primary-color)' : undefined
+              }}
             >
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (

@@ -83,17 +83,26 @@ function OnboardingFlow({ onComplete }) {
   };
 
   const handleLessonAnswer = (isCorrect, lessonData) => {
+  if (!isRetryPhase) {
     setLessonResults({
       correct: lessonResults.correct + (isCorrect ? 1 : 0),
       total: lessonResults.total + 1
     });
 
-    if (!isCorrect && !isRetryPhase && lessonData) {
+    if (!isCorrect && lessonData) {
       setIncorrectLessons([...incorrectLessons, lessonData]);
     }
+  } else {
+    if (isCorrect) {
+      setLessonResults({
+        correct: lessonResults.correct + 1,
+        total: lessonResults.total
+      });
+    }
+  }
 
-    handleNext();
-  };
+  handleNext();
+};
 
   const handleRegister = (selectedPlan) => {
     onComplete({ ...userData, registered: true, selectedPlan });

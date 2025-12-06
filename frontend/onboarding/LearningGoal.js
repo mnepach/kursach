@@ -55,6 +55,9 @@ function LearningGoal({ onNext }) {
               className={`card flex items-center gap-4 text-left transition-all ${
                 selected?.text === goal.text ? 'ring-4 ring-[var(--primary-color)]' : ''
               }`}
+              style={{
+               boxShadow: selected?.text === goal.text ? '0 0 0 4px var(--primary-color)' : undefined
+              }}
             >
               <div className="w-14 h-14 bg-[var(--secondary-color)] rounded-xl flex items-center justify-center overflow-hidden">
                 <img 

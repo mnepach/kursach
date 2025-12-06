@@ -2,204 +2,172 @@
   "english": [
     {
       "type": "translateToTarget",
-      "russianText": "Я хотел бы заказать столик на двоих",
+      "russianText": "Привет",
       "targetLanguage": "английский",
-      "options": [
-        "I would like to book a table for two",
-        "I want eat for two people",
-        "I like table two persons"
-      ],
-      "correctAnswer": "I would like to book a table for two",
+      "options": ["Hello", "Goodbye", "Thanks"],
+      "correctAnswer": "Hello",
       "points": 10
     },
     {
-      "type": "listen",
-      "audio": "complex_sentence.mp3",
-      "words": ["The", "weather", "is", "beautiful", "today"],
-      "correctAnswer": "The weather is beautiful today",
-      "points": 10
-    },
-    {
-      "type": "translateToRussian",
-      "targetText": "Could you please help me with this problem?",
+      "type": "selectImage",
+      "word": "Кошка",
       "options": [
-        "Не могли бы вы помочь мне с этой проблемой?",
-        "Можно помочь проблему?",
-        "Помоги мне это"
+        { "emoji": "🐱", "text": "Cat" },
+        { "emoji": "🐶", "text": "Dog" },
+        { "emoji": "🐦", "text": "Bird" }
       ],
-      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "correctAnswer": "Cat",
       "points": 10
     },
     {
       "type": "translateToTarget",
-      "russianText": "Где находится ближайшая станция метро?",
+      "russianText": "Я хочу пить",
       "targetLanguage": "английский",
-      "options": [
-        "Where is the nearest metro station?",
-        "Where metro station close?",
-        "Metro where is?"
-      ],
-      "correctAnswer": "Where is the nearest metro station?",
+      "options": ["I want to drink", "I am hungry", "I am tired"],
+      "correctAnswer": "I want to drink",
       "points": 10
     },
     {
       "type": "listen",
-      "audio": "past_tense.mp3",
-      "words": ["I", "went", "to", "the", "store", "yesterday"],
-      "correctAnswer": "I went to the store yesterday",
+      "audio": "weather.mp3",
+      "words": ["The", "weather", "is", "nice", "today"],
+      "correctAnswer": "The weather is nice today",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "She works at a hospital",
+      "options": ["Она работает в больнице", "Он работает в школе", "Она учится в университете"],
+      "correctAnswer": "Она работает в больнице",
       "points": 10
     }
   ],
   "spanish": [
     {
       "type": "translateToTarget",
-      "russianText": "Я хотел бы заказать столик на двоих",
+      "russianText": "Привет",
       "targetLanguage": "испанский",
-      "options": [
-        "Me gustaría reservar una mesa para dos",
-        "Yo quiero mesa dos personas",
-        "Mesa para dos yo"
-      ],
-      "correctAnswer": "Me gustaría reservar una mesa para dos",
+      "options": ["Hola", "Adiós", "Gracias"],
+      "correctAnswer": "Hola",
       "points": 10
     },
     {
-      "type": "listen",
-      "audio": "spanish_complex.mp3",
-      "words": ["El", "clima", "es", "hermoso", "hoy"],
-      "correctAnswer": "El clima es hermoso hoy",
-      "points": 10
-    },
-    {
-      "type": "translateToRussian",
-      "targetText": "¿Podría ayudarme con este problema, por favor?",
+      "type": "selectImage",
+      "word": "Собака",
       "options": [
-        "Не могли бы вы помочь мне с этой проблемой?",
-        "Можно помочь проблему?",
-        "Помоги мне это"
+        { "emoji": "🐶", "text": "Perro" },
+        { "emoji": "🐱", "text": "Gato" },
+        { "emoji": "🐦", "text": "Pájaro" }
       ],
-      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "correctAnswer": "Perro",
       "points": 10
     },
     {
       "type": "translateToTarget",
-      "russianText": "Где находится ближайшая станция метро?",
+      "russianText": "Я хочу есть",
       "targetLanguage": "испанский",
-      "options": [
-        "¿Dónde está la estación de metro más cercana?",
-        "¿Dónde metro estación cerca?",
-        "¿Metro dónde es?"
-      ],
-      "correctAnswer": "¿Dónde está la estación de metro más cercana?",
+      "options": ["Tengo hambre", "Tengo sed", "Estoy cansado"],
+      "correctAnswer": "Tengo hambre",
       "points": 10
     },
     {
       "type": "listen",
-      "audio": "spanish_past.mp3",
-      "words": ["Fui", "a", "la", "tienda", "ayer"],
-      "correctAnswer": "Fui a la tienda ayer",
+      "audio": "spanish_weather.mp3",
+      "words": ["El", "clima", "está", "bien", "hoy"],
+      "correctAnswer": "El clima está bien hoy",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "Ella trabaja en un hospital",
+      "options": ["Она работает в больнице", "Он работает в школе", "Она учится в университете"],
+      "correctAnswer": "Она работает в больнице",
       "points": 10
     }
   ],
   "japanese": [
     {
       "type": "translateToTarget",
-      "russianText": "Я хотел бы заказать столик на двоих",
+      "russianText": "Привет",
       "targetLanguage": "японский",
-      "options": [
-        "二人用のテーブルを予約したいのですが",
-        "二人テーブル欲しい",
-        "テーブル二人私"
-      ],
-      "correctAnswer": "二人用のテーブルを予約したいのですが",
+      "options": ["こんにちは", "さようなら", "ありがとう"],
+      "correctAnswer": "こんにちは",
       "points": 10
     },
     {
-      "type": "listen",
-      "audio": "japanese_complex.mp3",
-      "words": ["今日", "は", "とても", "いい", "天気", "です"],
-      "correctAnswer": "今日 は とても いい 天気 です",
-      "points": 10
-    },
-    {
-      "type": "translateToRussian",
-      "targetText": "この問題について教えていただけますか？",
+      "type": "selectImage",
+      "word": "Собака",
       "options": [
-        "Не могли бы вы помочь мне с этой проблемой?",
-        "Можно помочь проблему?",
-        "Помоги мне это"
+        { "emoji": "🐶", "text": "いぬ" },
+        { "emoji": "🐱", "text": "ねこ" },
+        { "emoji": "🐦", "text": "とり" }
       ],
-      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "correctAnswer": "いぬ",
       "points": 10
     },
     {
       "type": "translateToTarget",
-      "russianText": "Где находится ближайшая станция метро?",
+      "russianText": "Я хочу пить",
       "targetLanguage": "японский",
-      "options": [
-        "一番近い地下鉄の駅はどこですか？",
-        "地下鉄駅どこ近い？",
-        "駅どこですか地下鉄？"
-      ],
-      "correctAnswer": "一番近い地下鉄の駅はどこですか？",
+      "options": ["のどが渇きました", "お腹がすきました", "疲れました"],
+      "correctAnswer": "のどが渇きました",
       "points": 10
     },
     {
       "type": "listen",
-      "audio": "japanese_past.mp3",
-      "words": ["昨日", "お店", "に", "行きました"],
-      "correctAnswer": "昨日 お店 に 行きました",
+      "audio": "japanese_weather.mp3",
+      "words": ["今日", "は", "いい", "天気", "です"],
+      "correctAnswer": "今日 は いい 天気 です",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "彼女は病院で働いています",
+      "options": ["Она работает в больнице", "Он работает в школе", "Она учится в университете"],
+      "correctAnswer": "Она работает в больнице",
       "points": 10
     }
   ],
   "korean": [
     {
       "type": "translateToTarget",
-      "russianText": "Я хотел бы заказать столик на двоих",
+      "russianText": "Привет",
       "targetLanguage": "корейский",
-      "options": [
-        "두 명을 위한 테이블을 예약하고 싶습니다",
-        "두 사람 테이블 원해요",
-        "테이블 두 명 저"
-      ],
-      "correctAnswer": "두 명을 위한 테이블을 예약하고 싶습니다",
+      "options": ["안녕하세요", "안녕히 가세요", "감사합니다"],
+      "correctAnswer": "안녕하세요",
       "points": 10
     },
     {
-      "type": "listen",
-      "audio": "korean_complex.mp3",
-      "words": ["오늘", "날씨가", "정말", "좋아요"],
-      "correctAnswer": "오늘 날씨가 정말 좋아요",
-      "points": 10
-    },
-    {
-      "type": "translateToRussian",
-      "targetText": "이 문제에 대해 도와주시겠어요?",
+      "type": "selectImage",
+      "word": "Кошка",
       "options": [
-        "Не могли бы вы помочь мне с этой проблемой?",
-        "Можно помочь проблему?",
-        "Помоги мне это"
+        { "emoji": "🐱", "text": "고양이" },
+        { "emoji": "🐶", "text": "강아지" },
+        { "emoji": "🐦", "text": "새" }
       ],
-      "correctAnswer": "Не могли бы вы помочь мне с этой проблемой?",
+      "correctAnswer": "고양이",
       "points": 10
     },
     {
       "type": "translateToTarget",
-      "russianText": "Где находится ближайшая станция метро?",
+      "russianText": "Я хочу есть",
       "targetLanguage": "корейский",
-      "options": [
-        "가장 가까운 지하철역이 어디에 있나요?",
-        "지하철역 어디 가까워?",
-        "역 어디 지하철?"
-      ],
-      "correctAnswer": "가장 가까운 지하철역이 어디에 있나요?",
+      "options": ["배고파요", "목말라요", "피곤해요"],
+      "correctAnswer": "배고파요",
       "points": 10
     },
     {
       "type": "listen",
-      "audio": "korean_past.mp3",
-      "words": ["어제", "가게에", "갔어요"],
-      "correctAnswer": "어제 가게에 갔어요",
+      "audio": "korean_weather.mp3",
+      "words": ["오늘", "날씨가", "좋아요"],
+      "correctAnswer": "오늘 날씨가 좋아요",
+      "points": 10
+    },
+    {
+      "type": "translateToRussian",
+      "targetText": "그녀는 병원에서 일해요",
+      "options": ["Она работает в больнице", "Он работает в школе", "Она учится в университете"],
+      "correctAnswer": "Она работает в больнице",
       "points": 10
     }
   ]
