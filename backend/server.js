@@ -6,7 +6,6 @@ require('dotenv').config();
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth');
 const subscriptionRoutes = require('./routes/subscription');
-const lessonsRoutes = require('./routes/lessons');
 const progressRoutes = require('./routes/progress');
 const beginnerLessonsRoutes = require('./routes/beginner-lessons');
 const levelTestLessonsRoutes = require('./routes/level-test-lessons');
@@ -26,7 +25,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/linguapla
 
 app.use('/api/auth', authRoutes);
 app.use('/api/subscription', subscriptionRoutes);
-app.use('/api/lessons', lessonsRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/beginner-lessons', beginnerLessonsRoutes); 
 app.use('/api/level-test-lessons', levelTestLessonsRoutes);

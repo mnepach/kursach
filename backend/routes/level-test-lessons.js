@@ -27,6 +27,8 @@ router.get('/:language', async (req, res) => {
       return res.status(404).json({ message: 'Уроки для этого языка не найдены' });
     }
     
+    console.log(`Загружены тестовые уроки (${language}):`, lessons.length);
+    
     res.json({ lessons });
   } catch (error) {
     console.error('Ошибка получения тестовых уроков:', error);

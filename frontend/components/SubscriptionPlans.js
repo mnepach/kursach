@@ -261,9 +261,11 @@ function SubscriptionPlans({ onClose, currentPlan, onUpgrade }) {
                     ? 'Текущий план' 
                     : plan.id === 'free' && currentPlan !== 'free'
                     ? 'Отменить подписку'
+                    : plan.id === 'free'
+                    ? 'Текущий план'
                     : 'Выбрать план'}
                 </button>
-              </div>
+              </div>  
             );
           })}
         </div>
@@ -373,10 +375,8 @@ function PaymentModal({ plan, onClose, onSuccess, mousePos, scrollY }) {
 
   return (
     <div 
-      className="fixed inset-0 flex items-center justify-center z-[10001] p-4" 
-      style={{
-        overflow: 'hidden'
-      }}
+      className="fixed inset-0 flex items-center justify-center z-[10001] p-8" 
+      style={{ overflow: 'hidden' }}
     >
       <div
         style={{
@@ -394,114 +394,142 @@ function PaymentModal({ plan, onClose, onSuccess, mousePos, scrollY }) {
         }}
       ></div>
       <BubbleAnimation />
-      <div className="bg-white rounded-3xl max-w-md w-full p-8" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[var(--text-dark)]">Оплата подписки</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-
-        <div className="mb-6 p-4 bg-[var(--secondary-color)] rounded-xl">
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-bold text-[var(--text-dark)]">{plan.name}</span>
-            <span className="text-2xl font-bold text-[var(--primary-color)]">{planPrice} ₽</span>
-          </div>
-          <p className="text-sm text-[var(--text-light)]">Ежемесячная подписка</p>
-        </div>
-
-        <h3 className="font-bold text-[var(--text-dark)] mb-4">Выберите способ оплаты</h3>
-
-        <div className="space-y-3 mb-6">
-          {paymentMethods.map((method) => (
-            <button
-              key={method.id}
-              onClick={() => setPaymentMethod(method.id)}
-              className={`w-full p-4 rounded-xl border-2 transition-all flex items-center gap-3 ${
-                paymentMethod === method.id
-                  ? 'border-[var(--primary-color)] bg-[var(--secondary-color)]'
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <span className="text-2xl">{method.icon}</span>
-              <span className="font-medium text-[var(--text-dark)]">{method.name}</span>
+      <div 
+        className="bg-white rounded-3xl w-full max-w-4xl p-8 grid grid-cols-2 gap-8" 
+        onClick={(e) => e.stopPropagation()}
+        style={{ height: 'auto', maxHeight: '85vh' }}
+      >
+        <div className="flex flex-col">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-[var(--text-dark)]">Оформление подписки</h2>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
-          ))}
+          </div>
+
+          <div className="mb-6 p-4 bg-[var(--secondary-color)] rounded-xl">
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-bold text-[var(--text-dark)] text-lg">{plan.name}</span>
+              <span className="text-3xl font-bold text-[var(--primary-color)]">{planPrice} ₽</span>
+            </div>
+            <p className="text-sm text-[var(--text-light)]">Ежемесячная подписка</p>
+          </div>
+
+          <h3 className="font-bold text-[var(--text-dark)] mb-4">Способ оплаты</h3>
+
+          <div className="space-y-3 flex-1">
+            {paymentMethods.map((method) => (
+              <button
+                key={method.id}
+                onClick={() => setPaymentMethod(method.id)}
+                className={`w-full p-4 rounded-xl border-2 transition-all flex items-center gap-3 ${
+                  paymentMethod === method.id
+                    ? 'border-[var(--primary-color)] bg-[var(--secondary-color)]'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <span className="text-2xl">{method.icon}</span>
+                <span className="font-medium text-[var(--text-dark)]">{method.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {paymentMethod === 'card' && (
-          <form onSubmit={handlePayment} className="space-y-4 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Номер карты</label>
-              <input
-                type="text"
-                value={cardNumber}
-                onChange={handleCardNumberChange}
-                placeholder="1234 5678 9012 3456"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
-                required
-              />
-            </div>
+        <div className="flex flex-col border-l pl-8">
+          <h3 className="font-bold text-[var(--text-dark)] mb-6 text-xl">Данные для оплаты</h3>
 
-            <div className="grid grid-cols-2 gap-4">
+          {paymentMethod === 'card' ? (
+            <form onSubmit={handlePayment} className="space-y-4 flex-1 flex flex-col">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Срок действия</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Номер карты</label>
                 <input
                   type="text"
-                  value={cardExpiry}
-                  onChange={handleExpiryChange}
-                  placeholder="MM/YY"
+                  value={cardNumber}
+                  onChange={handleCardNumberChange}
+                  placeholder="1234 5678 9012 3456"
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                   required
                 />
               </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Срок действия</label>
+                  <input
+                    type="text"
+                    value={cardExpiry}
+                    onChange={handleExpiryChange}
+                    placeholder="MM/YY"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">CVC</label>
+                  <input
+                    type="text"
+                    value={cardCvc}
+                    onChange={handleCvcChange}
+                    placeholder="123"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
+                    required
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">CVC</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Имя на карте</label>
                 <input
                   type="text"
-                  value={cardCvc}
-                  onChange={handleCvcChange}
-                  placeholder="123"
+                  value={cardName}
+                  onChange={(e) => setCardName(e.target.value)}
+                  placeholder="IVAN IVANOV"
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
                   required
                 />
               </div>
+
+              <div className="flex-1"></div>
+
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full"
+              >
+                {loading ? 'Обработка...' : `Оплатить ${planPrice} ₽`}
+              </button>
+
+              <p className="text-xs text-[var(--text-light)] text-center">
+                Нажимая "Оплатить", вы соглашаетесь с условиями использования
+              </p>
+            </form>
+          ) : (
+            <div className="flex-1 flex flex-col items-center justify-center">
+              <div className="text-6xl mb-4">
+                {paymentMethods.find(m => m.id === paymentMethod)?.icon}
+              </div>
+              <p className="text-lg text-[var(--text-light)] mb-8 text-center">
+                Вы будете перенаправлены на страницу оплаты
+              </p>
+              <button
+                onClick={handlePayment}
+                disabled={loading}
+                className="btn-primary w-full"
+              >
+                {loading ? 'Обработка...' : `Перейти к оплате ${planPrice} ₽`}
+              </button>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Имя на карте</label>
-              <input
-                type="text"
-                value={cardName}
-                onChange={(e) => setCardName(e.target.value)}
-                placeholder="IVAN IVANOV"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]"
-                required
-              />
-            </div>
-          </form>
-        )}
-
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl">
-            {error}
-          </div>
-        )}
-
-        <button
-          onClick={handlePayment}
-          disabled={loading}
-          className="btn-primary w-full"
-        >
-          {loading ? 'Обработка...' : `Оплатить ${planPrice} ₽`}
-        </button>
-
-        <p className="text-xs text-[var(--text-light)] text-center mt-4">
-          Нажимая "Оплатить", вы соглашаетесь с условиями использования и политикой конфиденциальности
-        </p>
+          )}
+        </div>
       </div>
     </div>
   );
