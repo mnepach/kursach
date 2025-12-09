@@ -1,7 +1,7 @@
 import axios from 'axios';
 import storage from './storage';
 
-const API_URL = 'http://172.24.37.154:5000/api'; // менять чтобы совпадало с телефоном
+const API_URL = 'http://192.168.105.30:5000/api';
 
 class ApiService {
   constructor() {
