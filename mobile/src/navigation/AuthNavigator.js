@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import WelcomeScreen from '../screens/auth/WelcomeScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
@@ -16,11 +17,16 @@ const Stack = createStackNavigator();
 const AuthNavigator = () => {
   return (
     <Stack.Navigator
+      initialRouteName="Welcome"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: '#F8FAFC' }
       }}
     >
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       <Stack.Screen name="LanguageSelection" component={LanguageSelectionScreen} />
       <Stack.Screen name="WelcomeCharacter" component={WelcomeCharacterScreen} />
       <Stack.Screen name="HowDidYouHear" component={HowDidYouHearScreen} />
@@ -28,9 +34,6 @@ const AuthNavigator = () => {
       <Stack.Screen name="LanguageLevel" component={LanguageLevelScreen} />
       <Stack.Screen name="DailyGoal" component={DailyGoalScreen} />
       <Stack.Screen name="LearningMethod" component={LearningMethodScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
     </Stack.Navigator>
   );
 };
