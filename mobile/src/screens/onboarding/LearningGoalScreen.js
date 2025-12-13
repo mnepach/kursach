@@ -11,11 +11,11 @@ const LearningGoalScreen = ({ navigation, route }) => {
 
   const goals = [
     { id: 'travel', label: 'Путешествия', icon: '✈️' },
-    { id: 'work', label: 'Работа и карьера', icon: '💼' },
+    { id: 'work', label: 'Работа', icon: '💼' },
     { id: 'study', label: 'Учеба', icon: '📚' },
-    { id: 'culture', label: 'Культура и развлечения', icon: '🎭' },
-    { id: 'family', label: 'Семья и друзья', icon: '❤️' },
-    { id: 'brain', label: 'Тренировка мозга', icon: '🧠' },
+    { id: 'culture', label: 'Культура', icon: '🎭' },
+    { id: 'family', label: 'Семья', icon: '❤️' },
+    { id: 'brain', label: 'Развитие', icon: '🧠' },
   ];
 
   const handleNext = () => {
@@ -50,7 +50,7 @@ const LearningGoalScreen = ({ navigation, route }) => {
           keyExtractor={(item) => item.id}
           numColumns={2}
           columnWrapperStyle={styles.row}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           contentContainerStyle={styles.listContent}
         />
       </View>
@@ -75,35 +75,36 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: Sizes.padding.large,
-    paddingTop: Sizes.padding.xlarge,
+    paddingTop: Sizes.padding.large,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 28,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: Sizes.margin.large,
   },
   listContent: {
-    paddingBottom: Sizes.padding.xlarge,
+    gap: Sizes.margin.small,
   },
   row: {
     justifyContent: 'space-between',
-    marginBottom: Sizes.margin.medium,
+    marginBottom: Sizes.margin.small,
   },
   goalCard: {
     flex: 1,
     marginHorizontal: Sizes.margin.small,
     alignItems: 'center',
-    paddingVertical: Sizes.padding.xlarge,
+    paddingVertical: Sizes.padding.large,
   },
   selected: {
     borderWidth: 3,
     borderColor: Colors.primary,
   },
   icon: {
-    fontSize: 48,
-    marginBottom: Sizes.margin.medium,
+    fontSize: 36,
+    marginBottom: Sizes.margin.small,
   },
   label: {
     fontSize: Sizes.fontSize.medium,

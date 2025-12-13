@@ -21,17 +21,18 @@ const WelcomeCharacterScreen = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.mascotContainer}>
-          <Image 
-            source={require('../../../assets/images/mascot.gif')}
-            style={styles.mascot}
-          />
+          <View style={styles.mascotWrapper}>
+            <Image 
+              source={require('../../../assets/images/mascot.gif')}
+              style={styles.mascot}
+            />
+          </View>
         </View>
 
         <View style={styles.speechBubble}>
           <Text style={styles.greeting}>Привет! Я Hello Kitty 👋</Text>
           <Text style={styles.message}>
-            Я буду твоим проводником в мире LinguaPlay! 
-            Нажми "Далее", чтобы продолжить.
+            Я буду твоим проводником в мире LinguaPlay!
           </Text>
         </View>
       </View>
@@ -59,11 +60,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: Sizes.padding.large,
   },
   mascotContainer: {
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: Sizes.margin.large,
+  },
+  mascotWrapper: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 40,
   },
   mascot: {
-    width: 250,
-    height: 250,
+    width: '100%',
+    height: '100%',
+    opacity: 0.95,
   },
   speechBubble: {
     backgroundColor: Colors.white,
@@ -78,7 +90,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   greeting: {
-    fontSize: Sizes.fontSize.xlarge,
+    fontSize: Sizes.fontSize.large,
     fontWeight: 'bold',
     color: Colors.textDark,
     marginBottom: Sizes.margin.small,
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
   message: {
     fontSize: Sizes.fontSize.medium,
     color: Colors.textDark,
-    lineHeight: 24,
+    lineHeight: 22,
   },
   footer: {
     padding: Sizes.padding.large,

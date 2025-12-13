@@ -10,10 +10,10 @@ const DailyGoalScreen = ({ navigation, route }) => {
   const [selected, setSelected] = useState(null);
 
   const goals = [
-    { id: '5', label: '5 минут в день', description: 'Легко', icon: '☕' },
-    { id: '10', label: '10 минут в день', description: 'Нормально', icon: '🍵' },
-    { id: '15', label: '15 минут в день', description: 'Серьезно', icon: '💪' },
-    { id: '20', label: '20 минут в день', description: 'Интенсивно', icon: '🔥' },
+    { id: '5', label: '5 минут', description: 'Легко', icon: '☕' },
+    { id: '10', label: '10 минут', description: 'Нормально', icon: '🍵' },
+    { id: '15', label: '15 минут', description: 'Серьёзно', icon: '💪' },
+    { id: '20', label: '20 минут', description: 'Интенсивно', icon: '🔥' },
   ];
 
   const handleNext = () => {
@@ -41,13 +41,13 @@ const DailyGoalScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Установите ежедневную цель</Text>
+        <Text style={styles.title}>Ежедневная цель</Text>
         
         <FlatList
           data={goals}
           renderItem={renderGoal}
           keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           contentContainerStyle={styles.listContent}
         />
       </View>
@@ -72,39 +72,39 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: Sizes.padding.large,
-    paddingTop: Sizes.padding.xlarge,
+    paddingTop: Sizes.padding.large,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 28,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: Sizes.margin.large,
   },
   listContent: {
-    paddingBottom: Sizes.padding.xlarge,
+    gap: Sizes.margin.small,
   },
   goalCard: {
     alignItems: 'center',
-    marginBottom: Sizes.margin.medium,
-    paddingVertical: Sizes.padding.large,
+    paddingVertical: Sizes.padding.medium,
   },
   selected: {
     borderWidth: 3,
     borderColor: Colors.primary,
   },
   icon: {
-    fontSize: 48,
-    marginBottom: Sizes.margin.small,
+    fontSize: 32,
+    marginBottom: 4,
   },
   label: {
-    fontSize: Sizes.fontSize.large,
+    fontSize: Sizes.fontSize.medium,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
+    marginBottom: 2,
   },
   description: {
-    fontSize: Sizes.fontSize.medium,
+    fontSize: Sizes.fontSize.small,
     color: Colors.textLight,
   },
   footer: {

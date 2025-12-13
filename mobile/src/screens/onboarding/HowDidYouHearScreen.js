@@ -13,7 +13,7 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
     { id: 'social', label: 'Социальные сети', icon: '📱' },
     { id: 'friends', label: 'От друзей', icon: '👥' },
     { id: 'ads', label: 'Реклама', icon: '📺' },
-    { id: 'search', label: 'Поиск в интернете', icon: '🔍' },
+    { id: 'search', label: 'Поиск', icon: '🔍' },
     { id: 'other', label: 'Другое', icon: '💡' },
   ];
 
@@ -22,8 +22,8 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
       navigation.navigate('LearningGoal', {
         onboardingData: {
           ...onboardingData,
-          howDidYouHear: selected
-        }
+          howDidYouHear: selected,
+        },
       });
     }
   };
@@ -40,19 +40,17 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <View style={styles.center}>
         <Text style={styles.title}>Как вы узнали о нас?</Text>
-        
+
         <FlatList
           data={options}
           renderItem={renderOption}
           keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           contentContainerStyle={styles.listContent}
         />
-      </View>
 
-      <View style={styles.footer}>
         <Button
           title="Далее"
           onPress={handleNext}
@@ -69,44 +67,39 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.bgLight,
   },
-  content: {
+  center: {
     flex: 1,
+    justifyContent: 'center',
     paddingHorizontal: Sizes.padding.large,
-    paddingTop: Sizes.padding.xlarge,
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 26,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: Sizes.margin.large,
   },
   listContent: {
-    paddingBottom: Sizes.padding.xlarge,
+    gap: Sizes.margin.small,
+    marginBottom: Sizes.margin.large,
   },
   optionCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: Sizes.margin.medium,
-    paddingVertical: Sizes.padding.large,
+    paddingVertical: Sizes.padding.medium,
   },
   selected: {
     borderWidth: 3,
     borderColor: Colors.primary,
   },
   icon: {
-    fontSize: 32,
+    fontSize: 24,
     marginRight: Sizes.margin.medium,
   },
   label: {
-    fontSize: Sizes.fontSize.large,
+    fontSize: Sizes.fontSize.medium,
     fontWeight: '600',
     color: Colors.textDark,
-  },
-  footer: {
-    padding: Sizes.padding.large,
-    borderTopWidth: 1,
-    borderTopColor: Colors.border,
   },
   button: {
     width: '100%',

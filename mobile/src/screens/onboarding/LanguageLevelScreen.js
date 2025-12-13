@@ -13,7 +13,7 @@ const LanguageLevelScreen = ({ navigation, route }) => {
     { 
       id: 'beginner', 
       label: 'Новичок', 
-      description: 'Я только начинаю',
+      description: 'Только начинаю',
       icon: '🌱'
     },
     { 
@@ -61,13 +61,13 @@ const LanguageLevelScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Ваш уровень языка?</Text>
+        <Text style={styles.title}>Ваш уровень?</Text>
         
         <FlatList
           data={levels}
           renderItem={renderLevel}
           keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           contentContainerStyle={styles.listContent}
         />
       </View>
@@ -92,39 +92,39 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: Sizes.padding.large,
-    paddingTop: Sizes.padding.xlarge,
+    paddingTop: Sizes.padding.large,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 28,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: Sizes.margin.large,
   },
   listContent: {
-    paddingBottom: Sizes.padding.xlarge,
+    gap: Sizes.margin.small,
   },
   levelCard: {
     alignItems: 'center',
-    marginBottom: Sizes.margin.medium,
-    paddingVertical: Sizes.padding.large,
+    paddingVertical: Sizes.padding.medium,
   },
   selected: {
     borderWidth: 3,
     borderColor: Colors.primary,
   },
   icon: {
-    fontSize: 48,
-    marginBottom: Sizes.margin.small,
+    fontSize: 32,
+    marginBottom: 4,
   },
   label: {
-    fontSize: Sizes.fontSize.large,
+    fontSize: Sizes.fontSize.medium,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
+    marginBottom: 2,
   },
   description: {
-    fontSize: Sizes.fontSize.medium,
+    fontSize: Sizes.fontSize.small,
     color: Colors.textLight,
     textAlign: 'center',
   },

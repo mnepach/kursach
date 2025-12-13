@@ -11,7 +11,7 @@ const LearningMethodScreen = ({ navigation, route }) => {
 
   const methods = [
     { id: 'games', label: 'Игры', description: 'Весело и эффективно', icon: '🎮' },
-    { id: 'stories', label: 'Истории', description: 'Учите через контекст', icon: '📖' },
+    { id: 'stories', label: 'Истории', description: 'Через контекст', icon: '📖' },
     { id: 'audio', label: 'Аудио', description: 'Слушайте и повторяйте', icon: '🎧' },
     { id: 'mixed', label: 'Смешанный', description: 'Всего понемногу', icon: '🎯' },
   ];
@@ -49,7 +49,7 @@ const LearningMethodScreen = ({ navigation, route }) => {
           keyExtractor={(item) => item.id}
           numColumns={2}
           columnWrapperStyle={styles.row}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           contentContainerStyle={styles.listContent}
         />
       </View>
@@ -74,41 +74,42 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: Sizes.padding.large,
-    paddingTop: Sizes.padding.xlarge,
+    paddingTop: Sizes.padding.large,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 28,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: Sizes.margin.large,
   },
   listContent: {
-    paddingBottom: Sizes.padding.xlarge,
+    gap: Sizes.margin.small,
   },
   row: {
     justifyContent: 'space-between',
-    marginBottom: Sizes.margin.medium,
+    marginBottom: Sizes.margin.small,
   },
   methodCard: {
     flex: 1,
     marginHorizontal: Sizes.margin.small,
     alignItems: 'center',
-    paddingVertical: Sizes.padding.xlarge,
+    paddingVertical: Sizes.padding.large,
   },
   selected: {
     borderWidth: 3,
     borderColor: Colors.primary,
   },
   icon: {
-    fontSize: 48,
-    marginBottom: Sizes.margin.medium,
+    fontSize: 32,
+    marginBottom: 4,
   },
   label: {
-    fontSize: Sizes.fontSize.large,
+    fontSize: Sizes.fontSize.medium,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
+    marginBottom: 2,
     textAlign: 'center',
   },
   description: {
