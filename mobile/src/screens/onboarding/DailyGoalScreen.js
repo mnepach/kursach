@@ -71,9 +71,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: Sizes.padding.large,
-    paddingTop: Sizes.padding.large,
     justifyContent: 'center',
+    paddingHorizontal: Sizes.padding.large,
   },
   title: {
     fontSize: 28,
@@ -109,8 +108,10 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: Sizes.padding.large,
+    paddingBottom: Sizes.padding.large + 10,
     borderTopWidth: 1,
     borderTopColor: Colors.border,
+    backgroundColor: Colors.white,
   },
   button: {
     width: '100%',

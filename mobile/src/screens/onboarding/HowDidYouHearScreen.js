@@ -40,7 +40,8 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.center}>
+      {/* Основной контент — прижат к низу */}
+      <View style={styles.contentContainer}>
         <Text style={styles.title}>Как вы узнали о нас?</Text>
 
         <FlatList
@@ -50,7 +51,10 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
           scrollEnabled={false}
           contentContainerStyle={styles.listContent}
         />
+      </View>
 
+      {/* Футер с кнопкой */}
+      <View style={styles.footer}>
         <Button
           title="Далее"
           onPress={handleNext}
@@ -67,21 +71,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.bgLight,
   },
-  center: {
+  contentContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',        // ← прижимаем контент к низу
     paddingHorizontal: Sizes.padding.large,
+    paddingBottom: Sizes.padding.xlarge, // отступ от кнопки сверху
   },
   title: {
     fontSize: 26,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.large,
+    marginBottom: Sizes.margin.xlarge,
   },
   listContent: {
     gap: Sizes.margin.small,
-    marginBottom: Sizes.margin.large,
   },
   optionCard: {
     flexDirection: 'row',
@@ -100,6 +104,13 @@ const styles = StyleSheet.create({
     fontSize: Sizes.fontSize.medium,
     fontWeight: '600',
     color: Colors.textDark,
+  },
+  footer: {
+    padding: Sizes.padding.large,
+    paddingBottom: Sizes.padding.large + 10,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+    backgroundColor: Colors.white,
   },
   button: {
     width: '100%',

@@ -10,7 +10,11 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.scrollView} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         <View style={styles.header}>
           <Text style={styles.greeting}>Привет, {user?.name || 'Пользователь'}!</Text>
           <Text style={styles.subtitle}>Продолжим обучение?</Text>
@@ -57,9 +61,12 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollContent: {
+    paddingBottom: Sizes.padding.xlarge,
+  },
   header: {
     padding: Sizes.padding.large,
-    paddingTop: Sizes.padding.xlarge,
+    paddingTop: Sizes.padding.medium,
   },
   greeting: {
     fontSize: Sizes.fontSize.xxlarge,
@@ -72,7 +79,8 @@ const styles = StyleSheet.create({
     color: Colors.textLight,
   },
   statsCard: {
-    margin: Sizes.margin.large,
+    marginHorizontal: Sizes.margin.large,
+    marginBottom: Sizes.margin.large,
   },
   statsRow: {
     flexDirection: 'row',
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statEmoji: {
-    fontSize: 40,
+    fontSize: 32,
     marginBottom: Sizes.margin.small,
   },
   statValue: {
@@ -94,9 +102,10 @@ const styles = StyleSheet.create({
   statLabel: {
     fontSize: Sizes.fontSize.small,
     color: Colors.textLight,
+    textAlign: 'center',
   },
   section: {
-    padding: Sizes.padding.large,
+    paddingHorizontal: Sizes.padding.large,
   },
   sectionTitle: {
     fontSize: Sizes.fontSize.xlarge,
