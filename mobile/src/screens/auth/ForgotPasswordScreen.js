@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  Alert
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Input from '../../components/common/Input';

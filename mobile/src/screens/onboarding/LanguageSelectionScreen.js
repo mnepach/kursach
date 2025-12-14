@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  FlatList, 
-  TouchableOpacity,
-  Image,
-  SafeAreaView
-} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
