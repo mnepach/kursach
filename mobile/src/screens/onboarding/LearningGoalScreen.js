@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
+import BackgroundImage from '../../../assets/images/onboarding_background.jpg';
 
 const LearningGoalScreen = ({ navigation, route }) => {
   const onboardingData = route.params?.onboardingData || {};
@@ -30,40 +31,52 @@ const LearningGoalScreen = ({ navigation, route }) => {
     }
   };
 
-  const renderGoal = ({ item }) => (
-    <Card
-      style={[styles.goalCard, selected === item.id && styles.selected]}
-      onPress={() => setSelected(item.id)}
-    >
-      <Text style={styles.icon}>{item.icon}</Text>
-      <Text style={styles.label}>{item.label}</Text>
-    </Card>
-  );
+  const renderGoal = ({ item }) => {
+    const isTravel = item.id === 'travel';
+    return (
+      <Card
+        style={[
+          styles.goalCard,
+          { borderColor: selected === item.id ? Colors.primary : 'transparent' },
+          isTravel && styles.travelCard
+        ]}
+        onPress={() => setSelected(item.id)}
+      >
+        <Text style={styles.icon}>{item.icon}</Text>
+        <Text
+          style={[styles.label, isTravel && styles.travelLabel]}
+          numberOfLines={1}
+        >
+          {item.label}
+        </Text>
+      </Card>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Зачем вы изучаете язык?</Text>
-        
-        <FlatList
-          data={goals}
-          renderItem={renderGoal}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          scrollEnabled={false}
-          contentContainerStyle={styles.listContent}
-        />
-      </View>
-
-      <View style={styles.footer}>
-        <Button
-          title="Далее"
-          onPress={handleNext}
-          disabled={!selected}
-          style={styles.button}
-        />
-      </View>
+      <ImageBackground source={BackgroundImage} style={styles.background} resizeMode="cover">
+        <View style={styles.content}>
+          <Text style={styles.title}>Зачем вы изучаете язык?</Text>
+          <FlatList
+            data={goals}
+            renderItem={renderGoal}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            columnWrapperStyle={styles.row}
+            scrollEnabled={false}
+            contentContainerStyle={styles.listContent}
+          />
+        </View>
+        <View style={styles.footer}>
+          <Button
+            title="Далее"
+            onPress={handleNext}
+            disabled={!selected}
+            style={styles.button}
+          />
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -71,12 +84,15 @@ const LearningGoalScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.bgLight,
+  },
+  background: {
+    flex: 1,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: Sizes.padding.large,
+    marginTop: 120,
   },
   title: {
     fontSize: 28,
@@ -86,31 +102,39 @@ const styles = StyleSheet.create({
     marginBottom: Sizes.margin.xlarge,
   },
   listContent: {
-    gap: Sizes.margin.small,
+    paddingBottom: Sizes.padding.xlarge,
   },
   row: {
     justifyContent: 'space-between',
-    marginBottom: Sizes.margin.small,
+    marginBottom: 10,
   },
   goalCard: {
     flex: 1,
-    marginHorizontal: Sizes.margin.small,
+    marginHorizontal: 5,
     alignItems: 'center',
-    paddingVertical: Sizes.padding.large,
-  },
-  selected: {
+    paddingVertical: Sizes.padding.medium,
+    backgroundColor: Colors.white,
+    borderRadius: 18,
     borderWidth: 3,
-    borderColor: Colors.primary,
+    borderColor: 'transparent',
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  travelCard: {
+    paddingHorizontal: Sizes.padding.medium,
   },
   icon: {
-    fontSize: 36,
+    fontSize: 32,
     marginBottom: Sizes.margin.small,
   },
   label: {
-    fontSize: Sizes.fontSize.medium,
+    fontSize: 18,
     fontWeight: '600',
     color: Colors.textDark,
     textAlign: 'center',
+  },
+  travelLabel: {
+    fontSize: 16,
   },
   footer: {
     padding: Sizes.padding.large,

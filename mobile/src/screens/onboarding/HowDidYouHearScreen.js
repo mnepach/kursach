@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
+import BackgroundImage from '../../../assets/images/onboarding_background.jpg';
 
 const HowDidYouHearScreen = ({ navigation, route }) => {
   const onboardingData = route.params?.onboardingData || {};
@@ -31,7 +32,10 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
 
   const renderOption = ({ item }) => (
     <Card
-      style={[styles.optionCard, selected === item.id && styles.selected]}
+      style={[
+        styles.optionCard,
+        { borderColor: selected === item.id ? Colors.primary : 'transparent' },
+      ]}
       onPress={() => setSelected(item.id)}
     >
       <Text style={styles.icon}>{item.icon}</Text>
@@ -41,28 +45,26 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Основной контент — прижат к низу */}
-      <View style={styles.contentContainer}>
-        <Text style={styles.title}>Как вы узнали о нас?</Text>
-
-        <FlatList
-          data={options}
-          renderItem={renderOption}
-          keyExtractor={(item) => item.id}
-          scrollEnabled={false}
-          contentContainerStyle={styles.listContent}
-        />
-      </View>
-
-      {/* Футер с кнопкой */}
-      <View style={styles.footer}>
-        <Button
-          title="Далее"
-          onPress={handleNext}
-          disabled={!selected}
-          style={styles.button}
-        />
-      </View>
+      <ImageBackground source={BackgroundImage} style={styles.background} resizeMode="cover">
+        <View style={styles.content}>
+          <Text style={styles.title}>Как вы узнали о нас?</Text>
+          <FlatList
+            data={options}
+            renderItem={renderOption}
+            keyExtractor={(item) => item.id}
+            scrollEnabled={false}
+            contentContainerStyle={styles.listContent}
+          />
+        </View>
+        <View style={styles.footer}>
+          <Button
+            title="Далее"
+            onPress={handleNext}
+            disabled={!selected}
+            style={styles.button}
+          />
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -70,45 +72,51 @@ const HowDidYouHearScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.bgLight,
   },
-  contentContainer: {
+  background: {
     flex: 1,
-    justifyContent: 'flex-end',        // ← прижимаем контент к низу
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
     paddingHorizontal: Sizes.padding.large,
-    paddingBottom: Sizes.padding.xlarge, // отступ от кнопки сверху
+    marginTop: 120,
   },
   title: {
-    fontSize: 26,
+    fontSize: 32,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
+    marginBottom: 52,
   },
   listContent: {
-    gap: Sizes.margin.small,
+    paddingBottom: Sizes.padding.xlarge,
   },
   optionCard: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: Sizes.padding.medium,
-  },
-  selected: {
+    paddingHorizontal: Sizes.padding.large,
+    marginBottom: 10,
+    backgroundColor: Colors.white,
+    borderRadius: 18,
     borderWidth: 3,
-    borderColor: Colors.primary,
+    borderColor: 'transparent',
+    shadowOpacity: 0,
+    elevation: 0,
   },
   icon: {
     fontSize: 24,
     marginRight: Sizes.margin.medium,
   },
   label: {
-    fontSize: Sizes.fontSize.medium,
+    fontSize: 18,
     fontWeight: '600',
     color: Colors.textDark,
   },
   footer: {
-    padding: Sizes.padding.large,
-    paddingBottom: Sizes.padding.large + 10,
+    paddingHorizontal: Sizes.padding.large,
+    paddingVertical: Sizes.padding.large,
     borderTopWidth: 1,
     borderTopColor: Colors.border,
     backgroundColor: Colors.white,

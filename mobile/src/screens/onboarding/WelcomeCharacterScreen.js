@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     marginBottom: Sizes.margin.large,
   },
   mascotWrapper: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
     borderRadius: 100,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   greeting: {
-    fontSize: Sizes.fontSize.large,
+    fontSize: 24,
     fontWeight: 'bold',
     color: Colors.textDark,
     marginBottom: Sizes.margin.small,

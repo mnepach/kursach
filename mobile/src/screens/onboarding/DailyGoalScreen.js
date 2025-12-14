@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
+import BackgroundImage from '../../../assets/images/onboarding_background.jpg';
 
 const DailyGoalScreen = ({ navigation, route }) => {
   const onboardingData = route.params?.onboardingData || {};
@@ -30,7 +31,7 @@ const DailyGoalScreen = ({ navigation, route }) => {
 
   const renderGoal = ({ item }) => (
     <Card
-      style={[styles.goalCard, selected === item.id && styles.selected]}
+      style={[styles.goalCard, { borderColor: selected === item.id ? Colors.primary : 'transparent' }]}
       onPress={() => setSelected(item.id)}
     >
       <Text style={styles.icon}>{item.icon}</Text>
@@ -41,26 +42,26 @@ const DailyGoalScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Ежедневная цель</Text>
-        
-        <FlatList
-          data={goals}
-          renderItem={renderGoal}
-          keyExtractor={(item) => item.id}
-          scrollEnabled={false}
-          contentContainerStyle={styles.listContent}
-        />
-      </View>
-
-      <View style={styles.footer}>
-        <Button
-          title="Далее"
-          onPress={handleNext}
-          disabled={!selected}
-          style={styles.button}
-        />
-      </View>
+      <ImageBackground source={BackgroundImage} style={styles.background} resizeMode="cover">
+        <View style={styles.content}>
+          <Text style={styles.title}>Ежедневная цель</Text>
+          <FlatList
+            data={goals}
+            renderItem={renderGoal}
+            keyExtractor={(item) => item.id}
+            scrollEnabled={false}
+            contentContainerStyle={styles.listContent}
+          />
+        </View>
+        <View style={styles.footer}>
+          <Button
+            title="Далее"
+            onPress={handleNext}
+            disabled={!selected}
+            style={styles.button}
+          />
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -68,44 +69,53 @@ const DailyGoalScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.bgLight,
+  },
+  background: {
+    flex: 1,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: Sizes.padding.large,
+    marginTop: 70,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: Colors.textDark,
     textAlign: 'center',
     marginBottom: Sizes.margin.large,
   },
   listContent: {
-    gap: Sizes.margin.small,
+    paddingBottom: Sizes.padding.xlarge,
   },
   goalCard: {
     alignItems: 'center',
     paddingVertical: Sizes.padding.medium,
-  },
-  selected: {
+    paddingHorizontal: Sizes.padding.large,
+    marginBottom: 10,
+    backgroundColor: Colors.white,
+    borderRadius: 18,
     borderWidth: 3,
-    borderColor: Colors.primary,
+    borderColor: 'transparent',
+    shadowOpacity: 0,
+    elevation: 0,
   },
   icon: {
-    fontSize: 32,
+    fontSize: 28,
     marginBottom: 4,
   },
   label: {
-    fontSize: Sizes.fontSize.medium,
+    fontSize: 18,
     fontWeight: 'bold',
     color: Colors.textDark,
     marginBottom: 2,
+    textAlign: 'center',
   },
   description: {
-    fontSize: Sizes.fontSize.small,
+    fontSize: 14,
     color: Colors.textLight,
+    textAlign: 'center',
   },
   footer: {
     padding: Sizes.padding.large,
