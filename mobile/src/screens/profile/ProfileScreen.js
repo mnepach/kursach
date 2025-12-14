@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
   StyleSheet, 
-  SafeAreaView, 
   ScrollView,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  Platform,
+  StatusBar
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../context/AuthContext';
@@ -48,6 +49,14 @@ const ProfileScreen = ({ navigation }) => {
     );
   };
 
+  const handleEditProfile = () => {
+    navigation.navigate('EditProfile');
+  };
+
+  const handleSubscription = () => {
+    navigation.navigate('Subscription');
+  };
+
   const getPlanName = (planType) => {
     switch (planType) {
       case 'premium': return 'Премиум';
@@ -57,12 +66,12 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <TouchableOpacity 
             style={styles.avatarContainer}
-            onPress={() => navigation.navigate('EditProfile')}
+            onPress={handleEditProfile}
           >
             <Image 
               source={{ uri: user?.avatar || 'https://via.placeholder.com/100' }}
@@ -76,7 +85,7 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.name}>{user?.name}</Text>
           <Text style={styles.email}>{user?.email}</Text>
           
-          <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
+          <TouchableOpacity onPress={handleEditProfile}>
             <Text style={styles.editButton}>Редактировать профиль</Text>
           </TouchableOpacity>
         </View>
@@ -122,7 +131,7 @@ const ProfileScreen = ({ navigation }) => {
             title={user?.subscription?.planType === 'free' 
               ? 'Перейти на Премиум' 
               : 'Управление подпиской'}
-            onPress={() => navigation.navigate('Subscription')}
+            onPress={handleSubscription}
             variant={user?.subscription?.planType === 'free' ? 'primary' : 'outline'}
             style={styles.subscriptionButton}
           />
@@ -159,7 +168,7 @@ const ProfileScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -167,6 +176,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bgLight,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   header: {
     alignItems: 'center',
