@@ -5,18 +5,15 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
 import Card from '../../components/common/Card';
 import api from '../../services/api';
+import PaymentMethodModal from '../../components/payment/PaymentMethodModal';
 
 const PaymentScreen = ({ route, navigation }) => {
   const { plan } = route.params;
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [loading, setLoading] = useState(false);
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
-  const [cardName, setCardName] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const paymentMethods = [
     { id: 'card', name: 'Банковская карта', icon: 'card' },
@@ -24,62 +21,15 @@ const PaymentScreen = ({ route, navigation }) => {
     { id: 'google_pay', name: 'Google Pay', icon: 'logo-google' },
   ];
 
-  const formatCardNumber = (value) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    const matches = v.match(/\d{4,16}/g);
-    const match = matches && matches[0] || '';
-    const parts = [];
-    
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-    
-    return parts.length ? parts.join(' ') : value;
+  const handlePaymentMethodSelect = (methodId) => {
+    setPaymentMethod(methodId);
   };
 
-  const formatExpiry = (value) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    if (v.length >= 2) {
-      return v.slice(0, 2) + '/' + v.slice(2, 4);
-    }
-    return v;
-  };
-
-  const handleCardNumberChange = (value) => {
-    const formatted = formatCardNumber(value);
-    if (formatted.replace(/\s/g, '').length <= 16) {
-      setCardNumber(formatted);
-    }
-  };
-
-  const handleExpiryChange = (value) => {
-    const formatted = formatExpiry(value);
-    if (formatted.length <= 5) {
-      setCardExpiry(formatted);
-    }
-  };
-
-  const handlePayment = async () => {
-    if (paymentMethod === 'card') {
-      if (!cardNumber || !cardExpiry || !cardCvc || !cardName) {
-        Alert.alert('Ошибка', 'Заполните все поля карты');
-        return;
-      }
-
-      if (cardNumber.replace(/\s/g, '').length !== 16) {
-        Alert.alert('Ошибка', 'Неверный номер карты');
-        return;
-      }
-
-      if (cardCvc.length !== 3) {
-        Alert.alert('Ошибка', 'Неверный CVC код');
-        return;
-      }
-    }
-
+  const handlePaymentComplete = async (paymentData) => {
     setLoading(true);
     try {
       await api.upgradeSubscription(plan.id, paymentMethod);
+      setModalVisible(false);
       Alert.alert(
         'Успешно!',
         'Подписка успешно оформлена',
@@ -90,6 +40,10 @@ const PaymentScreen = ({ route, navigation }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleProceedToPayment = () => {
+    setModalVisible(true);
   };
 
   const planPrice = typeof plan.price === 'object' ? plan.price.amount : plan.price;
@@ -131,7 +85,7 @@ const PaymentScreen = ({ route, navigation }) => {
                 styles.methodCard,
                 paymentMethod === method.id && styles.selectedMethod
               ]}
-              onPress={() => setPaymentMethod(method.id)}
+              onPress={() => handlePaymentMethodSelect(method.id)}
             >
               <View style={styles.methodContent}>
                 <View style={styles.methodLeft}>
@@ -145,80 +99,26 @@ const PaymentScreen = ({ route, navigation }) => {
             </Card>
           ))}
         </View>
-
-        {paymentMethod === 'card' ? (
-          <View style={styles.cardForm}>
-            <Text style={styles.formTitle}>Данные для оплаты</Text>
-            
-            <Input
-              label="Номер карты"
-              value={cardNumber}
-              onChangeText={handleCardNumberChange}
-              placeholder="1234 5678 9012 3456"
-              keyboardType="number-pad"
-            />
-
-            <View style={styles.row}>
-              <Input
-                label="Срок действия"
-                value={cardExpiry}
-                onChangeText={handleExpiryChange}
-                placeholder="MM/YY"
-                keyboardType="number-pad"
-                style={styles.halfInput}
-              />
-
-              <Input
-                label="CVC"
-                value={cardCvc}
-                onChangeText={(value) => {
-                  const v = value.replace(/[^0-9]/gi, '');
-                  if (v.length <= 3) setCardCvc(v);
-                }}
-                placeholder="123"
-                keyboardType="number-pad"
-                style={styles.halfInput}
-              />
-            </View>
-
-            <Input
-              label="Имя на карте"
-              value={cardName}
-              onChangeText={setCardName}
-              placeholder="IVAN IVANOV"
-              autoCapitalize="characters"
-            />
-
-            <Text style={styles.securityNote}>
-              🔒 Ваши данные надежно защищены
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.alternativePayment}>
-            <View style={styles.paymentIcon}>
-              <Ionicons 
-                name={paymentMethods.find(m => m.id === paymentMethod)?.icon} 
-                size={64} 
-                color={Colors.primary} 
-              />
-            </View>
-            <Text style={styles.alternativeText}>
-              Вы будете перенаправлены на страницу оплаты {paymentMethods.find(m => m.id === paymentMethod)?.name}
-            </Text>
-          </View>
-        )}
       </ScrollView>
 
       <View style={styles.footer}>
         <Button
-          title={`Оплатить ${planPrice} ₽`}
-          onPress={handlePayment}
-          loading={loading}
+          title="Перейти к оплате"
+          onPress={handleProceedToPayment}
         />
         <Text style={styles.footerNote}>
-          Нажимая "Оплатить", вы соглашаетесь с условиями использования
+          Нажимая "Перейти к оплате", вы соглашаетесь с условиями использования
         </Text>
       </View>
+
+      <PaymentMethodModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        paymentMethod={paymentMethod}
+        planPrice={planPrice}
+        onPaymentComplete={handlePaymentComplete}
+        loading={loading}
+      />
     </SafeAreaView>
   );
 };
@@ -305,47 +205,6 @@ const styles = StyleSheet.create({
     fontSize: Sizes.fontSize.medium,
     fontWeight: '600',
     color: Colors.textDark,
-  },
-  cardForm: {
-    marginTop: Sizes.margin.medium,
-  },
-  formTitle: {
-    fontSize: Sizes.fontSize.large,
-    fontWeight: 'bold',
-    color: Colors.textDark,
-    marginBottom: Sizes.margin.large,
-  },
-  row: {
-    flexDirection: 'row',
-    gap: Sizes.margin.medium,
-  },
-  halfInput: {
-    flex: 1,
-  },
-  securityNote: {
-    fontSize: Sizes.fontSize.small,
-    color: Colors.textLight,
-    textAlign: 'center',
-    marginTop: Sizes.margin.medium,
-  },
-  alternativePayment: {
-    alignItems: 'center',
-    paddingVertical: Sizes.padding.xlarge,
-  },
-  paymentIcon: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: Colors.secondary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: Sizes.margin.large,
-  },
-  alternativeText: {
-    fontSize: Sizes.fontSize.medium,
-    color: Colors.textLight,
-    textAlign: 'center',
-    paddingHorizontal: Sizes.padding.large,
   },
   footer: {
     padding: Sizes.padding.large,
