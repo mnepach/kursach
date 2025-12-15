@@ -9,8 +9,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView 
-        style={styles.scrollView} 
+      <ScrollView
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
@@ -26,13 +26,13 @@ const HomeScreen = () => {
               <Text style={styles.statValue}>{user?.statistics?.streak || 0}</Text>
               <Text style={styles.statLabel}>Дней подряд</Text>
             </View>
-            
+
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>🏆</Text>
               <Text style={styles.statValue}>{user?.statistics?.experience || 0}</Text>
               <Text style={styles.statLabel}>Очков опыта</Text>
             </View>
-            
+
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>⭐</Text>
               <Text style={styles.statValue}>{user?.statistics?.achievements || 0}</Text>
@@ -56,17 +56,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bgLight,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
+    paddingTop:
+      Platform.OS === 'android'
+        ? (StatusBar.currentHeight || 0) + Sizes.padding.large
+        : Sizes.padding.xlarge,
     paddingBottom: Sizes.padding.xlarge,
   },
   header: {
     padding: Sizes.padding.large,
-    paddingTop: Sizes.padding.medium,
   },
   greeting: {
     fontSize: Sizes.fontSize.xxlarge,

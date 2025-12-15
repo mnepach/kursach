@@ -58,7 +58,7 @@ const LoginScreen = ({ navigation }) => {
         >
           <View style={styles.header}>
             <Text style={styles.title}>Вход</Text>
-            <Text style={styles.subtitle}>Добро пожаловать обратно!</Text>
+            <Text style={styles.subtitle}>С возвращением!</Text>
           </View>
 
           <View style={styles.form}>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: Sizes.margin.xlarge,
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 42,
     fontWeight: 'bold',
     color: Colors.textDark,
     marginBottom: Sizes.margin.small,

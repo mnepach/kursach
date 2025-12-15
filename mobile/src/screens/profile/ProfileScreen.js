@@ -1,15 +1,6 @@
 import { useState, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  Alert,
-  Platform,
-  StatusBar
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Alert, Platform, StatusBar,} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../context/AuthContext';
 import Colors from '../../constants/colors';
@@ -21,7 +12,6 @@ import api from '../../services/api';
 const ProfileScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
   const [progressData, setProgressData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadProgressData();
@@ -31,52 +21,36 @@ const ProfileScreen = ({ navigation }) => {
     try {
       const response = await api.getOverallStats();
       setProgressData(response.stats.languages || []);
-    } catch (error) {
-      console.error('Error loading progress:', error);
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
   };
 
   const handleLogout = () => {
-    Alert.alert(
-      'Выход',
-      'Вы уверены, что хотите выйти?',
-      [
-        { text: 'Отмена', style: 'cancel' },
-        { text: 'Выйти', onPress: logout, style: 'destructive' }
-      ]
-    );
-  };
-
-  const handleEditProfile = () => {
-    navigation.navigate('EditProfile');
-  };
-
-  const handleSubscription = () => {
-    navigation.navigate('Subscription');
+    Alert.alert('Выход', 'Вы уверены?', [
+      { text: 'Отмена', style: 'cancel' },
+      { text: 'Выйти', onPress: logout, style: 'destructive' },
+    ]);
   };
 
   const getPlanName = (planType) => {
-    switch (planType) {
-      case 'premium': return 'Премиум';
-      case 'basic': return 'Базовый';
-      default: return 'Бесплатный';
-    }
+    if (planType === 'premium') return 'Премиум';
+    if (planType === 'basic') return 'Базовый';
+    return 'Бесплатный';
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.avatarContainer}
-            onPress={handleEditProfile}
-          >
-            <Image 
-              source={{ uri: user?.avatar || 'https://via.placeholder.com/100' }}
-              style={styles.avatar}
-            />
+          <TouchableOpacity style={styles.avatarContainer}>
+            <View style={styles.avatarWrapper}>
+              <Image
+                source={{ uri: user?.avatar || 'https://via.placeholder.com/100' }}
+                style={styles.avatar}
+              />
+            </View>
             <View style={styles.editBadge}>
               <Ionicons name="camera" size={16} color={Colors.white} />
             </View>
@@ -84,8 +58,8 @@ const ProfileScreen = ({ navigation }) => {
 
           <Text style={styles.name}>{user?.name}</Text>
           <Text style={styles.email}>{user?.email}</Text>
-          
-          <TouchableOpacity onPress={handleEditProfile}>
+
+          <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
             <Text style={styles.editButton}>Редактировать профиль</Text>
           </TouchableOpacity>
         </View>
@@ -117,47 +91,25 @@ const ProfileScreen = ({ navigation }) => {
                 {getPlanName(user?.subscription?.planType)}
               </Text>
               <Text style={styles.subscriptionSubtitle}>
-                {user?.subscription?.planType === 'free' 
-                  ? 'Базовые возможности' 
+                {user?.subscription?.planType === 'free'
+                  ? 'Базовые возможности'
                   : 'Безлимитный доступ'}
               </Text>
             </View>
             {user?.subscription?.planType === 'free' && (
-              <Ionicons name="lock-closed" size={24} color={Colors.textLight} />
+              <Ionicons name="lock-closed" size={22} color={Colors.textLight} />
             )}
           </View>
-          
+
           <Button
-            title={user?.subscription?.planType === 'free' 
-              ? 'Перейти на Премиум' 
-              : 'Управление подпиской'}
-            onPress={handleSubscription}
-            variant={user?.subscription?.planType === 'free' ? 'primary' : 'outline'}
-            style={styles.subscriptionButton}
+            title={
+              user?.subscription?.planType === 'free'
+                ? 'Перейти на Премиум'
+                : 'Управление подпиской'
+            }
+            onPress={() => navigation.navigate('Subscription')}
           />
         </Card>
-
-        {progressData.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Прогресс обучения</Text>
-            {progressData.map((lang, index) => (
-              <Card key={index} style={styles.progressCard}>
-                <View style={styles.progressHeader}>
-                  <Text style={styles.languageName}>{lang.language}</Text>
-                  <Text style={styles.progressPercent}>{lang.progress}%</Text>
-                </View>
-                <View style={styles.progressBarContainer}>
-                  <View 
-                    style={[
-                      styles.progressBar, 
-                      { width: `${lang.progress}%` }
-                    ]} 
-                  />
-                </View>
-              </Card>
-            ))}
-          </View>
-        )}
 
         <View style={styles.section}>
           <Button
@@ -168,52 +120,62 @@ const ProfileScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: Colors.bgLight,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  },
+  scrollContent: {
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 8,
+    paddingBottom: Sizes.padding.xlarge,
   },
   header: {
     alignItems: 'center',
-    paddingTop: Sizes.padding.xlarge,
-    paddingBottom: Sizes.padding.large,
+    paddingTop: Sizes.padding.large,
+    paddingBottom: Sizes.padding.medium,
     backgroundColor: Colors.white,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   avatarContainer: {
-    position: 'relative',
-    marginBottom: Sizes.margin.medium,
+    marginBottom: Sizes.margin.small,
+  },
+  avatarWrapper: {
+    width: 104,
+    height: 104,
+    borderRadius: 52,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 96,
+    height: 96,
+    borderRadius: 48,
     backgroundColor: Colors.secondary,
   },
   editBadge: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    right: -2,
+    bottom: -2,
     backgroundColor: Colors.primary,
-    borderRadius: 15,
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     alignItems: 'center',
-    borderWidth: 3,
+    justifyContent: 'center',
+    borderWidth: 2,
     borderColor: Colors.white,
   },
   name: {
     fontSize: Sizes.fontSize.xxlarge,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
+    marginBottom: 2,
   },
   email: {
     fontSize: Sizes.fontSize.medium,
@@ -237,13 +199,12 @@ const styles = StyleSheet.create({
   },
   statEmoji: {
     fontSize: 32,
-    marginBottom: Sizes.margin.small,
+    marginBottom: 4,
   },
   statValue: {
     fontSize: Sizes.fontSize.xlarge,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
   },
   statLabel: {
     fontSize: Sizes.fontSize.small,
@@ -264,53 +225,13 @@ const styles = StyleSheet.create({
     fontSize: Sizes.fontSize.large,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
   },
   subscriptionSubtitle: {
     fontSize: Sizes.fontSize.medium,
     color: Colors.textLight,
   },
-  subscriptionButton: {
-    marginTop: Sizes.margin.medium,
-  },
   section: {
     paddingHorizontal: Sizes.padding.large,
-    marginBottom: Sizes.margin.large,
-  },
-  sectionTitle: {
-    fontSize: Sizes.fontSize.xlarge,
-    fontWeight: 'bold',
-    color: Colors.textDark,
-    marginBottom: Sizes.margin.medium,
-  },
-  progressCard: {
-    marginBottom: Sizes.margin.medium,
-  },
-  progressHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: Sizes.margin.small,
-  },
-  languageName: {
-    fontSize: Sizes.fontSize.medium,
-    fontWeight: 'bold',
-    color: Colors.textDark,
-  },
-  progressPercent: {
-    fontSize: Sizes.fontSize.medium,
-    fontWeight: 'bold',
-    color: Colors.primary,
-  },
-  progressBarContainer: {
-    height: 8,
-    backgroundColor: Colors.border,
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  progressBar: {
-    height: '100%',
-    backgroundColor: Colors.primary,
-    borderRadius: 4,
   },
   logoutButton: {
     borderColor: Colors.error,
