@@ -4,9 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useAuth } from '../context/AuthContext';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
-import LessonScreen from '../screens/lessons/LessonScreen';
 import EditProfileScreen from '../screens/profile/EditProfileScreen';
 import SubscriptionScreen from '../screens/subscription/SubscriptionScreen';
+import PaymentScreen from '../screens/subscription/PaymentScreen';
+import LessonScreen from '../screens/lessons/LessonScreen';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import Colors from '../constants/colors';
 
@@ -31,9 +32,10 @@ const AppNavigator = () => {
         ) : (
           <>
             <Stack.Screen name="Main" component={MainNavigator} />
-            <Stack.Screen name="Lesson" component={LessonScreen} />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
             <Stack.Screen name="Subscription" component={SubscriptionScreen} />
+            <Stack.Screen name="Payment" component={PaymentScreen} />
+            <Stack.Screen name="Lesson" component={LessonScreen} />
           </>
         )}
       </Stack.Navigator>

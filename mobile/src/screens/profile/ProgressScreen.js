@@ -6,7 +6,7 @@ import Sizes from '../../constants/sizes';
 
 const ProgressScreen = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.content}>
         <Text style={styles.title}>Прогресс</Text>
         <Text style={styles.subtitle}>Этот экран в разработке</Text>

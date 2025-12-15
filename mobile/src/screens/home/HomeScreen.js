@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, Platform, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
@@ -8,7 +9,7 @@ const HomeScreen = () => {
   const { user } = useAuth();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
@@ -48,7 +49,7 @@ const HomeScreen = () => {
           </Card>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -61,14 +62,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingTop:
-      Platform.OS === 'android'
-        ? (StatusBar.currentHeight || 0) + Sizes.padding.large
-        : Sizes.padding.xlarge,
     paddingBottom: Sizes.padding.xlarge,
   },
   header: {
     padding: Sizes.padding.large,
+    paddingTop: Sizes.padding.medium,
   },
   greeting: {
     fontSize: Sizes.fontSize.xxlarge,
