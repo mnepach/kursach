@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
@@ -29,39 +29,33 @@ const LearningMethodScreen = ({ navigation, route }) => {
     }
   };
 
-  const renderMethod = ({ item }) => {
-    const isMixed = item.id === 'mixed';
-    return (
-      <Card
-        style={[
-          styles.methodCard,
-          isMixed && styles.mixedCard,
-          { borderColor: selected === item.id ? Colors.primary : 'transparent' }
-        ]}
-        onPress={() => setSelected(item.id)}
-      >
-        <Text style={styles.icon}>{item.icon}</Text>
-        <Text style={styles.label}>{item.label}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-      </Card>
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={BackgroundImage} style={styles.background} resizeMode="cover">
         <View style={styles.content}>
           <Text style={styles.title}>Как вы любите учиться?</Text>
-          <FlatList
-            data={methods}
-            renderItem={renderMethod}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            columnWrapperStyle={styles.row}
-            scrollEnabled={false}
-            contentContainerStyle={styles.listContent}
-          />
+          
+          <ScrollView 
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.methodsContainer}
+          >
+            {methods.map((method, index) => (
+              <Card
+                key={method.id}
+                style={[
+                  styles.methodCard,
+                  { borderColor: selected === method.id ? Colors.primary : 'transparent' }
+                ]}
+                onPress={() => setSelected(method.id)}
+              >
+                <Text style={styles.icon}>{method.icon}</Text>
+                <Text style={styles.label}>{method.label}</Text>
+                <Text style={styles.description}>{method.description}</Text>
+              </Card>
+            ))}
+          </ScrollView>
         </View>
+        
         <View style={styles.footer}>
           <Button
             title="Продолжить"
@@ -76,13 +70,16 @@ const LearningMethodScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  background: { flex: 1 },
+  container: { 
+    flex: 1 
+  },
+  background: { 
+    flex: 1 
+  },
   content: {
     flex: 1,
-    justifyContent: 'center',
     paddingHorizontal: Sizes.padding.large,
-    marginTop: 120,
+    paddingTop: 100,
   },
   title: {
     fontSize: 32,
@@ -91,14 +88,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: Sizes.margin.xlarge,
   },
-  listContent: { paddingBottom: Sizes.padding.xlarge },
-  row: { justifyContent: 'space-between', marginBottom: 10 },
+  methodsContainer: {
+    paddingBottom: Sizes.padding.large,
+  },
   methodCard: {
-    flex: 1,
-    marginHorizontal: 5,
     alignItems: 'center',
-    paddingVertical: Sizes.padding.medium,
-    paddingHorizontal: Sizes.padding.large,
+    paddingVertical: Sizes.padding.large,
+    paddingHorizontal: Sizes.padding.medium,
+    marginBottom: 12,
     backgroundColor: Colors.white,
     borderRadius: 18,
     borderWidth: 3,
@@ -106,10 +103,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
     elevation: 0,
   },
-  mixedCard: {
-    paddingHorizontal: 1, 
+  icon: { 
+    fontSize: 32, 
+    marginBottom: 8,
   },
-  icon: { fontSize: 28, marginBottom: 4 },
   label: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -129,7 +126,9 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
     backgroundColor: Colors.white,
   },
-  button: { width: '100%' },
+  button: { 
+    width: '100%' 
+  },
 });
 
 export default LearningMethodScreen;

@@ -5,7 +5,6 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// Получить весь прогресс пользователя
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const progress = await Progress.find({ user: req.user._id });
@@ -16,7 +15,6 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
-// Получить прогресс по конкретному языку
 router.get('/:language', authMiddleware, async (req, res) => {
   try {
     const { language } = req.params;
@@ -26,7 +24,6 @@ router.get('/:language', authMiddleware, async (req, res) => {
       language 
     });
     
-    // Если прогресса нет, создаем новый
     if (!progress) {
       const languageData = {
         'Английский': '../trickle/assets/england.png',
@@ -51,7 +48,6 @@ router.get('/:language', authMiddleware, async (req, res) => {
   }
 });
 
-// Обновить прогресс после завершения урока
 router.post('/:language/complete', authMiddleware, async (req, res) => {
   try {
     const { language } = req.params;
@@ -66,13 +62,32 @@ router.post('/:language/complete', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Прогресс не найден' });
     }
     
-    // Обновляем прогресс
-    await progress.updateProgress(lessonId, score);
+    const existingLesson = progress.completedLessons.find(
+      cl => cl.lessonId === lessonId
+    );
     
-    // Обновляем статистику пользователя
+    if (existingLesson) {
+      existingLesson.score = Math.max(existingLesson.score, score);
+      existingLesson.completedAt = new Date();
+    } else {
+      progress.completedLessons.push({
+        lessonId,
+        completedAt: new Date(),
+        score
+      });
+    }
+    
+    progress.totalLessonsCompleted = progress.completedLessons.length;
+    progress.vocabularyLearned += 5;
+    progress.overallProgress = Math.min(100, progress.totalLessonsCompleted * 5);
+    progress.lastActivityDate = new Date();
+    
+    await progress.save();
+    
     const user = await User.findById(req.user._id);
     user.statistics.experience += score || 10;
-    user.statistics.streak = calculateStreak(progress.lastActivityDate);
+    user.statistics.streak = calculateStreak(progress.lastActivityDate, user.statistics.lastActivityDate);
+    user.statistics.lastActivityDate = new Date();
     await user.save();
     
     res.json({ 
@@ -86,7 +101,6 @@ router.post('/:language/complete', authMiddleware, async (req, res) => {
   }
 });
 
-// Получить статистику пользователя
 router.get('/stats/overall', authMiddleware, async (req, res) => {
   try {
     const progress = await Progress.find({ user: req.user._id });
@@ -111,19 +125,25 @@ router.get('/stats/overall', authMiddleware, async (req, res) => {
   }
 });
 
-// Вспомогательная функция для расчета серии дней
-function calculateStreak(lastActivity) {
+function calculateStreak(lastActivity, previousActivity) {
   const now = new Date();
   const lastDate = new Date(lastActivity);
-  const diffTime = Math.abs(now - lastDate);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const prevDate = previousActivity ? new Date(previousActivity) : null;
   
-  // Если последняя активность была сегодня или вчера, увеличиваем серию
-  if (diffDays <= 1) {
-    return 1; // В реальном приложении это должно быть более сложным
+  const hoursSinceLastActivity = Math.abs(now - lastDate) / 36e5;
+  
+  if (hoursSinceLastActivity > 48) {
+    return 1;
   }
   
-  return 0;
+  if (prevDate) {
+    const hoursBetweenActivities = Math.abs(lastDate - prevDate) / 36e5;
+    if (hoursBetweenActivities <= 48) {
+      return 1;
+    }
+  }
+  
+  return 1;
 }
 
 module.exports = router;

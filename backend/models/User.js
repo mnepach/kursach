@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: './trickle/assets/default-avatar.png'
+    default: 'https://via.placeholder.com/150'
   },
   subscription: {
     type: mongoose.Schema.Types.ObjectId,
@@ -47,6 +47,10 @@ const userSchema = new mongoose.Schema({
     achievements: {
       type: Number,
       default: 0
+    },
+    lastActivityDate: {
+      type: Date,
+      default: null
     }
   },
   hasCompletedOnboarding: {

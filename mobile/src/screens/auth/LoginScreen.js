@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../context/AuthContext';
 import Colors from '../../constants/colors';
@@ -87,13 +87,13 @@ const LoginScreen = ({ navigation }) => {
               loading={loading}
               style={styles.button}
             />
+          </View>
 
-            <Button
-              title="Нет аккаунта? Зарегистрироваться"
-              onPress={() => navigation.navigate('LanguageSelection')}
-              variant="outline"
-              style={styles.button}
-            />
+          <View style={styles.registerContainer}>
+            <Text style={styles.registerText}>Нет аккаунта? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('LanguageSelection')}>
+              <Text style={styles.registerLink}>Зарегистрироваться</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -133,6 +133,24 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: Sizes.margin.medium,
+  },
+  registerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: Sizes.margin.xlarge,
+    paddingTop: Sizes.padding.large,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+  },
+  registerText: {
+    fontSize: Sizes.fontSize.medium,
+    color: Colors.textLight,
+  },
+  registerLink: {
+    fontSize: Sizes.fontSize.medium,
+    color: Colors.primary,
+    fontWeight: '600',
   },
 });
 

@@ -12,26 +12,32 @@ import Button from '../../components/common/Button';
 const EditProfileScreen = ({ navigation }) => {
   const { user, updateUser } = useAuth();
   const [name, setName] = useState(user?.name || '');
-  const [avatar, setAvatar] = useState(user?.avatar || '');
+  const [avatar, setAvatar] = useState(user?.avatar || 'https://via.placeholder.com/150');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const pickImage = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permissionResult.granted) {
-      Alert.alert('Ошибка', 'Необходимо разрешение на доступ к галерее');
-      return;
-    }
+    try {
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      
+      if (!permissionResult.granted) {
+        Alert.alert('Ошибка', 'Необходимо разрешение на доступ к галерее');
+        return;
+      }
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaType.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.7,
-    });
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.7,
+      });
 
-    if (!result.canceled) {
-      setAvatar(result.assets[0].uri);
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        setAvatar(result.assets[0].uri);
+      }
+    } catch (err) {
+      console.error('Error picking image:', err);
+      Alert.alert('Ошибка', 'Не удалось выбрать изображение');
     }
   };
 
@@ -70,7 +76,7 @@ const EditProfileScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.avatarContainer} onPress={pickImage}>
           <View style={styles.avatarWrapper}>
             <Image
-              source={{ uri: avatar || 'https://via.placeholder.com/150' }}
+              source={{ uri: avatar }}
               style={styles.avatar}
             />
             <View style={styles.cameraButton}>

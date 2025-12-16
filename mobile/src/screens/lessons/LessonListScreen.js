@@ -14,21 +14,33 @@ const LessonListScreen = ({ navigation }) => {
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [progress, setProgress] = useState(null);
 
   useEffect(() => {
     if (user?.onboardingData?.selectedLanguage) {
       setSelectedLanguage(user.onboardingData.selectedLanguage);
-      loadLessons(user.onboardingData.selectedLanguage.name);
+      loadData(user.onboardingData.selectedLanguage.name);
     } else {
       setLoading(false);
     }
   }, [user]);
 
-  const loadLessons = async (language) => {
+  const loadData = async (language) => {
     try {
       setLoading(true);
-      const response = await api.getLessons(language);
-      setLessons(response.lessons || []);
+      const [lessonsResponse, progressResponse] = await Promise.all([
+        api.getLessons(language),
+        api.getLanguageProgress(language),
+      ]);
+      
+      const sortedLessons = sortLessonsByLevel(lessonsResponse.lessons || []);
+      const unlockedLessons = determineUnlockedLessons(
+        sortedLessons, 
+        progressResponse.progress?.completedLessons || []
+      );
+      
+      setLessons(unlockedLessons);
+      setProgress(progressResponse.progress);
     } catch (error) {
       console.error('Error loading lessons:', error);
     } finally {
@@ -36,9 +48,41 @@ const LessonListScreen = ({ navigation }) => {
     }
   };
 
+  const sortLessonsByLevel = (lessons) => {
+    const levelOrder = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
+    return lessons.sort((a, b) => {
+      const levelDiff = levelOrder[a.level] - levelOrder[b.level];
+      if (levelDiff !== 0) return levelDiff;
+      return a.lessonNumber - b.lessonNumber;
+    });
+  };
+
+  const determineUnlockedLessons = (lessons, completedLessons) => {
+    if (lessons.length === 0) return [];
+
+    const completedIds = new Set(completedLessons.map(cl => cl.lessonId));
+    let lastUnlockedIndex = -1;
+
+    return lessons.map((lesson, index) => {
+      const isCompleted = completedIds.has(lesson._id);
+      const isFirst = index === 0;
+      const isPreviousCompleted = index > 0 && completedIds.has(lessons[index - 1]._id);
+      const isUnlocked = isFirst || isPreviousCompleted || isCompleted;
+
+      if (isUnlocked) {
+        lastUnlockedIndex = index;
+      }
+
+      return {
+        ...lesson,
+        isLocked: !isUnlocked,
+        isCompleted,
+      };
+    });
+  };
+
   const handleLessonPress = (lesson) => {
-    if (lesson.locked) {
-      navigation.navigate('Subscription');
+    if (lesson.isLocked) {
       return;
     }
     
@@ -79,49 +123,69 @@ const LessonListScreen = ({ navigation }) => {
 
   const renderLesson = ({ item, index }) => (
     <Card
-      style={styles.lessonCard}
+      style={[
+        styles.lessonCard,
+        item.isCompleted && styles.completedCard,
+        item.isLocked && styles.lockedCard,
+      ]}
       onPress={() => handleLessonPress(item)}
+      disabled={item.isLocked}
     >
       <View style={styles.lessonHeader}>
         <View style={styles.lessonNumber}>
-          <Text style={styles.lessonNumberText}>{item.lessonNumber}</Text>
+          {item.isCompleted ? (
+            <Ionicons name="checkmark" size={24} color={Colors.white} />
+          ) : item.isLocked ? (
+            <Ionicons name="lock-closed" size={24} color={Colors.white} />
+          ) : (
+            <Text style={styles.lessonNumberText}>{item.lessonNumber}</Text>
+          )}
         </View>
         <View style={styles.lessonInfo}>
-          <Text style={styles.lessonTitle}>{item.title}</Text>
+          <Text style={[styles.lessonTitle, item.isLocked && styles.lockedText]}>
+            {item.title}
+          </Text>
           <Text style={styles.lessonDescription}>
             {item.exercises.length} упражнений • {item.totalPoints} очков
           </Text>
         </View>
         <View style={styles.lessonRight}>
-          {item.locked ? (
-            <View style={styles.lockBadge}>
-              <Ionicons name="lock-closed" size={16} color={Colors.white} />
-            </View>
-          ) : (
-            <View style={[styles.levelBadge, { backgroundColor: getLevelColor(item.level) }]}>
-              <Text style={styles.levelText}>{item.level}</Text>
-            </View>
-          )}
+          <View style={[styles.levelBadge, { backgroundColor: getLevelColor(item.level) }]}>
+            <Text style={styles.levelText}>{item.level}</Text>
+          </View>
         </View>
       </View>
     </Card>
   );
 
-  return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <View style={styles.languageInfo}>
-          {selectedLanguage.flag && (
-            <Image source={selectedLanguage.flag} style={styles.flagImage} />
-          )}
-          <Text style={styles.headerTitle}>{selectedLanguage.name}</Text>
-        </View>
-      </View>
+  const renderSectionHeader = (level) => (
+    <View style={[styles.sectionHeader, { borderLeftColor: getLevelColor(level) }]}>
+      <Text style={styles.sectionTitle}>Уровень {level}</Text>
+    </View>
+  );
 
+  const renderListWithSections = () => {
+    const sections = [];
+    let currentLevel = null;
+
+    lessons.forEach((lesson, index) => {
+      if (lesson.level !== currentLevel) {
+        currentLevel = lesson.level;
+        sections.push({ type: 'header', level: currentLevel, key: `header-${currentLevel}` });
+      }
+      sections.push({ type: 'lesson', data: lesson, key: `lesson-${lesson._id}` });
+    });
+
+    return (
       <FlatList
-        data={lessons}
-        renderItem={renderLesson}
-        keyExtractor={(item, index) => `${item._id || index}`}
+        data={sections}
+        renderItem={({ item }) => {
+          if (item.type === 'header') {
+            return renderSectionHeader(item.level);
+          }
+          return renderLesson({ item: item.data });
+        }}
+        keyExtractor={(item) => item.key}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
@@ -133,6 +197,28 @@ const LessonListScreen = ({ navigation }) => {
           </View>
         }
       />
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <View style={styles.header}>
+        <View style={styles.languageInfo}>
+          {selectedLanguage.flag && (
+            <Image source={selectedLanguage.flag} style={styles.flagImage} />
+          )}
+          <View>
+            <Text style={styles.headerTitle}>{selectedLanguage.name}</Text>
+            {progress && (
+              <Text style={styles.headerSubtitle}>
+                Пройдено: {progress.totalLessonsCompleted} уроков
+              </Text>
+            )}
+          </View>
+        </View>
+      </View>
+
+      {renderListWithSections()}
     </SafeAreaView>
   );
 };
@@ -155,12 +241,29 @@ const styles = StyleSheet.create({
     gap: Sizes.margin.medium,
   },
   flagImage: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   headerTitle: {
     fontSize: Sizes.fontSize.xlarge,
+    fontWeight: 'bold',
+    color: Colors.textDark,
+  },
+  headerSubtitle: {
+    fontSize: Sizes.fontSize.small,
+    color: Colors.textLight,
+    marginTop: 2,
+  },
+  sectionHeader: {
+    paddingVertical: Sizes.padding.medium,
+    paddingHorizontal: Sizes.padding.large,
+    backgroundColor: Colors.bgLight,
+    borderLeftWidth: 4,
+    marginBottom: Sizes.margin.small,
+  },
+  sectionTitle: {
+    fontSize: Sizes.fontSize.large,
     fontWeight: 'bold',
     color: Colors.textDark,
   },
@@ -171,6 +274,14 @@ const styles = StyleSheet.create({
   lessonCard: {
     marginBottom: Sizes.margin.medium,
     padding: Sizes.padding.large,
+  },
+  completedCard: {
+    backgroundColor: '#F0FDF4',
+    borderWidth: 2,
+    borderColor: Colors.success,
+  },
+  lockedCard: {
+    opacity: 0.6,
   },
   lessonHeader: {
     flexDirection: 'row',
@@ -199,6 +310,9 @@ const styles = StyleSheet.create({
     color: Colors.textDark,
     marginBottom: Sizes.margin.small,
   },
+  lockedText: {
+    color: Colors.textLight,
+  },
   lessonDescription: {
     fontSize: Sizes.fontSize.small,
     color: Colors.textLight,
@@ -215,14 +329,6 @@ const styles = StyleSheet.create({
     fontSize: Sizes.fontSize.tiny,
     fontWeight: 'bold',
     color: Colors.white,
-  },
-  lockBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: Colors.textLight,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   emptyContainer: {
     flex: 1,
