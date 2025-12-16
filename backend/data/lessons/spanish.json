@@ -1,0 +1,486 @@
+[
+  {
+    "lessonNumber": 1,
+    "title": "Saludos",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Привет",
+        "targetLanguage": "испанский",
+        "options": ["Hola", "Adiós", "Gracias"],
+        "correctAnswer": "Hola",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Доброе утро",
+        "options": [
+          { "emoji": "☀️", "text": "Buenos días" },
+          { "emoji": "🌙", "text": "Buenas noches" },
+          { "emoji": "🌆", "text": "Buenas tardes" }
+        ],
+        "correctAnswer": "Buenos días",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "como_estas.mp3",
+        "words": ["¿Cómo", "estás?"],
+        "correctAnswer": "¿Cómo estás?",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Mucho gusto",
+        "options": ["Приятно познакомиться", "До свидания", "Спасибо"],
+        "correctAnswer": "Приятно познакомиться",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спасибо",
+        "targetLanguage": "испанский",
+        "options": ["Gracias", "Por favor", "De nada"],
+        "correctAnswer": "Gracias",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 2,
+    "title": "Presentación",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Меня зовут",
+        "targetLanguage": "испанский",
+        "options": ["Me llamo", "Soy de", "Encantado"],
+        "correctAnswer": "Me llamo",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "como_te_llamas.mp3",
+        "words": ["¿Cómo", "te", "llamas?"],
+        "correctAnswer": "¿Cómo te llamas?",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "¿De dónde eres?",
+        "options": ["Откуда ты?", "Как тебя зовут?", "Сколько тебе лет?"],
+        "correctAnswer": "Откуда ты?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я из России",
+        "targetLanguage": "испанский",
+        "options": ["Soy de Rusia", "Vivo en Rusia", "Rusia es mi país"],
+        "correctAnswer": "Soy de Rusia",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Друг",
+        "options": [
+          { "emoji": "👫", "text": "Amigo" },
+          { "emoji": "👨‍👩‍👧", "text": "Familia" },
+          { "emoji": "👤", "text": "Desconocido" }
+        ],
+        "correctAnswer": "Amigo",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 3,
+    "title": "Números",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Один",
+        "targetLanguage": "испанский",
+        "options": ["Uno", "Dos", "Tres"],
+        "correctAnswer": "Uno",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Пять",
+        "options": [
+          { "emoji": "5️⃣", "text": "Cinco" },
+          { "emoji": "3️⃣", "text": "Tres" },
+          { "emoji": "7️⃣", "text": "Siete" }
+        ],
+        "correctAnswer": "Cinco",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Diez",
+        "options": ["Десять", "Двадцать", "Сто"],
+        "correctAnswer": "Десять",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "contar_cinco.mp3",
+        "words": ["Uno", "dos", "tres", "cuatro", "cinco"],
+        "correctAnswer": "Uno dos tres cuatro cinco",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Двадцать",
+        "targetLanguage": "испанский",
+        "options": ["Veinte", "Doce", "Dos"],
+        "correctAnswer": "Veinte",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 4,
+    "title": "Colores",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "selectImage",
+        "word": "Красный",
+        "options": [
+          { "emoji": "🔴", "text": "Rojo" },
+          { "emoji": "🔵", "text": "Azul" },
+          { "emoji": "🟢", "text": "Verde" }
+        ],
+        "correctAnswer": "Rojo",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Синий",
+        "targetLanguage": "испанский",
+        "options": ["Azul", "Negro", "Marrón"],
+        "correctAnswer": "Azul",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Amarillo",
+        "options": ["Жёлтый", "Зелёный", "Оранжевый"],
+        "correctAnswer": "Жёлтый",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Белый",
+        "options": [
+          { "emoji": "⚪", "text": "Blanco" },
+          { "emoji": "⚫", "text": "Negro" },
+          { "emoji": "🟤", "text": "Marrón" }
+        ],
+        "correctAnswer": "Blanco",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Зелёный",
+        "targetLanguage": "испанский",
+        "options": ["Verde", "Gris", "Dorado"],
+        "correctAnswer": "Verde",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 5,
+    "title": "Familia",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Мама",
+        "targetLanguage": "испанский",
+        "options": ["Madre", "Padre", "Hermana"],
+        "correctAnswer": "Madre",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Папа",
+        "options": [
+          { "emoji": "👨", "text": "Padre" },
+          { "emoji": "👩", "text": "Madre" },
+          { "emoji": "👦", "text": "Hermano" }
+        ],
+        "correctAnswer": "Padre",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Hermana",
+        "options": ["Сестра", "Брат", "Дочь"],
+        "correctAnswer": "Сестра",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "mi_familia.mp3",
+        "words": ["Esta", "es", "mi", "familia"],
+        "correctAnswer": "Esta es mi familia",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Брат",
+        "targetLanguage": "испанский",
+        "options": ["Hermano", "Padre", "Hijo"],
+        "correctAnswer": "Hermano",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 6,
+    "title": "Comida y bebidas",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "selectImage",
+        "word": "Яблоко",
+        "options": [
+          { "emoji": "🍎", "text": "Manzana" },
+          { "emoji": "🍌", "text": "Plátano" },
+          { "emoji": "🍊", "text": "Naranja" }
+        ],
+        "correctAnswer": "Manzana",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Вода",
+        "targetLanguage": "испанский",
+        "options": ["Agua", "Leche", "Jugo"],
+        "correctAnswer": "Agua",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Pan",
+        "options": ["Хлеб", "Масло", "Сыр"],
+        "correctAnswer": "Хлеб",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хочу пить",
+        "targetLanguage": "испанский",
+        "options": ["Tengo sed", "Tengo hambre", "Estoy cansado"],
+        "correctAnswer": "Tengo sed",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "me_gusta_pizza.mp3",
+        "words": ["Me", "gusta", "la", "pizza"],
+        "correctAnswer": "Me gusta la pizza",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 7,
+    "title": "Casa",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Дом",
+        "targetLanguage": "испанский",
+        "options": ["Casa", "Apartamento", "Edificio"],
+        "correctAnswer": "Casa",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Комната",
+        "options": [
+          { "emoji": "🛏️", "text": "Habitación" },
+          { "emoji": "🚪", "text": "Puerta" },
+          { "emoji": "🪟", "text": "Ventana" }
+        ],
+        "correctAnswer": "Habitación",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Cocina",
+        "options": ["Кухня", "Ванная", "Спальня"],
+        "correctAnswer": "Кухня",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Где ванная?",
+        "targetLanguage": "испанский",
+        "options": ["¿Dónde está el baño?", "Este es el baño", "Necesito un baño"],
+        "correctAnswer": "¿Dónde está el baño?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "mi_habitacion.mp3",
+        "words": ["Esta", "es", "mi", "habitación"],
+        "correctAnswer": "Esta es mi habitación",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 8,
+    "title": "Tiempo y días",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Понедельник",
+        "targetLanguage": "испанский",
+        "options": ["Lunes", "Martes", "Domingo"],
+        "correctAnswer": "Lunes",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Утро",
+        "options": [
+          { "emoji": "🌅", "text": "Mañana" },
+          { "emoji": "🌃", "text": "Noche" },
+          { "emoji": "🌆", "text": "Tarde" }
+        ],
+        "correctAnswer": "Mañana",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "¿Qué hora es?",
+        "options": ["Который час?", "Какой день?", "Какая дата?"],
+        "correctAnswer": "Который час?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "hoy_lunes.mp3",
+        "words": ["Hoy", "es", "lunes"],
+        "correctAnswer": "Hoy es lunes",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Сейчас три часа",
+        "targetLanguage": "испанский",
+        "options": ["Son las tres", "Son las dos", "Son las cuatro"],
+        "correctAnswer": "Son las tres",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 9,
+    "title": "Clima",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "selectImage",
+        "word": "Солнечно",
+        "options": [
+          { "emoji": "☀️", "text": "Soleado" },
+          { "emoji": "🌧️", "text": "Lluvioso" },
+          { "emoji": "❄️", "text": "Nevado" }
+        ],
+        "correctAnswer": "Soleado",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Холодно",
+        "targetLanguage": "испанский",
+        "options": ["Frío", "Calor", "Templado"],
+        "correctAnswer": "Frío",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Está lloviendo",
+        "options": ["Идёт дождь", "Идёт снег", "Солнечно"],
+        "correctAnswer": "Идёт дождь",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "buen_tiempo.mp3",
+        "words": ["Hace", "buen", "tiempo"],
+        "correctAnswer": "Hace buen tiempo",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Какая сегодня погода?",
+        "targetLanguage": "испанский",
+        "options": ["¿Qué tiempo hace hoy?", "¿Cómo está el tiempo?", "¿Está soleado?"],
+        "correctAnswer": "¿Qué tiempo hace hoy?",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 10,
+    "title": "Compras",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Сколько это стоит?",
+        "targetLanguage": "испанский",
+        "options": ["¿Cuánto cuesta?", "¿Qué es esto?", "¿Dónde está?"],
+        "correctAnswer": "¿Cuánto cuesta?",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Магазин",
+        "options": [
+          { "emoji": "🏪", "text": "Tienda" },
+          { "emoji": "🏦", "text": "Banco" },
+          { "emoji": "🏥", "text": "Hospital" }
+        ],
+        "correctAnswer": "Tienda",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Quiero comprar esto",
+        "options": ["Я хочу купить это", "Я продаю это", "Это дорого"],
+        "correctAnswer": "Я хочу купить это",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "puedo_ayudar.mp3",
+        "words": ["¿Puedo", "ayudarle?"],
+        "correctAnswer": "¿Puedo ayudarle?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Это слишком дорого",
+        "targetLanguage": "испанский",
+        "options": ["Es muy caro", "Es muy barato", "Lo compro"],
+        "correctAnswer": "Es muy caro",
+        "points": 10
+      }
+    ]
+  }
+]

@@ -1,0 +1,486 @@
+[
+  {
+    "lessonNumber": 1,
+    "title": "인사 (Приветствия)",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Привет",
+        "targetLanguage": "корейский",
+        "options": ["안녕하세요", "안녕히 가세요", "감사합니다"],
+        "correctAnswer": "안녕하세요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Доброе утро",
+        "options": [
+          { "emoji": "☀️", "text": "좋은 아침" },
+          { "emoji": "🌙", "text": "안녕히 주무세요" },
+          { "emoji": "🌆", "text": "좋은 저녁" }
+        ],
+        "correctAnswer": "좋은 아침",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "jal_지냈어요.mp3",
+        "words": ["잘", "지냈어요?"],
+        "correctAnswer": "잘 지냈어요?",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "만나서 반갑습니다",
+        "options": ["Приятно познакомиться", "До свидания", "Спасибо"],
+        "correctAnswer": "Приятно познакомиться",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спасибо",
+        "targetLanguage": "корейский",
+        "options": ["감사합니다", "천만에요", "죄송합니다"],
+        "correctAnswer": "감사합니다",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 2,
+    "title": "자기소개 (Знакомство)",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Меня зовут",
+        "targetLanguage": "корейский",
+        "options": ["제 이름은", "어디서", "반갑습니다"],
+        "correctAnswer": "제 이름은",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "ireum_mwoyeyo.mp3",
+        "words": ["이름이", "뭐예요?"],
+        "correctAnswer": "이름이 뭐예요?",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "어디서 왔어요?",
+        "options": ["Откуда вы?", "Как вас зовут?", "Сколько вам лет?"],
+        "correctAnswer": "Откуда вы?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я из России",
+        "targetLanguage": "корейский",
+        "options": ["러시아에서 왔어요", "러시아에 살아요", "러시아입니다"],
+        "correctAnswer": "러시아에서 왔어요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Друг",
+        "options": [
+          { "emoji": "👫", "text": "친구" },
+          { "emoji": "👨‍👩‍👧", "text": "가족" },
+          { "emoji": "👤", "text": "낯선 사람" }
+        ],
+        "correctAnswer": "친구",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 3,
+    "title": "숫자 (Цифры)",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Один",
+        "targetLanguage": "корейский",
+        "options": ["하나", "둘", "셋"],
+        "correctAnswer": "하나",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Пять",
+        "options": [
+          { "emoji": "5️⃣", "text": "다섯" },
+          { "emoji": "3️⃣", "text": "셋" },
+          { "emoji": "7️⃣", "text": "일곱" }
+        ],
+        "correctAnswer": "다섯",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "열",
+        "options": ["Десять", "Двадцать", "Сто"],
+        "correctAnswer": "Десять",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "hana_daseot.mp3",
+        "words": ["하나", "둘", "셋", "넷", "다섯"],
+        "correctAnswer": "하나 둘 셋 넷 다섯",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Двадцать",
+        "targetLanguage": "корейский",
+        "options": ["스물", "열둘", "둘"],
+        "correctAnswer": "스물",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 4,
+    "title": "색깔 (Цвета)",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "selectImage",
+        "word": "Красный",
+        "options": [
+          { "emoji": "🔴", "text": "빨간색" },
+          { "emoji": "🔵", "text": "파란색" },
+          { "emoji": "🟢", "text": "초록색" }
+        ],
+        "correctAnswer": "빨간색",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Синий",
+        "targetLanguage": "корейский",
+        "options": ["파란색", "검은색", "갈색"],
+        "correctAnswer": "파란색",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "노란색",
+        "options": ["Жёлтый", "Зелёный", "Оранжевый"],
+        "correctAnswer": "Жёлтый",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Белый",
+        "options": [
+          { "emoji": "⚪", "text": "하얀색" },
+          { "emoji": "⚫", "text": "검은색" },
+          { "emoji": "🟤", "text": "갈색" }
+        ],
+        "correctAnswer": "하얀색",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Зелёный",
+        "targetLanguage": "корейский",
+        "options": ["초록색", "회색", "금색"],
+        "correctAnswer": "초록색",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 5,
+    "title": "가족 (Семья)",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Мама",
+        "targetLanguage": "корейский",
+        "options": ["어머니", "아버지", "누나"],
+        "correctAnswer": "어머니",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Папа",
+        "options": [
+          { "emoji": "👨", "text": "아버지" },
+          { "emoji": "👩", "text": "어머니" },
+          { "emoji": "👦", "text": "형" }
+        ],
+        "correctAnswer": "아버지",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "여동생",
+        "options": ["Младшая сестра", "Брат", "Дочь"],
+        "correctAnswer": "Младшая сестра",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "uri_gajok.mp3",
+        "words": ["우리", "가족", "이에요"],
+        "correctAnswer": "우리 가족 이에요",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Брат",
+        "targetLanguage": "корейский",
+        "options": ["형", "아버지", "아들"],
+        "correctAnswer": "형",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 6,
+    "title": "음식 (Еда)",
+    "level": "A1",
+    "exercises": [
+      {
+        "type": "selectImage",
+        "word": "Яблоко",
+        "options": [
+          { "emoji": "🍎", "text": "사과" },
+          { "emoji": "🍌", "text": "바나나" },
+          { "emoji": "🍊", "text": "오렌지" }
+        ],
+        "correctAnswer": "사과",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Вода",
+        "targetLanguage": "корейский",
+        "options": ["물", "우유", "주스"],
+        "correctAnswer": "물",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "빵",
+        "options": ["Хлеб", "Масло", "Сыр"],
+        "correctAnswer": "Хлеб",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хочу пить",
+        "targetLanguage": "корейский",
+        "options": ["목말라요", "배고파요", "피곤해요"],
+        "correctAnswer": "목말라요",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "kimchi_joahaeyo.mp3",
+        "words": ["김치를", "좋아해요"],
+        "correctAnswer": "김치를 좋아해요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 7,
+    "title": "집 (Дом)",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Дом",
+        "targetLanguage": "корейский",
+        "options": ["집", "아파트", "건물"],
+        "correctAnswer": "집",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Комната",
+        "options": [
+          { "emoji": "🛏️", "text": "방" },
+          { "emoji": "🚪", "text": "문" },
+          { "emoji": "🪟", "text": "창문" }
+        ],
+        "correctAnswer": "방",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "부엌",
+        "options": ["Кухня", "Ванная", "Спальня"],
+        "correctAnswer": "Кухня",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Где ванная?",
+        "targetLanguage": "корейский",
+        "options": ["화장실이 어디예요?", "이게 화장실이에요", "화장실이 필요해요"],
+        "correctAnswer": "화장실이 어디예요?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "nae_bang.mp3",
+        "words": ["제", "방", "이에요"],
+        "correctAnswer": "제 방 이에요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 8,
+    "title": "시간 (Время)",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Понедельник",
+        "targetLanguage": "корейский",
+        "options": ["월요일", "화요일", "일요일"],
+        "correctAnswer": "월요일",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Утро",
+        "options": [
+          { "emoji": "🌅", "text": "아침" },
+          { "emoji": "🌃", "text": "밤" },
+          { "emoji": "🌆", "text": "저녁" }
+        ],
+        "correctAnswer": "아침",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "몇 시예요?",
+        "options": ["Который час?", "Какой день?", "Какая дата?"],
+        "correctAnswer": "Который час?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "oneul_woryoil.mp3",
+        "words": ["오늘은", "월요일", "이에요"],
+        "correctAnswer": "오늘은 월요일 이에요",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Сейчас три часа",
+        "targetLanguage": "корейский",
+        "options": ["세 시예요", "두 시예요", "네 시예요"],
+        "correctAnswer": "세 시예요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 9,
+    "title": "날씨 (Погода)",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "selectImage",
+        "word": "Солнечно",
+        "options": [
+          { "emoji": "☀️", "text": "맑아요" },
+          { "emoji": "🌧️", "text": "비가 와요" },
+          { "emoji": "❄️", "text": "눈이 와요" }
+        ],
+        "correctAnswer": "맑아요",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Холодно",
+        "targetLanguage": "корейский",
+        "options": ["추워요", "더워요", "따뜻해요"],
+        "correctAnswer": "추워요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "비가 와요",
+        "options": ["Идёт дождь", "Идёт снег", "Солнечно"],
+        "correctAnswer": "Идёт дождь",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "joeun_nalssi.mp3",
+        "words": ["좋은", "날씨", "예요"],
+        "correctAnswer": "좋은 날씨 예요",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Какая сегодня погода?",
+        "targetLanguage": "корейский",
+        "options": ["오늘 날씨가 어때요?", "날씨가 어때요?", "맑아요?"],
+        "correctAnswer": "오늘 날씨가 어때요?",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 10,
+    "title": "쇼핑 (Покупки)",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Сколько это стоит?",
+        "targetLanguage": "корейский",
+        "options": ["얼마예요?", "이게 뭐예요?", "어디예요?"],
+        "correctAnswer": "얼마예요?",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Магазин",
+        "options": [
+          { "emoji": "🏪", "text": "가게" },
+          { "emoji": "🏦", "text": "은행" },
+          { "emoji": "🏥", "text": "병원" }
+        ],
+        "correctAnswer": "가게",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "이걸 사고 싶어요",
+        "options": ["Я хочу купить это", "Я продаю это", "Это дорого"],
+        "correctAnswer": "Я хочу купить это",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "eoseo_oseyo.mp3",
+        "words": ["어서", "오세요"],
+        "correctAnswer": "어서 오세요",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Это слишком дорого",
+        "targetLanguage": "корейский",
+        "options": ["너무 비싸요", "싸요", "살게요"],
+        "correctAnswer": "너무 비싸요",
+        "points": 10
+      }
+    ]
+  }
+]
