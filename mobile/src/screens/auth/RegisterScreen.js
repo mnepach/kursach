@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert, TouchableOpacity,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../context/AuthContext';
 import Colors from '../../constants/colors';
@@ -10,7 +10,7 @@ import Button from '../../components/common/Button';
 const RegisterScreen = ({ navigation, route }) => {
   const { register } = useAuth();
   const onboardingData = route.params?.onboardingData || {};
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,27 +20,18 @@ const RegisterScreen = ({ navigation, route }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!name.trim()) {
-      newErrors.name = 'Введите имя';
-    }
-    
-    if (!email) {
-      newErrors.email = 'Введите email';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Некорректный email';
-    }
-    
-    if (!password) {
-      newErrors.password = 'Введите пароль';
-    } else if (password.length < 6) {
-      newErrors.password = 'Минимум 6 символов';
-    }
-    
-    if (password !== confirmPassword) {
+
+    if (!name.trim()) newErrors.name = 'Введите имя';
+
+    if (!email) newErrors.email = 'Введите email';
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Некорректный email';
+
+    if (!password) newErrors.password = 'Введите пароль';
+    else if (password.length < 6) newErrors.password = 'Минимум 6 символов';
+
+    if (password !== confirmPassword)
       newErrors.confirmPassword = 'Пароли не совпадают';
-    }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -55,7 +46,7 @@ const RegisterScreen = ({ navigation, route }) => {
         email,
         password,
         onboardingData,
-        selectedPlan: 'free'
+        selectedPlan: 'free',
       });
     } catch (error) {
       Alert.alert('Ошибка', error.message || 'Не удалось зарегистрироваться');
@@ -69,9 +60,8 @@ const RegisterScreen = ({ navigation, route }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        <ScrollView 
+        <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -124,15 +114,15 @@ const RegisterScreen = ({ navigation, route }) => {
               loading={loading}
               style={styles.button}
             />
-
-            <Button
-              title="Уже есть аккаунт? Войти"
-              onPress={() => navigation.navigate('Login')}
-              variant="outline"
-              style={styles.button}
-            />
           </View>
         </ScrollView>
+
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginText}>Уже есть аккаунт? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.loginLink}>Войти</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -147,9 +137,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    flexGrow: 1,
     padding: Sizes.padding.large,
-    paddingBottom: Sizes.padding.xlarge + 20,
+    paddingBottom: Sizes.padding.xlarge,
   },
   header: {
     marginTop: Sizes.margin.xlarge,
@@ -170,6 +159,24 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: Sizes.margin.medium,
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: Sizes.padding.large,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+    backgroundColor: Colors.bgLight,
+  },
+  loginText: {
+    fontSize: Sizes.fontSize.medium,
+    color: Colors.textLight,
+  },
+  loginLink: {
+    fontSize: Sizes.fontSize.medium,
+    color: Colors.primary,
+    fontWeight: '600',
   },
 });
 

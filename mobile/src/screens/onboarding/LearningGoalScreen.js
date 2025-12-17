@@ -16,7 +16,7 @@ const LearningGoalScreen = ({ navigation, route }) => {
     { id: 'work', label: 'Работа', icon: '💼' },
     { id: 'study', label: 'Учеба', icon: '📚' },
     { id: 'culture', label: 'Культура', icon: '🎭' },
-    { id: 'family', label: 'Семья', icon: '❤️' },
+    { id: 'family', label: 'Друзья', icon: '❤️' },
     { id: 'brain', label: 'Развитие', icon: '🧠' },
   ];
 
@@ -57,7 +57,7 @@ const LearningGoalScreen = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <ImageBackground source={BackgroundImage} style={styles.background} resizeMode="cover">
         <View style={styles.content}>
-          <Text style={styles.title}>Зачем вы изучаете язык?</Text>
+          <Text style={styles.title}>Для чего вы изучаете язык?</Text>
           <FlatList
             data={goals}
             renderItem={renderGoal}

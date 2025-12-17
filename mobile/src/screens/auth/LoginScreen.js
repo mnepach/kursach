@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert, TouchableOpacity,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../context/AuthContext';
 import Colors from '../../constants/colors';
@@ -16,17 +16,12 @@ const LoginScreen = ({ navigation }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!email) {
-      newErrors.email = 'Введите email';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Некорректный email';
-    }
-    
-    if (!password) {
-      newErrors.password = 'Введите пароль';
-    }
-    
+
+    if (!email) newErrors.email = 'Введите email';
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Некорректный email';
+
+    if (!password) newErrors.password = 'Введите пароль';
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -49,9 +44,8 @@ const LoginScreen = ({ navigation }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        <ScrollView 
+        <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -88,14 +82,14 @@ const LoginScreen = ({ navigation }) => {
               style={styles.button}
             />
           </View>
-
-          <View style={styles.registerContainer}>
-            <Text style={styles.registerText}>Нет аккаунта? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('LanguageSelection')}>
-              <Text style={styles.registerLink}>Зарегистрироваться</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
+
+        <View style={styles.registerContainer}>
+          <Text style={styles.registerText}>Нет аккаунта? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LanguageSelection')}>
+            <Text style={styles.registerLink}>Зарегистрироваться</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -110,9 +104,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    flexGrow: 1,
     padding: Sizes.padding.large,
-    paddingBottom: Sizes.padding.xlarge + 20,
+    paddingBottom: Sizes.padding.xlarge,
   },
   header: {
     marginTop: Sizes.margin.xlarge,
@@ -138,10 +131,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: Sizes.margin.xlarge,
-    paddingTop: Sizes.padding.large,
+    paddingVertical: Sizes.padding.large,
     borderTopWidth: 1,
     borderTopColor: Colors.border,
+    backgroundColor: Colors.bgLight,
   },
   registerText: {
     fontSize: Sizes.fontSize.medium,

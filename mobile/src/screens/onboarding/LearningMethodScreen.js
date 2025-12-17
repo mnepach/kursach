@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import BackgroundImage from '../../../assets/images/onboarding_background.jpg';
+
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = (width - Sizes.padding.large * 2 - Sizes.margin.medium) / 2;
 
 const LearningMethodScreen = ({ navigation, route }) => {
   const onboardingData = route.params?.onboardingData || {};
@@ -23,8 +26,8 @@ const LearningMethodScreen = ({ navigation, route }) => {
       navigation.navigate('Register', {
         onboardingData: {
           ...onboardingData,
-          learningMethod: selected
-        }
+          learningMethod: selected,
+        },
       });
     }
   };
@@ -34,28 +37,32 @@ const LearningMethodScreen = ({ navigation, route }) => {
       <ImageBackground source={BackgroundImage} style={styles.background} resizeMode="cover">
         <View style={styles.content}>
           <Text style={styles.title}>Как вы любите учиться?</Text>
-          
-          <ScrollView 
+
+          <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.methodsContainer}
           >
-            {methods.map((method, index) => (
-              <Card
-                key={method.id}
-                style={[
-                  styles.methodCard,
-                  { borderColor: selected === method.id ? Colors.primary : 'transparent' }
-                ]}
-                onPress={() => setSelected(method.id)}
-              >
-                <Text style={styles.icon}>{method.icon}</Text>
-                <Text style={styles.label}>{method.label}</Text>
-                <Text style={styles.description}>{method.description}</Text>
-              </Card>
-            ))}
+            <View style={styles.grid}>
+              {methods.map((method) => (
+                <Card
+                  key={method.id}
+                  style={[
+                    styles.methodCard,
+                    {
+                      borderColor: selected === method.id ? Colors.primary : 'transparent',
+                    },
+                  ]}
+                  onPress={() => setSelected(method.id)}
+                >
+                  <Text style={styles.icon}>{method.icon}</Text>
+                  <Text style={styles.label}>{method.label}</Text>
+                  <Text style={styles.description}>{method.description}</Text>
+                </Card>
+              ))}
+            </View>
           </ScrollView>
         </View>
-        
+
         <View style={styles.footer}>
           <Button
             title="Продолжить"
@@ -70,11 +77,11 @@ const LearningMethodScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1 
+  container: {
+    flex: 1,
   },
-  background: { 
-    flex: 1 
+  background: {
+    flex: 1,
   },
   content: {
     flex: 1,
@@ -91,20 +98,25 @@ const styles = StyleSheet.create({
   methodsContainer: {
     paddingBottom: Sizes.padding.large,
   },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: Sizes.margin.medium,
+  },
   methodCard: {
+    width: CARD_WIDTH,
     alignItems: 'center',
     paddingVertical: Sizes.padding.large,
     paddingHorizontal: Sizes.padding.medium,
-    marginBottom: 12,
     backgroundColor: Colors.white,
     borderRadius: 18,
     borderWidth: 3,
-    borderColor: 'transparent',
     shadowOpacity: 0,
     elevation: 0,
   },
-  icon: { 
-    fontSize: 32, 
+  icon: {
+    fontSize: 32,
     marginBottom: 8,
   },
   label: {
@@ -126,8 +138,8 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
     backgroundColor: Colors.white,
   },
-  button: { 
-    width: '100%' 
+  button: {
+    width: '100%',
   },
 });
 
