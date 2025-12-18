@@ -18,7 +18,10 @@ const LessonScreen = ({ navigation, route }) => {
   const { lesson, language } = params;
   
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [wrongAnswers, setWrongAnswers] = useState([]);
+  const [isRetryPhase, setIsRetryPhase] = useState(false);
+  const [retryExercises, setRetryExercises] = useState([]);
+  const [currentRetryIndex, setCurrentRetryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showComplete, setShowComplete] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -27,8 +30,13 @@ const LessonScreen = ({ navigation, route }) => {
   const [selectedWords, setSelectedWords] = useState([]);
   const [availableWords, setAvailableWords] = useState([]);
 
-  const currentExercise = lesson.exercises[currentExerciseIndex];
-  const totalExercises = lesson.exercises.length;
+  const currentExercise = isRetryPhase 
+    ? retryExercises[currentRetryIndex] 
+    : lesson.exercises[currentExerciseIndex];
+  const totalExercises = isRetryPhase 
+    ? retryExercises.length 
+    : lesson.exercises.length;
+  const currentProgress = isRetryPhase ? currentRetryIndex + 1 : currentExerciseIndex + 1;
 
   const shuffledOptions = useMemo(() => {
     if (!currentExercise) return [];
@@ -38,7 +46,7 @@ const LessonScreen = ({ navigation, route }) => {
       return [...currentExercise.options].sort(() => Math.random() - 0.5);
     }
     return [];
-  }, [currentExerciseIndex]);
+  }, [currentExerciseIndex, currentRetryIndex, isRetryPhase]);
 
   const listenWords = useMemo(() => {
     if (!currentExercise || currentExercise.type !== 'listen') return [];
@@ -52,13 +60,13 @@ const LessonScreen = ({ navigation, route }) => {
       }
     }
     return words.sort(() => Math.random() - 0.5);
-  }, [currentExerciseIndex]);
+  }, [currentExerciseIndex, currentRetryIndex, isRetryPhase]);
 
   useEffect(() => {
     if (currentExercise?.type === 'listen') {
       setAvailableWords([...listenWords]);
     }
-  }, [currentExerciseIndex, listenWords]);
+  }, [currentExerciseIndex, currentRetryIndex, isRetryPhase, listenWords]);
 
   if (!lesson || !language) {
     return (
@@ -85,18 +93,35 @@ const LessonScreen = ({ navigation, route }) => {
       setIsCorrect(correct);
       setChecked(true);
       
-      if (correct) {
-        setCorrectAnswers(correctAnswers + 1);
+      if (!correct && !isRetryPhase) {
+        setWrongAnswers([...wrongAnswers, currentExerciseIndex]);
       }
     }
   };
 
   const handleNext = () => {
-    if (currentExerciseIndex < lesson.exercises.length - 1) {
-      setCurrentExerciseIndex(currentExerciseIndex + 1);
-      resetExerciseState();
+    if (isRetryPhase) {
+      if (currentRetryIndex < retryExercises.length - 1) {
+        setCurrentRetryIndex(currentRetryIndex + 1);
+        resetExerciseState();
+      } else {
+        setShowComplete(true);
+      }
     } else {
-      setShowComplete(true);
+      if (currentExerciseIndex < lesson.exercises.length - 1) {
+        setCurrentExerciseIndex(currentExerciseIndex + 1);
+        resetExerciseState();
+      } else {
+        if (wrongAnswers.length > 0) {
+          const wrongExercises = wrongAnswers.map(idx => lesson.exercises[idx]);
+          setRetryExercises(wrongExercises);
+          setIsRetryPhase(true);
+          setCurrentRetryIndex(0);
+          resetExerciseState();
+        } else {
+          setShowComplete(true);
+        }
+      }
     }
   };
 
@@ -105,7 +130,10 @@ const LessonScreen = ({ navigation, route }) => {
     setChecked(false);
     setIsCorrect(false);
     setSelectedWords([]);
-    if (lesson.exercises[currentExerciseIndex + 1]?.type === 'listen') {
+    const nextExercise = isRetryPhase 
+      ? retryExercises[currentRetryIndex + 1]
+      : lesson.exercises[currentExerciseIndex + 1];
+    if (nextExercise?.type === 'listen') {
       setAvailableWords([...listenWords]);
     } else {
       setAvailableWords([]);
@@ -115,7 +143,8 @@ const LessonScreen = ({ navigation, route }) => {
   const handleComplete = async () => {
     setLoading(true);
     try {
-      const score = Math.round((correctAnswers / totalExercises) * 100);
+      const correctAnswers = lesson.exercises.length - wrongAnswers.length;
+      const score = Math.round((correctAnswers / lesson.exercises.length) * 100);
       await api.completeLesson(
         language, 
         lesson._id, 
@@ -139,8 +168,8 @@ const LessonScreen = ({ navigation, route }) => {
   if (showComplete) {
     return (
       <LessonCompleteScreen
-        correctAnswers={correctAnswers}
-        totalQuestions={totalExercises}
+        correctAnswers={lesson.exercises.length - wrongAnswers.length}
+        totalQuestions={lesson.exercises.length}
         onComplete={handleComplete}
       />
     );
@@ -182,6 +211,11 @@ const LessonScreen = ({ navigation, route }) => {
 
     return (
       <View style={styles.exerciseContainer}>
+        {isRetryPhase && (
+          <View style={styles.retryBanner}>
+            <Text style={styles.retryBannerText}>Повторение ошибок</Text>
+          </View>
+        )}
         <Text style={styles.title}>Составьте из слов предложение</Text>
         <Text style={styles.subtitle}>Прослушайте фразу и составьте предложение</Text>
         <TouchableOpacity style={styles.audioButton}>
@@ -243,6 +277,11 @@ const LessonScreen = ({ navigation, route }) => {
 
     return (
       <View style={styles.exerciseContainer}>
+        {isRetryPhase && (
+          <View style={styles.retryBanner}>
+            <Text style={styles.retryBannerText}>Повторение ошибок</Text>
+          </View>
+        )}
         <Text style={styles.question}>{currentExercise.word}</Text>
         <Text style={styles.subtitle}>Выберите правильный перевод</Text>
         <View style={styles.optionsContainer}>
@@ -268,6 +307,11 @@ const LessonScreen = ({ navigation, route }) => {
 
     return (
       <View style={styles.exerciseContainer}>
+        {isRetryPhase && (
+          <View style={styles.retryBanner}>
+            <Text style={styles.retryBannerText}>Повторение ошибок</Text>
+          </View>
+        )}
         <Text style={styles.title}>
           {isToTarget ? `Переведите на ${currentExercise.targetLanguage}` : 'Переведите на русский'}
         </Text>
@@ -297,7 +341,7 @@ const LessonScreen = ({ navigation, route }) => {
         <TouchableOpacity style={styles.closeButton} onPress={() => navigation.goBack()}>
           <Ionicons name="close" size={28} color={Colors.textDark} />
         </TouchableOpacity>
-        <ProgressBar current={Math.min(currentExerciseIndex + 1, totalExercises)} total={totalExercises} />
+        <ProgressBar current={currentProgress} total={totalExercises} />
       </View>
       <ScrollView 
         style={styles.scrollView} 
@@ -342,6 +386,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: Sizes.padding.large,
     justifyContent: 'center'
+  },
+  retryBanner: {
+    backgroundColor: Colors.warning,
+    paddingVertical: Sizes.padding.small,
+    paddingHorizontal: Sizes.padding.medium,
+    borderRadius: Sizes.borderRadius.medium,
+    marginBottom: Sizes.margin.large,
+    alignSelf: 'center'
+  },
+  retryBannerText: {
+    color: Colors.white,
+    fontSize: Sizes.fontSize.medium,
+    fontWeight: 'bold'
   },
   title: { 
     fontSize: Sizes.fontSize.large, 

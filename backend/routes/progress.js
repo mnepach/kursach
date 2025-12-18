@@ -1,130 +1,143 @@
-const express = require('express');
-const Progress = require('../models/Progress');
-const User = require('../models/User');
-const authMiddleware = require('../middleware/auth');
+const mongoose = require('mongoose');
 
-const router = express.Router();
-
-router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const progress = await Progress.find({ user: req.user._id });
-    res.json({ progress });
-  } catch (error) {
-    console.error('Ошибка получения прогресса:', error);
-    res.status(500).json({ message: 'Ошибка сервера' });
+const progressSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  language: {
+    type: String,
+    required: true
+  },
+  languageFlag: {
+    type: String,
+    required: true
+  },
+  completedLessons: [{
+    lessonId: String,
+    lessonNumber: Number,
+    level: String,
+    completedAt: Date,
+    score: Number
+  }],
+  currentLevel: {
+    type: String,
+    default: 'A1'
+  },
+  overallProgress: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
+  },
+  vocabularyLearned: {
+    type: Number,
+    default: 0
+  },
+  totalLessonsCompleted: {
+    type: Number,
+    default: 0
+  },
+  levelProgress: {
+    A1: { type: Number, default: 0 },
+    A2: { type: Number, default: 0 },
+    B1: { type: Number, default: 0 },
+    B2: { type: Number, default: 0 },
+    C1: { type: Number, default: 0 },
+    C2: { type: Number, default: 0 }
+  },
+  lastActivityDate: {
+    type: Date,
+    default: Date.now
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 
-router.get('/:language', authMiddleware, async (req, res) => {
-  try {
-    const { language } = req.params;
-    
-    let progress = await Progress.findOne({ 
-      user: req.user._id, 
-      language 
+progressSchema.methods.updateProgress = function(lessonId, lessonNumber, level, score) {
+  const existingLesson = this.completedLessons.find(
+    cl => cl.lessonId === lessonId
+  );
+  
+  if (existingLesson) {
+    existingLesson.score = Math.max(existingLesson.score, score);
+    existingLesson.completedAt = new Date();
+  } else {
+    this.completedLessons.push({
+      lessonId,
+      lessonNumber,
+      level,
+      completedAt: new Date(),
+      score
     });
+  }
+  
+  this.totalLessonsCompleted = this.completedLessons.length;
+  this.vocabularyLearned += 5;
+  
+  const levelLessons = {
+    A1: this.completedLessons.filter(l => l.level === 'A1').length,
+    A2: this.completedLessons.filter(l => l.level === 'A2').length,
+    B1: this.completedLessons.filter(l => l.level === 'B1').length,
+    B2: this.completedLessons.filter(l => l.level === 'B2').length,
+    C1: this.completedLessons.filter(l => l.level === 'C1').length,
+    C2: this.completedLessons.filter(l => l.level === 'C2').length
+  };
+  
+  this.levelProgress = levelLessons;
+  
+  if (levelLessons.A1 >= 6) this.currentLevel = 'A2';
+  if (levelLessons.A2 >= 4) this.currentLevel = 'B1';
+  if (levelLessons.B1 >= 10) this.currentLevel = 'B2';
+  if (levelLessons.B2 >= 10) this.currentLevel = 'C1';
+  if (levelLessons.C1 >= 10) this.currentLevel = 'C2';
+  
+  const totalPossibleLessons = 40;
+  this.overallProgress = Math.min(100, Math.round((this.totalLessonsCompleted / totalPossibleLessons) * 100));
+  
+  this.lastActivityDate = new Date();
+  
+  return this.save();
+};
+
+progressSchema.methods.isLessonUnlocked = function(lessonNumber, lessonLevel) {
+  if (lessonNumber === 1 && lessonLevel === 'A1') {
+    return true;
+  }
+  
+  const previousLessonNumber = lessonNumber - 1;
+  const previousLesson = this.completedLessons.find(
+    cl => cl.lessonNumber === previousLessonNumber && cl.level === lessonLevel
+  );
+  
+  if (previousLesson) {
+    return true;
+  }
+  
+  if (lessonNumber === 1) {
+    const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const currentLevelIndex = levelOrder.indexOf(lessonLevel);
     
-    if (!progress) {
-      const languageData = {
-        'Английский': '../trickle/assets/england.png',
-        'Испанский': '../trickle/assets/spain.png',
-        'Японский': '../trickle/assets/japan.png',
-        'Корейский': '../trickle/assets/korea.png'
+    if (currentLevelIndex > 0) {
+      const previousLevel = levelOrder[currentLevelIndex - 1];
+      const previousLevelLessons = this.completedLessons.filter(l => l.level === previousLevel);
+      
+      const requiredLessons = {
+        'A2': 6,
+        'B1': 4,
+        'B2': 10,
+        'C1': 10,
+        'C2': 10
       };
       
-      progress = new Progress({
-        user: req.user._id,
-        language,
-        languageFlag: languageData[language] || '../trickle/assets/icon.jpg'
-      });
-      
-      await progress.save();
-    }
-    
-    res.json({ progress });
-  } catch (error) {
-    console.error('Ошибка получения прогресса:', error);
-    res.status(500).json({ message: 'Ошибка сервера' });
-  }
-});
-
-router.post('/:language/complete', authMiddleware, async (req, res) => {
-  try {
-    const { language } = req.params;
-    const { lessonId, lessonNumber, level, score } = req.body;
-    
-    let progress = await Progress.findOne({ 
-      user: req.user._id, 
-      language 
-    });
-    
-    if (!progress) {
-      return res.status(404).json({ message: 'Прогресс не найден' });
-    }
-    
-    await progress.updateProgress(lessonId, lessonNumber, level, score);
-    
-    const user = await User.findById(req.user._id);
-    user.statistics.experience += score || 10;
-    user.statistics.streak = calculateStreak(progress.lastActivityDate, user.statistics.lastActivityDate);
-    user.statistics.lastActivityDate = new Date();
-    await user.save();
-    
-    res.json({ 
-      progress,
-      statistics: user.statistics,
-      message: 'Прогресс обновлен' 
-    });
-  } catch (error) {
-    console.error('Ошибка обновления прогресса:', error);
-    res.status(500).json({ message: 'Ошибка сервера' });
-  }
-});
-
-router.get('/stats/overall', authMiddleware, async (req, res) => {
-  try {
-    const progress = await Progress.find({ user: req.user._id });
-    
-    const stats = {
-      totalLanguages: progress.length,
-      totalLessonsCompleted: progress.reduce((sum, p) => sum + p.totalLessonsCompleted, 0),
-      totalVocabulary: progress.reduce((sum, p) => sum + p.vocabularyLearned, 0),
-      languages: progress.map(p => ({
-        language: p.language,
-        flag: p.languageFlag,
-        progress: p.overallProgress,
-        lessonsCompleted: p.totalLessonsCompleted,
-        currentLevel: p.currentLevel,
-        levelProgress: p.levelProgress
-      }))
-    };
-    
-    res.json({ stats });
-  } catch (error) {
-    console.error('Ошибка получения статистики:', error);
-    res.status(500).json({ message: 'Ошибка сервера' });
-  }
-});
-
-function calculateStreak(lastActivity, previousActivity) {
-  const now = new Date();
-  const lastDate = new Date(lastActivity);
-  const prevDate = previousActivity ? new Date(previousActivity) : null;
-  
-  const hoursSinceLastActivity = Math.abs(now - lastDate) / 36e5;
-  
-  if (hoursSinceLastActivity > 48) {
-    return 1;
-  }
-  
-  if (prevDate) {
-    const hoursBetweenActivities = Math.abs(lastDate - prevDate) / 36e5;
-    if (hoursBetweenActivities <= 48) {
-      return 1;
+      return previousLevelLessons.length >= (requiredLessons[lessonLevel] || 0);
     }
   }
   
-  return 1;
-}
+  return false;
+};
 
-module.exports = router;
+module.exports = mongoose.model('Progress', progressSchema);

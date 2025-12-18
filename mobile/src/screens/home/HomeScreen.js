@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/colors';
@@ -9,6 +9,7 @@ import Button from '../../components/common/Button';
 import { useAuth } from '../../context/AuthContext';
 import { getLessonDeclension, getDayDeclension, getAchievementDeclension } from '../../utils/helpers';
 import api from '../../services/api';
+import { useFocusEffect } from '@react-navigation/native';
 
 const LANGUAGES = [
   { 
@@ -37,14 +38,18 @@ const HomeScreen = ({ navigation }) => {
   const { user, updateUser } = useAuth();
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState(null);
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   const loadData = async () => {
     try {
+      setLoading(true);
       const response = await api.getOverallStats();
       const languages = response.stats.languages || [];
       setProgressData(languages);
@@ -53,8 +58,17 @@ const HomeScreen = ({ navigation }) => {
         const activeLang = languages.find(
           l => l.language === user.onboardingData.selectedLanguage.name
         );
-        if (activeLang) {
-          setActiveLanguage(activeLang);
+        setActiveLanguage(activeLang || null);
+      } else if (languages.length > 0) {
+        const firstLang = LANGUAGES.find(l => l.name === languages[0].language);
+        if (firstLang) {
+          await updateUser({
+            onboardingData: {
+              ...user.onboardingData,
+              selectedLanguage: firstLang
+            }
+          });
+          setActiveLanguage(languages[0]);
         }
       }
     } catch (error) {
@@ -64,7 +78,13 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
-  const handleAddLanguage = () => {
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  }, []);
+
+  const handleAddLanguage = async () => {
     const currentPlan = user?.subscription?.planType || 'free';
     const maxLanguages = user?.subscription?.features?.maxLanguages || 1;
     const currentLanguagesCount = progressData.length;
@@ -81,12 +101,19 @@ const HomeScreen = ({ navigation }) => {
       return;
     }
 
+    const availableLanguages = LANGUAGES.filter(
+      lang => !progressData.some(p => p.language === lang.name)
+    );
+
+    if (availableLanguages.length === 0) {
+      Alert.alert('Информация', 'Вы уже изучаете все доступные языки');
+      return;
+    }
+
     Alert.alert(
       'Добавить язык',
       'Выберите язык для изучения',
-      LANGUAGES.filter(
-        lang => !progressData.some(p => p.language === lang.name)
-      ).map(lang => ({
+      availableLanguages.map(lang => ({
         text: lang.name,
         onPress: async () => {
           try {
@@ -96,6 +123,9 @@ const HomeScreen = ({ navigation }) => {
                 selectedLanguage: lang
               }
             });
+            
+            await api.getLanguageProgress(lang.name);
+            
             await loadData();
           } catch (error) {
             Alert.alert('Ошибка', 'Не удалось добавить язык');
@@ -105,10 +135,10 @@ const HomeScreen = ({ navigation }) => {
     );
   };
 
-  const handleSwitchLanguage = (language) => {
+  const handleSwitchLanguage = async (language) => {
     const lang = LANGUAGES.find(l => l.name === language.language);
     if (lang) {
-      updateUser({
+      await updateUser({
         onboardingData: {
           ...user.onboardingData,
           selectedLanguage: lang
@@ -131,6 +161,14 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={Colors.primary}
+            colors={[Colors.primary]}
+          />
+        }
       >
         <View style={styles.header}>
           <View>
