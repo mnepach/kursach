@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     marginBottom: Sizes.margin.large,
   },
   title: {
-    fontSize: Sizes.fontSize.xxxlarge,
+    fontSize: 42,
     fontWeight: 'bold',
     color: Colors.textDark,
     marginBottom: Sizes.margin.xlarge,

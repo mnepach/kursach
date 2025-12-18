@@ -26,9 +26,9 @@ const LessonScreen = ({ navigation, route }) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [selectedWords, setSelectedWords] = useState([]);
   const [availableWords, setAvailableWords] = useState([]);
-  const [wrongAnswers, setWrongAnswers] = useState([]);
-  const [isRetry, setIsRetry] = useState(false);
-  const [retryAttempted, setRetryAttempted] = useState(new Set());
+
+  const currentExercise = lesson.exercises[currentExerciseIndex];
+  const totalExercises = lesson.exercises.length;
 
   const shuffledOptions = useMemo(() => {
     if (!currentExercise) return [];
@@ -43,7 +43,7 @@ const LessonScreen = ({ navigation, route }) => {
   const listenWords = useMemo(() => {
     if (!currentExercise || currentExercise.type !== 'listen') return [];
     const words = [...currentExercise.words];
-    const extraWords = ['the', 'a', 'is', 'and'];
+    const extraWords = ['the', 'a', 'is', 'and', 'to', 'of'];
     const numExtras = Math.min(2, extraWords.length);
     for (let i = 0; i < numExtras; i++) {
       const extraWord = extraWords[Math.floor(Math.random() * extraWords.length)];
@@ -58,7 +58,7 @@ const LessonScreen = ({ navigation, route }) => {
     if (currentExercise?.type === 'listen') {
       setAvailableWords([...listenWords]);
     }
-  }, [currentExerciseIndex]);
+  }, [currentExerciseIndex, listenWords]);
 
   if (!lesson || !language) {
     return (
@@ -70,9 +70,6 @@ const LessonScreen = ({ navigation, route }) => {
       </SafeAreaView>
     );
   }
-
-  const currentExercise = lesson.exercises[currentExerciseIndex];
-  const totalExercises = 7;
 
   const handleCheck = () => {
     if (checked) {
@@ -89,39 +86,17 @@ const LessonScreen = ({ navigation, route }) => {
       setChecked(true);
       
       if (correct) {
-        if (!isRetry) {
-          setCorrectAnswers(correctAnswers + 1);
-        }
-      } else {
-        if (!retryAttempted.has(currentExerciseIndex)) {
-          setWrongAnswers([...wrongAnswers, currentExerciseIndex]);
-        }
+        setCorrectAnswers(correctAnswers + 1);
       }
     }
   };
 
   const handleNext = () => {
-    if (!isCorrect && !retryAttempted.has(currentExerciseIndex)) {
-      setRetryAttempted(new Set([...retryAttempted, currentExerciseIndex]));
-      setIsRetry(true);
-      resetExerciseState();
-      return;
-    }
-
-    setIsRetry(false);
-    
     if (currentExerciseIndex < lesson.exercises.length - 1) {
       setCurrentExerciseIndex(currentExerciseIndex + 1);
       resetExerciseState();
     } else {
-      if (wrongAnswers.length > 0 && wrongAnswers.some(idx => !retryAttempted.has(idx))) {
-        const nextWrongIndex = wrongAnswers.find(idx => !retryAttempted.has(idx));
-        setCurrentExerciseIndex(nextWrongIndex);
-        setIsRetry(true);
-        resetExerciseState();
-      } else {
-        setShowComplete(true);
-      }
+      setShowComplete(true);
     }
   };
 
@@ -130,7 +105,7 @@ const LessonScreen = ({ navigation, route }) => {
     setChecked(false);
     setIsCorrect(false);
     setSelectedWords([]);
-    if (lesson.exercises[currentExerciseIndex]?.type === 'listen') {
+    if (lesson.exercises[currentExerciseIndex + 1]?.type === 'listen') {
       setAvailableWords([...listenWords]);
     } else {
       setAvailableWords([]);
@@ -141,7 +116,13 @@ const LessonScreen = ({ navigation, route }) => {
     setLoading(true);
     try {
       const score = Math.round((correctAnswers / totalExercises) * 100);
-      await api.completeLesson(language, lesson._id, score);
+      await api.completeLesson(
+        language, 
+        lesson._id, 
+        score,
+        lesson.lessonNumber,
+        lesson.level
+      );
       navigation.navigate('Main', { screen: 'Lessons' });
     } catch (error) {
       console.error('Error completing lesson:', error);
@@ -184,10 +165,18 @@ const LessonScreen = ({ navigation, route }) => {
       if (checked) return;
       if (fromAvailable) {
         setSelectedWords([...selectedWords, word]);
-        setAvailableWords(availableWords.filter(w => w !== word));
+        setAvailableWords(availableWords.filter((w, i) => {
+          if (w === word) {
+            return i !== availableWords.indexOf(word);
+          }
+          return true;
+        }));
       } else {
-        setAvailableWords([...availableWords, word]);
-        setSelectedWords(selectedWords.filter(w => w !== word));
+        const wordIndex = selectedWords.lastIndexOf(word);
+        if (wordIndex !== -1) {
+          setAvailableWords([...availableWords, word]);
+          setSelectedWords(selectedWords.filter((w, i) => i !== wordIndex));
+        }
       }
     };
 
@@ -205,7 +194,7 @@ const LessonScreen = ({ navigation, route }) => {
             <View style={styles.wordsContainer}>
               {selectedWords.map((word, index) => (
                 <WordButton 
-                  key={`selected-${index}`} 
+                  key={`selected-${index}-${word}`} 
                   word={word} 
                   onPress={() => handleWordClick(word, false)} 
                   disabled={checked} 

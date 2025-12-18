@@ -1,23 +1,143 @@
-import { View, Text, StyleSheet, ScrollView, Platform, StatusBar } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
+import Button from '../../components/common/Button';
 import { useAuth } from '../../context/AuthContext';
+import api from '../../services/api';
 
-const HomeScreen = () => {
-  const { user } = useAuth();
+const LANGUAGES = [
+  { 
+    id: 'english',
+    name: 'Английский', 
+    flag: require('../../../assets/images/flags/england.png'),
+  },
+  { 
+    id: 'spanish',
+    name: 'Испанский', 
+    flag: require('../../../assets/images/flags/spain.png'),
+  },
+  { 
+    id: 'japanese',
+    name: 'Японский', 
+    flag: require('../../../assets/images/flags/japan.png'),
+  },
+  { 
+    id: 'korean',
+    name: 'Корейский', 
+    flag: require('../../../assets/images/flags/korea.png'),
+  }
+];
+
+const HomeScreen = ({ navigation }) => {
+  const { user, updateUser } = useAuth();
+  const [progressData, setProgressData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeLanguage, setActiveLanguage] = useState(null);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const response = await api.getOverallStats();
+      const languages = response.stats.languages || [];
+      setProgressData(languages);
+      
+      if (user?.onboardingData?.selectedLanguage) {
+        const activeLang = languages.find(
+          l => l.language === user.onboardingData.selectedLanguage.name
+        );
+        if (activeLang) {
+          setActiveLanguage(activeLang);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddLanguage = () => {
+    const currentPlan = user?.subscription?.planType || 'free';
+    const maxLanguages = user?.subscription?.features?.maxLanguages || 1;
+    const currentLanguagesCount = progressData.length;
+
+    if (currentLanguagesCount >= maxLanguages) {
+      Alert.alert(
+        'Ограничение тарифа',
+        'Вы достигли максимального количества языков для вашего тарифа. Перейдите на платный тариф для изучения большего количества языков.',
+        [
+          { text: 'Отмена', style: 'cancel' },
+          { text: 'Перейти на Premium', onPress: () => navigation.navigate('Subscription') }
+        ]
+      );
+      return;
+    }
+
+    Alert.alert(
+      'Добавить язык',
+      'Выберите язык для изучения',
+      LANGUAGES.filter(
+        lang => !progressData.some(p => p.language === lang.name)
+      ).map(lang => ({
+        text: lang.name,
+        onPress: async () => {
+          try {
+            await updateUser({
+              onboardingData: {
+                ...user.onboardingData,
+                selectedLanguage: lang
+              }
+            });
+            await loadData();
+          } catch (error) {
+            Alert.alert('Ошибка', 'Не удалось добавить язык');
+          }
+        }
+      })).concat([{ text: 'Отмена', style: 'cancel' }])
+    );
+  };
+
+  const handleSwitchLanguage = (language) => {
+    const lang = LANGUAGES.find(l => l.name === language.language);
+    if (lang) {
+      updateUser({
+        onboardingData: {
+          ...user.onboardingData,
+          selectedLanguage: lang
+        }
+      });
+      setActiveLanguage(language);
+    }
+  };
+
+  const currentPlan = user?.subscription?.planType || 'free';
+  const maxLanguages = user?.subscription?.features?.maxLanguages || 1;
+  const canAddLanguage = progressData.length < maxLanguages;
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <ScrollView
-        style={styles.scrollView}
+      <ScrollView 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.header}>
-          <Text style={styles.greeting}>Привет, {user?.name || 'Пользователь'}!</Text>
-          <Text style={styles.subtitle}>Продолжим обучение?</Text>
+          <View>
+            <Text style={styles.greeting}>Привет, {user?.name || 'Пользователь'}!</Text>
+            <Text style={styles.subtitle}>Продолжим обучение?</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Image 
+              source={{ uri: user?.avatar || 'https://via.placeholder.com/48' }}
+              style={styles.avatar}
+            />
+          </TouchableOpacity>
         </View>
 
         <Card style={styles.statsCard}>
@@ -27,13 +147,13 @@ const HomeScreen = () => {
               <Text style={styles.statValue}>{user?.statistics?.streak || 0}</Text>
               <Text style={styles.statLabel}>Дней подряд</Text>
             </View>
-
+            
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>🏆</Text>
               <Text style={styles.statValue}>{user?.statistics?.experience || 0}</Text>
               <Text style={styles.statLabel}>Очков опыта</Text>
             </View>
-
+            
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>⭐</Text>
               <Text style={styles.statValue}>{user?.statistics?.achievements || 0}</Text>
@@ -43,10 +163,109 @@ const HomeScreen = () => {
         </Card>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Ваши курсы</Text>
-          <Card style={styles.courseCard}>
-            <Text style={styles.courseText}>Здесь будут отображаться ваши курсы</Text>
-          </Card>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Ваши курсы</Text>
+            <TouchableOpacity 
+              style={[
+                styles.addButton,
+                !canAddLanguage && styles.addButtonDisabled
+              ]}
+              onPress={handleAddLanguage}
+            >
+              <Ionicons 
+                name="add-circle" 
+                size={24} 
+                color={canAddLanguage ? Colors.primary : Colors.textLight} 
+              />
+              <Text style={[
+                styles.addButtonText,
+                !canAddLanguage && styles.addButtonTextDisabled
+              ]}>
+                Добавить курс
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {progressData.length > 0 ? (
+            progressData.map((lang, index) => {
+              const isActive = activeLanguage?.language === lang.language;
+              const languageData = LANGUAGES.find(l => l.name === lang.language);
+
+              return (
+                <Card 
+                  key={index} 
+                  style={[
+                    styles.courseCard,
+                    isActive && styles.activeCourseCard
+                  ]}
+                  onPress={() => {
+                    if (!isActive) {
+                      handleSwitchLanguage(lang);
+                    }
+                  }}
+                >
+                  <View style={styles.courseHeader}>
+                    {languageData?.flag && (
+                      <Image 
+                        source={languageData.flag} 
+                        style={styles.flagImage} 
+                      />
+                    )}
+                    <View style={styles.courseInfo}>
+                      <Text style={styles.courseName}>{lang.language}</Text>
+                      <Text style={[
+                        styles.courseStatus,
+                        isActive && styles.courseStatusActive
+                      ]}>
+                        {isActive ? '✓ Курс активен' : 'Нажмите для активации'}
+                      </Text>
+                    </View>
+                    <View style={styles.courseLevelBadge}>
+                      <Text style={styles.courseLevel}>{lang.currentLevel}</Text>
+                    </View>
+                  </View>
+                  
+                  <View style={styles.progressBarContainer}>
+                    <View 
+                      style={[
+                        styles.progressBar, 
+                        { width: `${lang.progress}%` }
+                      ]} 
+                    />
+                  </View>
+                  
+                  <View style={styles.courseFooter}>
+                    <Text style={styles.progressText}>
+                      {lang.lessonsCompleted} уроков завершено
+                    </Text>
+                    <Text style={styles.progressPercentage}>
+                      {lang.progress}%
+                    </Text>
+                  </View>
+
+                  {isActive && (
+                    <Button
+                      title="Продолжить обучение"
+                      onPress={() => navigation.navigate('Lessons', { language: lang.language })}
+                      style={styles.continueButton}
+                    />
+                  )}
+                </Card>
+              );
+            })
+          ) : (
+            <Card style={styles.emptyCard}>
+              <Text style={styles.emptyEmoji}>📚</Text>
+              <Text style={styles.emptyText}>
+                Начните изучать новый язык!
+              </Text>
+              <Button
+                title="Выбрать язык"
+                onPress={handleAddLanguage}
+                style={styles.emptyButton}
+              />
+            </Card>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -58,25 +277,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.bgLight,
   },
-  scrollView: {
-    flex: 1,
-  },
   scrollContent: {
     paddingBottom: Sizes.padding.xlarge,
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: Sizes.padding.large,
-    paddingTop: Sizes.padding.medium,
   },
   greeting: {
     fontSize: Sizes.fontSize.xxlarge,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
+    marginBottom: 4,
   },
   subtitle: {
-    fontSize: Sizes.fontSize.large,
+    fontSize: Sizes.fontSize.medium,
     color: Colors.textLight,
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: Colors.primary,
   },
   statsCard: {
     marginHorizontal: Sizes.margin.large,
@@ -97,7 +321,6 @@ const styles = StyleSheet.create({
     fontSize: Sizes.fontSize.xlarge,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
   },
   statLabel: {
     fontSize: Sizes.fontSize.small,
@@ -107,19 +330,125 @@ const styles = StyleSheet.create({
   section: {
     paddingHorizontal: Sizes.padding.large,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Sizes.margin.medium,
+  },
   sectionTitle: {
     fontSize: Sizes.fontSize.xlarge,
     fontWeight: 'bold',
     color: Colors.textDark,
-    marginBottom: Sizes.margin.medium,
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  addButtonDisabled: {
+    opacity: 0.5,
+  },
+  addButtonText: {
+    fontSize: Sizes.fontSize.small,
+    color: Colors.primary,
+    fontWeight: '600',
+  },
+  addButtonTextDisabled: {
+    color: Colors.textLight,
   },
   courseCard: {
-    padding: Sizes.padding.xlarge,
+    marginBottom: Sizes.margin.medium,
   },
-  courseText: {
+  activeCourseCard: {
+    borderWidth: 2,
+    borderColor: Colors.primary,
+  },
+  courseHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: Sizes.margin.medium,
+    gap: Sizes.margin.medium,
+  },
+  flagImage: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  courseInfo: {
+    flex: 1,
+  },
+  courseName: {
+    fontSize: Sizes.fontSize.large,
+    fontWeight: 'bold',
+    color: Colors.textDark,
+    marginBottom: 4,
+  },
+  courseStatus: {
+    fontSize: Sizes.fontSize.small,
+    color: Colors.textLight,
+  },
+  courseStatusActive: {
+    color: Colors.success,
+    fontWeight: '600',
+  },
+  courseLevelBadge: {
+    backgroundColor: Colors.primary,
+    paddingHorizontal: Sizes.padding.medium,
+    paddingVertical: Sizes.padding.small,
+    borderRadius: Sizes.borderRadius.full,
+  },
+  courseLevel: {
+    fontSize: Sizes.fontSize.small,
+    fontWeight: 'bold',
+    color: Colors.white,
+  },
+  progressBarContainer: {
+    height: 8,
+    backgroundColor: Colors.border,
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginBottom: Sizes.margin.small,
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: Colors.primary,
+    borderRadius: 4,
+  },
+  courseFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Sizes.margin.medium,
+  },
+  progressText: {
+    fontSize: Sizes.fontSize.small,
+    color: Colors.textLight,
+  },
+  progressPercentage: {
+    fontSize: Sizes.fontSize.small,
+    fontWeight: 'bold',
+    color: Colors.primary,
+  },
+  continueButton: {
+    marginTop: Sizes.margin.small,
+  },
+  emptyCard: {
+    paddingVertical: Sizes.padding.xlarge * 2,
+    alignItems: 'center',
+  },
+  emptyEmoji: {
+    fontSize: 64,
+    marginBottom: Sizes.margin.large,
+  },
+  emptyText: {
     fontSize: Sizes.fontSize.medium,
     color: Colors.textLight,
     textAlign: 'center',
+    marginBottom: Sizes.margin.large,
+  },
+  emptyButton: {
+    minWidth: 200,
   },
 });
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, Animated } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
@@ -80,20 +80,26 @@ const ProgressScreen = () => {
 
         <View style={styles.statsGrid}>
           <Card style={styles.statCard}>
-            <Text style={styles.statEmoji}>📚</Text>
-            <Text style={styles.statValue}>{stats?.totalLanguages || 0}</Text>
+            <View style={styles.statContent}>
+              <Text style={styles.statValue}>{stats?.totalLanguages || 0}</Text>
+              <Text style={styles.statEmoji}>📚</Text>
+            </View>
             <Text style={styles.statLabel}>Языков</Text>
           </Card>
 
           <Card style={styles.statCard}>
-            <Text style={styles.statEmoji}>✅</Text>
-            <Text style={styles.statValue}>{stats?.totalLessonsCompleted || 0}</Text>
+            <View style={styles.statContent}>
+              <Text style={styles.statValue}>{stats?.totalLessonsCompleted || 0}</Text>
+              <Text style={styles.statEmoji}>✅</Text>
+            </View>
             <Text style={styles.statLabel}>Уроков</Text>
           </Card>
 
           <Card style={styles.statCard}>
-            <Text style={styles.statEmoji}>📖</Text>
-            <Text style={styles.statValue}>{stats?.totalVocabulary || 0}</Text>
+            <View style={styles.statContent}>
+              <Text style={styles.statValue}>{stats?.totalVocabulary || 0}</Text>
+              <Text style={styles.statEmoji}>📖</Text>
+            </View>
             <Text style={styles.statLabel}>Слов</Text>
           </Card>
         </View>
@@ -142,7 +148,10 @@ const ProgressScreen = () => {
 
                 <View style={styles.milestones}>
                   <View style={styles.milestone}>
-                    <View style={[styles.milestoneIcon, { backgroundColor: getLevelColor(lang.currentLevel) }]}>
+                    <View style={[
+                      styles.milestoneIcon, 
+                      { backgroundColor: getLevelColor(lang.currentLevel) }
+                    ]}>
                       <Text style={styles.milestoneIconText}>🎯</Text>
                     </View>
                     <Text style={styles.milestoneText}>Текущий уровень</Text>
@@ -213,15 +222,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: Sizes.padding.large,
   },
-  statEmoji: {
-    fontSize: 32,
+  statContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     marginBottom: Sizes.margin.small,
+  },
+  statEmoji: {
+    fontSize: 24,
   },
   statValue: {
     fontSize: Sizes.fontSize.xxlarge,
     fontWeight: 'bold',
     color: Colors.primary,
-    marginBottom: Sizes.margin.small,
   },
   statLabel: {
     fontSize: Sizes.fontSize.small,
@@ -314,14 +327,14 @@ const styles = StyleSheet.create({
     gap: Sizes.margin.medium,
   },
   milestoneIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   milestoneIconText: {
-    fontSize: 16,
+    fontSize: 20,
   },
   milestoneText: {
     fontSize: Sizes.fontSize.small,
