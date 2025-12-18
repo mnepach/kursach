@@ -9,6 +9,13 @@ import Card from '../../components/common/Card';
 import Loader from '../../components/common/Loader';
 import api from '../../services/api';
 
+const LANGUAGE_FLAGS = {
+  'Английский': require('../../../assets/images/flags/england.png'),
+  'Испанский': require('../../../assets/images/flags/spain.png'),
+  'Японский': require('../../../assets/images/flags/japan.png'),
+  'Корейский': require('../../../assets/images/flags/korea.png'),
+};
+
 const LessonListScreen = ({ navigation }) => {
   const { user } = useAuth();
   const [lessons, setLessons] = useState([]);
@@ -143,6 +150,22 @@ const LessonListScreen = ({ navigation }) => {
     }
   };
 
+  const getLessonWordDeclension = (count) => {
+    const lastDigit = count % 10;
+    const lastTwoDigits = count % 100;
+    
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+      return 'уроков';
+    }
+    if (lastDigit === 1) {
+      return 'урок';
+    }
+    if (lastDigit >= 2 && lastDigit <= 4) {
+      return 'урока';
+    }
+    return 'уроков';
+  };
+
   if (loading) {
     return <Loader fullScreen />;
   }
@@ -171,7 +194,16 @@ const LessonListScreen = ({ navigation }) => {
       disabled={item.isLocked}
     >
       <View style={styles.lessonHeader}>
-        <View style={[styles.lessonNumber, { backgroundColor: item.isLocked ? Colors.border : Colors.primary }]}>
+        <View style={[
+          styles.lessonNumber, 
+          { 
+            backgroundColor: item.isCompleted 
+              ? Colors.success 
+              : item.isLocked 
+                ? Colors.border 
+                : Colors.primary 
+          }
+        ]}>
           {item.isCompleted ? (
             <Ionicons name="checkmark" size={24} color={Colors.white} />
           ) : item.isLocked ? (
@@ -250,18 +282,21 @@ const LessonListScreen = ({ navigation }) => {
     );
   };
 
+  const languageFlag = LANGUAGE_FLAGS[selectedLanguage.name];
+  const totalCompleted = progress?.totalLessonsCompleted || 0;
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
         <View style={styles.languageInfo}>
-          {selectedLanguage.flag && (
-            <Image source={selectedLanguage.flag} style={styles.flagImage} />
+          {languageFlag && (
+            <Image source={languageFlag} style={styles.flagImage} />
           )}
           <View>
             <Text style={styles.headerTitle}>{selectedLanguage.name}</Text>
             {progress && (
               <Text style={styles.headerSubtitle}>
-                Пройдено: {progress.totalLessonsCompleted} уроков • Уровень: {progress.currentLevel}
+                Пройдено: {totalCompleted} {getLessonWordDeclension(totalCompleted)} • Уровень: {progress.currentLevel}
               </Text>
             )}
           </View>
@@ -358,7 +393,6 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },

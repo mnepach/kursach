@@ -7,6 +7,7 @@ import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
+import { getDayDeclension, getAchievementDeclension } from '../../utils/helpers';
 import api from '../../services/api';
 
 const ProfileScreen = ({ navigation }) => {
@@ -36,6 +37,10 @@ const ProfileScreen = ({ navigation }) => {
     if (planType === 'basic') return 'Базовый';
     return 'Бесплатный';
   };
+
+  const streakDays = user?.statistics?.streak || 0;
+  const experiencePoints = user?.statistics?.experience || 0;
+  const achievementsCount = user?.statistics?.achievements || 0;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -67,20 +72,20 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.statsContainer}>
           <Card style={styles.statCard}>
             <Text style={styles.statEmoji}>🔥</Text>
-            <Text style={styles.statValue}>{user?.statistics?.streak || 0}</Text>
-            <Text style={styles.statLabel}>Дней подряд</Text>
+            <Text style={styles.statValue}>{streakDays}</Text>
+            <Text style={styles.statLabel}>{getDayDeclension(streakDays)} подряд</Text>
           </Card>
 
           <Card style={styles.statCard}>
             <Text style={styles.statEmoji}>🏆</Text>
-            <Text style={styles.statValue}>{user?.statistics?.experience || 0}</Text>
+            <Text style={styles.statValue}>{experiencePoints}</Text>
             <Text style={styles.statLabel}>Очков опыта</Text>
           </Card>
 
           <Card style={styles.statCard}>
             <Text style={styles.statEmoji}>⭐</Text>
-            <Text style={styles.statValue}>{user?.statistics?.achievements || 0}</Text>
-            <Text style={styles.statLabel}>Достижений</Text>
+            <Text style={styles.statValue}>{achievementsCount}</Text>
+            <Text style={styles.statLabel}>{getAchievementDeclension(achievementsCount)}</Text>
           </Card>
         </View>
 
@@ -234,7 +239,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Sizes.padding.large,
   },
   logoutButton: {
-    borderColor: Colors.error,
+    borderColor: Colors.border,
   },
 });
 

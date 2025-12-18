@@ -5,6 +5,7 @@ import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Loader from '../../components/common/Loader';
+import { getLanguageDeclension, getLessonDeclension, getWordDeclension } from '../../utils/helpers';
 import api from '../../services/api';
 
 const ProgressScreen = () => {
@@ -70,6 +71,10 @@ const ProgressScreen = () => {
     return <Loader fullScreen />;
   }
 
+  const totalLanguages = stats?.totalLanguages || 0;
+  const totalLessons = stats?.totalLessonsCompleted || 0;
+  const totalWords = stats?.totalVocabulary || 0;
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -81,26 +86,26 @@ const ProgressScreen = () => {
         <View style={styles.statsGrid}>
           <Card style={styles.statCard}>
             <View style={styles.statContent}>
-              <Text style={styles.statValue}>{stats?.totalLanguages || 0}</Text>
+              <Text style={styles.statValue}>{totalLanguages}</Text>
               <Text style={styles.statEmoji}>📚</Text>
             </View>
-            <Text style={styles.statLabel}>Языков</Text>
+            <Text style={styles.statLabel}>{getLanguageDeclension(totalLanguages)}</Text>
           </Card>
 
           <Card style={styles.statCard}>
             <View style={styles.statContent}>
-              <Text style={styles.statValue}>{stats?.totalLessonsCompleted || 0}</Text>
+              <Text style={styles.statValue}>{totalLessons}</Text>
               <Text style={styles.statEmoji}>✅</Text>
             </View>
-            <Text style={styles.statLabel}>Уроков</Text>
+            <Text style={styles.statLabel}>{getLessonDeclension(totalLessons)}</Text>
           </Card>
 
           <Card style={styles.statCard}>
             <View style={styles.statContent}>
-              <Text style={styles.statValue}>{stats?.totalVocabulary || 0}</Text>
+              <Text style={styles.statValue}>{totalWords}</Text>
               <Text style={styles.statEmoji}>📖</Text>
             </View>
-            <Text style={styles.statLabel}>Слов</Text>
+            <Text style={styles.statLabel}>{getWordDeclension(totalWords)}</Text>
           </Card>
         </View>
 
@@ -108,68 +113,73 @@ const ProgressScreen = () => {
           <View style={styles.languagesSection}>
             <Text style={styles.sectionTitle}>Изучаемые языки</Text>
             
-            {stats.languages.map((lang, index) => (
-              <Card key={index} style={styles.languageCard}>
-                <View style={styles.languageHeader}>
-                  <View style={styles.languageInfo}>
-                    <Text style={styles.languageName}>{lang.language}</Text>
-                    <View style={[styles.levelBadge, { backgroundColor: getLevelColor(lang.currentLevel) }]}>
-                      <Text style={styles.levelBadgeText}>
-                        {lang.currentLevel} • {getLevelDescription(lang.currentLevel)}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.languageStats}>
-                    <Text style={styles.lessonsCount}>{lang.lessonsCompleted}</Text>
-                    <Text style={styles.lessonsLabel}>уроков</Text>
-                  </View>
-                </View>
+            {stats.languages.map((lang, index) => {
+              const lessonsCount = lang.lessonsCompleted || 0;
+              const lessonsToNext = Math.ceil((100 - lang.progress) / 5);
 
-                <View style={styles.progressSection}>
-                  <View style={styles.progressHeader}>
-                    <Text style={styles.progressLabel}>Прогресс</Text>
-                    <Text style={styles.progressPercentage}>{lang.progress}%</Text>
-                  </View>
-                  <View style={styles.progressBarContainer}>
-                    <Animated.View
-                      style={[
-                        styles.progressBar,
-                        {
-                          width: progressAnims[index].interpolate({
-                            inputRange: [0, 100],
-                            outputRange: ['0%', '100%'],
-                          }),
-                          backgroundColor: getLevelColor(lang.currentLevel),
-                        },
-                      ]}
-                    />
-                  </View>
-                </View>
-
-                <View style={styles.milestones}>
-                  <View style={styles.milestone}>
-                    <View style={[
-                      styles.milestoneIcon, 
-                      { backgroundColor: getLevelColor(lang.currentLevel) }
-                    ]}>
-                      <Text style={styles.milestoneIconText}>🎯</Text>
-                    </View>
-                    <Text style={styles.milestoneText}>Текущий уровень</Text>
-                  </View>
-                  
-                  {lang.progress < 100 && (
-                    <View style={styles.milestone}>
-                      <View style={[styles.milestoneIcon, { backgroundColor: Colors.border }]}>
-                        <Text style={styles.milestoneIconText}>🏆</Text>
+              return (
+                <Card key={index} style={styles.languageCard}>
+                  <View style={styles.languageHeader}>
+                    <View style={styles.languageInfo}>
+                      <Text style={styles.languageName}>{lang.language}</Text>
+                      <View style={[styles.levelBadge, { backgroundColor: getLevelColor(lang.currentLevel) }]}>
+                        <Text style={styles.levelBadgeText}>
+                          {lang.currentLevel} • {getLevelDescription(lang.currentLevel)}
+                        </Text>
                       </View>
-                      <Text style={styles.milestoneText}>
-                        До следующего: {Math.ceil((100 - lang.progress) / 5)} уроков
-                      </Text>
                     </View>
-                  )}
-                </View>
-              </Card>
-            ))}
+                    <View style={styles.languageStats}>
+                      <Text style={styles.lessonsCount}>{lessonsCount}</Text>
+                      <Text style={styles.lessonsLabel}>{getLessonDeclension(lessonsCount)}</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.progressSection}>
+                    <View style={styles.progressHeader}>
+                      <Text style={styles.progressLabel}>Прогресс</Text>
+                      <Text style={styles.progressPercentage}>{lang.progress}%</Text>
+                    </View>
+                    <View style={styles.progressBarContainer}>
+                      <Animated.View
+                        style={[
+                          styles.progressBar,
+                          {
+                            width: progressAnims[index].interpolate({
+                              inputRange: [0, 100],
+                              outputRange: ['0%', '100%'],
+                            }),
+                            backgroundColor: getLevelColor(lang.currentLevel),
+                          },
+                        ]}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={styles.milestones}>
+                    <View style={styles.milestone}>
+                      <View style={[
+                        styles.milestoneIcon, 
+                        { backgroundColor: getLevelColor(lang.currentLevel) }
+                      ]}>
+                        <Text style={styles.milestoneIconText}>🎯</Text>
+                      </View>
+                      <Text style={styles.milestoneText}>Текущий уровень</Text>
+                    </View>
+                    
+                    {lang.progress < 100 && (
+                      <View style={styles.milestone}>
+                        <View style={[styles.milestoneIcon, { backgroundColor: Colors.border }]}>
+                          <Text style={styles.milestoneIconText}>🏆</Text>
+                        </View>
+                        <Text style={styles.milestoneText}>
+                          До следующего: {lessonsToNext} {getLessonDeclension(lessonsToNext)}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                </Card>
+              );
+            })}
           </View>
         ) : (
           <Card style={styles.emptyCard}>

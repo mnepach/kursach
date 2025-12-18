@@ -58,3 +58,39 @@ export const getStreakMessage = (streak) => {
   if (streak < 30) return `${streak} дней! Продолжайте!`;
   return `${streak} дней! Невероятно!`;
 };
+
+export const getDeclension = (count, one, twoToFour, fiveAndMore) => {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+  
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+    return fiveAndMore;
+  }
+  if (lastDigit === 1) {
+    return one;
+  }
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return twoToFour;
+  }
+  return fiveAndMore;
+};
+
+export const getLanguageDeclension = (count) => {
+  return getDeclension(count, 'язык', 'языка', 'языков');
+};
+
+export const getLessonDeclension = (count) => {
+  return getDeclension(count, 'урок', 'урока', 'уроков');
+};
+
+export const getWordDeclension = (count) => {
+  return getDeclension(count, 'слово', 'слова', 'слов');
+};
+
+export const getDayDeclension = (count) => {
+  return getDeclension(count, 'день', 'дня', 'дней');
+};
+
+export const getAchievementDeclension = (count) => {
+  return getDeclension(count, 'достижение', 'достижения', 'достижений');
+};

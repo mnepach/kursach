@@ -7,6 +7,7 @@ import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import { useAuth } from '../../context/AuthContext';
+import { getLessonDeclension, getDayDeclension, getAchievementDeclension } from '../../utils/helpers';
 import api from '../../services/api';
 
 const LANGUAGES = [
@@ -121,6 +122,10 @@ const HomeScreen = ({ navigation }) => {
   const maxLanguages = user?.subscription?.features?.maxLanguages || 1;
   const canAddLanguage = progressData.length < maxLanguages;
 
+  const streakDays = user?.statistics?.streak || 0;
+  const experiencePoints = user?.statistics?.experience || 0;
+  const achievementsCount = user?.statistics?.achievements || 0;
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView 
@@ -144,20 +149,20 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.statsRow}>
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>🔥</Text>
-              <Text style={styles.statValue}>{user?.statistics?.streak || 0}</Text>
-              <Text style={styles.statLabel}>Дней подряд</Text>
+              <Text style={styles.statValue}>{streakDays}</Text>
+              <Text style={styles.statLabel}>{getDayDeclension(streakDays)} подряд</Text>
             </View>
             
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>🏆</Text>
-              <Text style={styles.statValue}>{user?.statistics?.experience || 0}</Text>
+              <Text style={styles.statValue}>{experiencePoints}</Text>
               <Text style={styles.statLabel}>Очков опыта</Text>
             </View>
             
             <View style={styles.statItem}>
               <Text style={styles.statEmoji}>⭐</Text>
-              <Text style={styles.statValue}>{user?.statistics?.achievements || 0}</Text>
-              <Text style={styles.statLabel}>Достижений</Text>
+              <Text style={styles.statValue}>{achievementsCount}</Text>
+              <Text style={styles.statLabel}>{getAchievementDeclension(achievementsCount)}</Text>
             </View>
           </View>
         </Card>
@@ -190,6 +195,7 @@ const HomeScreen = ({ navigation }) => {
             progressData.map((lang, index) => {
               const isActive = activeLanguage?.language === lang.language;
               const languageData = LANGUAGES.find(l => l.name === lang.language);
+              const lessonsCompleted = lang.lessonsCompleted || 0;
 
               return (
                 <Card 
@@ -236,7 +242,7 @@ const HomeScreen = ({ navigation }) => {
                   
                   <View style={styles.courseFooter}>
                     <Text style={styles.progressText}>
-                      {lang.lessonsCompleted} уроков завершено
+                      {lessonsCompleted} {getLessonDeclension(lessonsCompleted)} завершено
                     </Text>
                     <Text style={styles.progressPercentage}>
                       {lang.progress}%
