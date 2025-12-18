@@ -639,5 +639,509 @@
         "points": 10
       }
     ]
+  },
+  {
+    "lessonNumber": 11,
+    "title": "일상생활 (Повседневная жизнь)",
+    "level": "B1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я обычно просыпаюсь рано",
+        "targetLanguage": "корейский",
+        "options": ["저는 보통 일찍 일어나요", "저는 늦게 자요", "저는 집에 있어요"],
+        "correctAnswer": "저는 보통 일찍 일어나요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "퇴근 후에 운동해요",
+        "options": ["После работы я занимаюсь спортом", "Я работаю вечером", "Я отдыхаю дома"],
+        "correctAnswer": "После работы я занимаюсь спортом",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "daily_routine.mp3",
+        "words": ["매일", "같은", "생활을", "해요"],
+        "correctAnswer": "매일 같은 생활을 해요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Работа",
+        "options": [
+          { "emoji": "💼", "text": "일" },
+          { "emoji": "🏖️", "text": "휴가" },
+          { "emoji": "🛏️", "text": "잠" }
+        ],
+        "correctAnswer": "일",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "В свободное время я читаю",
+        "targetLanguage": "корейский",
+        "options": ["시간이 있을 때 책을 읽어요", "책을 샀어요", "읽는 걸 싫어해요"],
+        "correctAnswer": "시간이 있을 때 책을 읽어요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "요즘 바빠요",
+        "options": ["В последнее время я занят", "Я всегда свободен", "Мне скучно"],
+        "correctAnswer": "В последнее время я занят",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я часто готовлю дома",
+        "targetLanguage": "корейский",
+        "options": ["저는 자주 집에서 요리해요", "저는 외식을만 해요", "요리를 못 해요"],
+        "correctAnswer": "저는 자주 집에서 요리해요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 12,
+    "title": "여행 (Путешествия)",
+    "level": "B1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я люблю путешествовать",
+        "targetLanguage": "корейский",
+        "options": ["여행하는 것을 좋아해요", "집에만 있어요", "비행기를 무서워해요"],
+        "correctAnswer": "여행하는 것을 좋아해요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Аэропорт",
+        "options": [
+          { "emoji": "✈️", "text": "공항" },
+          { "emoji": "🚉", "text": "기차역" },
+          { "emoji": "🏨", "text": "호텔" }
+        ],
+        "correctAnswer": "공항",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "비행기 표를 예약했어요",
+        "options": ["Я забронировал билет", "Я потерял паспорт", "Я отменил поездку"],
+        "correctAnswer": "Я забронировал билет",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "travel_plan.mp3",
+        "words": ["다음", "주에", "여행을", "가요"],
+        "correctAnswer": "다음 주에 여행을 가요",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Где находится отель?",
+        "targetLanguage": "корейский",
+        "options": ["호텔이 어디에 있어요?", "호텔에 가고 싶어요", "호텔이 없어요"],
+        "correctAnswer": "호텔이 어디에 있어요?",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "길을 잃었어요",
+        "options": ["Я заблудился", "Я нашёл дорогу", "Я опоздал"],
+        "correctAnswer": "Я заблудился",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хочу посетить Корею",
+        "targetLanguage": "корейский",
+        "options": ["한국에 가 보고 싶어요", "한국에 살아요", "한국이 싫어요"],
+        "correctAnswer": "한국에 가 보고 싶어요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 13,
+    "title": "의견 표현 (Выражение мнения)",
+    "level": "B2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я думаю, что это хорошая идея",
+        "targetLanguage": "корейский",
+        "options": ["이건 좋은 생각이라고 생각해요", "이건 불가능해요", "생각이 없어요"],
+        "correctAnswer": "이건 좋은 생각이라고 생각해요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "제 의견은 조금 달라요",
+        "options": ["Моё мнение немного другое", "Я полностью согласен", "У меня нет мнения"],
+        "correctAnswer": "Моё мнение немного другое",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "opinion.mp3",
+        "words": ["저는", "이렇게", "생각해요"],
+        "correctAnswer": "저는 이렇게 생각해요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Дискуссия",
+        "options": [
+          { "emoji": "💬", "text": "토론" },
+          { "emoji": "📖", "text": "독서" },
+          { "emoji": "🎵", "text": "음악" }
+        ],
+        "correctAnswer": "토론",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я согласен с тобой",
+        "targetLanguage": "корейский",
+        "options": ["당신 말에 동의해요", "동의하지 않아요", "잘 모르겠어요"],
+        "correctAnswer": "당신 말에 동의해요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "그럴 수도 있어요",
+        "options": ["Может быть", "Никогда", "Обязательно"],
+        "correctAnswer": "Может быть",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Важно учитывать разные мнения",
+        "targetLanguage": "корейский",
+        "options": ["다양한 의견을 고려하는 것이 중요해요", "의견은 필요 없어요", "하나만 맞아요"],
+        "correctAnswer": "다양한 의견을 고려하는 것이 중요해요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 14,
+    "title": "문제 해결 (Решение проблем)",
+    "level": "B2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Нам нужно найти решение",
+        "targetLanguage": "корейский",
+        "options": ["해결책을 찾아야 해요", "문제를 만들어요", "포기해요"],
+        "correctAnswer": "해결책을 찾아야 해요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "상황이 생각보다 복잡해요",
+        "options": ["Ситуация сложнее, чем кажется", "Всё просто", "Проблем нет"],
+        "correctAnswer": "Ситуация сложнее, чем кажется",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "problem.mp3",
+        "words": ["문제를", "해결할", "방법을", "찾아요"],
+        "correctAnswer": "문제를 해결할 방법을 찾아요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Проблема",
+        "options": [
+          { "emoji": "❗", "text": "문제" },
+          { "emoji": "🎉", "text": "축하" },
+          { "emoji": "💤", "text": "휴식" }
+        ],
+        "correctAnswer": "문제",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Это зависит от ситуации",
+        "targetLanguage": "корейский",
+        "options": ["상황에 따라 달라요", "항상 같아요", "상관없어요"],
+        "correctAnswer": "상황에 따라 달라요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "다른 방법도 있어요",
+        "options": ["Есть и другой способ", "Способ только один", "Способа нет"],
+        "correctAnswer": "Есть и другой способ",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Мы должны обсудить это",
+        "targetLanguage": "корейский",
+        "options": ["이것에 대해 논의해야 해요", "혼자 결정해요", "이미 끝났어요"],
+        "correctAnswer": "이것에 대해 논의해야 해요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 15,
+    "title": "사회와 문화 (Общество и культура)",
+    "level": "C1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Культура сильно влияет на общество",
+        "targetLanguage": "корейский",
+        "options": ["문화는 사회에 큰 영향을 미쳐요", "문화는 중요하지 않아요", "사회는 변하지 않아요"],
+        "correctAnswer": "문화는 사회에 큰 영향을 미쳐요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "전통을 존중하는 것이 중요해요",
+        "options": ["Важно уважать традиции", "Традиции устарели", "Традиций нет"],
+        "correctAnswer": "Важно уважать традиции",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "culture.mp3",
+        "words": ["각", "나라에는", "고유한", "문화가", "있어요"],
+        "correctAnswer": "각 나라에는 고유한 문화가 있어요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Культура",
+        "options": [
+          { "emoji": "🏛️", "text": "문화" },
+          { "emoji": "🏭", "text": "산업" },
+          { "emoji": "🌳", "text": "자연" }
+        ],
+        "correctAnswer": "문화",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Современное общество быстро меняется",
+        "targetLanguage": "корейский",
+        "options": ["현대 사회는 빠르게 변하고 있어요", "사회는 항상 같아요", "변화가 없어요"],
+        "correctAnswer": "현대 사회는 빠르게 변하고 있어요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "세대 간의 차이가 커지고 있어요",
+        "options": ["Разница между поколениями растёт", "Все поколения одинаковы", "Разницы нет"],
+        "correctAnswer": "Разница между поколениями растёт",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Это сложный социальный вопрос",
+        "targetLanguage": "корейский",
+        "options": ["이건 복잡한 사회적 문제예요", "간단한 질문이에요", "문제가 아니에요"],
+        "correctAnswer": "이건 복잡한 사회적 문제예요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 16,
+    "title": "추상적 주제 (Абстрактные темы)",
+    "level": "C1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Счастье каждый понимает по-разному",
+        "targetLanguage": "корейский",
+        "options": ["행복은 사람마다 다르게 느껴요", "행복은 하나예요", "행복은 중요하지 않아요"],
+        "correctAnswer": "행복은 사람마다 다르게 느껴요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "삶의 의미를 고민해 본 적이 있어요",
+        "options": ["Я задумывался о смысле жизни", "Я никогда не думал об этом", "Жизнь проста"],
+        "correctAnswer": "Я задумывался о смысле жизни",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "abstract.mp3",
+        "words": ["이", "문제는", "쉽게", "답할", "수", "없어요"],
+        "correctAnswer": "이 문제는 쉽게 답할 수 없어요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Мысль",
+        "options": [
+          { "emoji": "🤔", "text": "생각" },
+          { "emoji": "🏃", "text": "운동" },
+          { "emoji": "🍽️", "text": "식사" }
+        ],
+        "correctAnswer": "생각",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Важно уметь критически мыслить",
+        "targetLanguage": "корейский",
+        "options": ["비판적으로 생각할 수 있는 것이 중요해요", "생각할 필요 없어요", "항상 믿어요"],
+        "correctAnswer": "비판적으로 생각할 수 있는 것이 중요해요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "정답이 없는 질문도 있어요",
+        "options": ["Есть вопросы без правильного ответа", "Ответ всегда есть", "Вопросов нет"],
+        "correctAnswer": "Есть вопросы без правильного ответа",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Этот вопрос вызывает много споров",
+        "targetLanguage": "корейский",
+        "options": ["이 질문은 많은 논쟁을 불러일으켜요", "아무도 관심 없어요", "이미 해결됐어요"],
+        "correctAnswer": "이 질문은 많은 논쟁을 불러일으켜요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 17,
+    "title": "고급 표현 (Продвинутые выражения)",
+    "level": "C2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "С его точки зрения это неизбежно",
+        "targetLanguage": "корейский",
+        "options": ["그의 관점에서는 불가피해요", "그는 동의하지 않아요", "우연이에요"],
+        "correctAnswer": "그의 관점에서는 불가피해요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "표면적으로는 간단해 보이지만 그렇지 않아요",
+        "options": ["На первый взгляд это кажется простым, но это не так", "Это действительно просто", "Это очевидно"],
+        "correctAnswer": "На первый взгляд это кажется простым, но это не так",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "advanced_expression.mp3",
+        "words": ["맥락을", "고려하지", "않으면", "오해할", "수", "있어요"],
+        "correctAnswer": "맥락을 고려하지 않으면 오해할 수 있어요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Контекст",
+        "options": [
+          { "emoji": "🧩", "text": "맥락" },
+          { "emoji": "📦", "text": "상자" },
+          { "emoji": "⏰", "text": "시간" }
+        ],
+        "correctAnswer": "맥락",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Это утверждение требует уточнения",
+        "targetLanguage": "корейский",
+        "options": ["이 주장은 уточ할 필요가 있어요", "완벽하게 맞아요", "설명이 필요 없어요"],
+        "correctAnswer": "이 주장은 уточ할 필요가 있어요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "뉘앙스를 이해하는 것이 핵심이에요",
+        "options": ["Понимание нюансов — ключевой момент", "Главное — скорость", "Нюансы не важны"],
+        "correctAnswer": "Понимание нюансов — ключевой момент",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Его речь была очень убедительной",
+        "targetLanguage": "корейский",
+        "options": ["그의 말은 매우 설득력이 있었어요", "그의 말은 혼란스러웠어요", "아무도 듣지 않았어요"],
+        "correctAnswer": "그의 말은 매우 설득력이 있었어요",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 18,
+    "title": "미묘한 의미 (Тонкие смысловые оттенки)",
+    "level": "C2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Смысл меняется в зависимости от контекста",
+        "targetLanguage": "корейский",
+        "options": ["의미는 맥락에 따라 달라져요", "의미는 항상 같아요", "맥락은 중요하지 않아요"],
+        "correctAnswer": "의미는 맥락에 따라 달라져요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "그 표현에는 아이러니가 담겨 있어요",
+        "options": ["В этом выражении есть ирония", "Это буквальное выражение", "Это комплимент"],
+        "correctAnswer": "В этом выражении есть ирония",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "nuance.mp3",
+        "words": ["말투에", "따라", "의미가", "달라질", "수", "있어요"],
+        "correctAnswer": "말투에 따라 의미가 달라질 수 있어요",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Нюанс",
+        "options": [
+          { "emoji": "🎭", "text": "뉘앙스" },
+          { "emoji": "📢", "text": "소리" },
+          { "emoji": "📝", "text": "메모" }
+        ],
+        "correctAnswer": "뉘앙스",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Он выразился очень осторожно",
+        "targetLanguage": "корейский",
+        "options": ["그는 매우 조심스럽게 표현했어요", "그는 직설적으로 말했어요", "그는 아무 말도 안 했어요"],
+        "correctAnswer": "그는 매우 조심스럽게 표현했어요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "미묘한 차이를 느낄 수 있어요",
+        "options": ["Можно почувствовать тонкую разницу", "Разницы нет", "Всё одинаково"],
+        "correctAnswer": "Можно почувствовать тонкую разницу",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Это выражение трудно точно перевести",
+        "targetLanguage": "корейский",
+        "options": ["이 표현은 정확히 번역하기 어려워요", "번역이 쉬워요", "번역할 필요 없어요"],
+        "correctAnswer": "이 표현은 정확히 번역하기 어려워요",
+        "points": 10
+      }
+    ]
   }
 ]

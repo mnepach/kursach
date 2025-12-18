@@ -639,5 +639,425 @@
         "points": 10
       }
     ]
+  },
+  {
+    "lessonNumber": 11,
+    "title": "Transporte",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Автобус",
+        "targetLanguage": "испанский",
+        "options": ["Autobús", "Tren", "Taxi"],
+        "correctAnswer": "Autobús",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Поезд",
+        "options": [
+          { "emoji": "🚆", "text": "Tren" },
+          { "emoji": "🚌", "text": "Autobús" },
+          { "emoji": "🚗", "text": "Coche" }
+        ],
+        "correctAnswer": "Tren",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Taxi",
+        "options": ["Такси", "Автобус", "Поезд"],
+        "correctAnswer": "Такси",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "donde_esta_el_tren.mp3",
+        "words": ["¿Dónde", "está", "el", "tren?"],
+        "correctAnswer": "¿Dónde está el tren?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я еду на автобусе",
+        "targetLanguage": "испанский",
+        "options": ["Voy en autobús", "Voy en tren", "Voy en coche"],
+        "correctAnswer": "Voy en autobús",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Billete de ida y vuelta",
+        "options": ["Билет туда и обратно", "Одноразовый билет", "Проездной"],
+        "correctAnswer": "Билет туда и обратно",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Самолёт",
+        "options": [
+          { "emoji": "✈️", "text": "Avión" },
+          { "emoji": "🚁", "text": "Helicóptero" },
+          { "emoji": "🚤", "text": "Barco" }
+        ],
+        "correctAnswer": "Avión",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 12,
+    "title": "Restaurante",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Меню",
+        "targetLanguage": "испанский",
+        "options": ["Menú", "Cuenta", "Mesa"],
+        "correctAnswer": "Menú",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Вода",
+        "options": [
+          { "emoji": "💧", "text": "Agua" },
+          { "emoji": "🍷", "text": "Vino" },
+          { "emoji": "🍺", "text": "Cerveza" }
+        ],
+        "correctAnswer": "Agua",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "La cuenta, por favor",
+        "options": ["Счёт, пожалуйста", "Меню, пожалуйста", "Стол, пожалуйста"],
+        "correctAnswer": "Счёт, пожалуйста",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "quiero_una_pizza.mp3",
+        "words": ["Quiero", "una", "pizza"],
+        "correctAnswer": "Quiero una pizza",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Мне нравится эта еда",
+        "targetLanguage": "испанский",
+        "options": ["Me gusta esta comida", "No me gusta esta comida", "Quiero más comida"],
+        "correctAnswer": "Me gusta esta comida",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Официант",
+        "options": [
+          { "emoji": "🧑‍🍳", "text": "Camarero" },
+          { "emoji": "👩‍🍳", "text": "Cocinero" },
+          { "emoji": "👨‍🍳", "text": "Chef" }
+        ],
+        "correctAnswer": "Camarero",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Mesa para dos",
+        "options": ["Стол на двоих", "Стол на четверых", "Стол на одного"],
+        "correctAnswer": "Стол на двоих",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 13,
+    "title": "Compras en el mercado",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Фрукты",
+        "targetLanguage": "испанский",
+        "options": ["Frutas", "Verduras", "Carnes"],
+        "correctAnswer": "Frutas",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Овощи",
+        "options": [
+          { "emoji": "🥦", "text": "Verduras" },
+          { "emoji": "🍎", "text": "Frutas" },
+          { "emoji": "🥩", "text": "Carnes" }
+        ],
+        "correctAnswer": "Verduras",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "¿Cuánto cuesta?",
+        "options": ["Сколько это стоит?", "Я хочу купить это", "Это дорого"],
+        "correctAnswer": "Сколько это стоит?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "quiero_comprar_manazana.mp3",
+        "words": ["Quiero", "comprar", "manzana"],
+        "correctAnswer": "Quiero comprar manzana",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Сколько килограмм?",
+        "targetLanguage": "испанский",
+        "options": ["¿Cuántos kilos?", "¿Cuánto cuesta?", "¿Dónde está?"],
+        "correctAnswer": "¿Cuántos kilos?",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 14,
+    "title": "Места в городе",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Больница",
+        "targetLanguage": "испанский",
+        "options": ["Hospital", "Escuela", "Iglesia"],
+        "correctAnswer": "Hospital",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Школа",
+        "options": [
+          { "emoji": "🏫", "text": "Escuela" },
+          { "emoji": "🏥", "text": "Hospital" },
+          { "emoji": "⛪", "text": "Iglesia" }
+        ],
+        "correctAnswer": "Escuela",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Iglesia",
+        "options": ["Церковь", "Больница", "Школа"],
+        "correctAnswer": "Церковь",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "donde_esta_la_escuela.mp3",
+        "words": ["¿Dónde", "está", "la", "escuela?"],
+        "correctAnswer": "¿Dónde está la escuela?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я иду в больницу",
+        "targetLanguage": "испанский",
+        "options": ["Voy al hospital", "Voy a la escuela", "Voy a la iglesia"],
+        "correctAnswer": "Voy al hospital",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 15,
+    "title": "Путешествия",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Карта",
+        "targetLanguage": "испанский",
+        "options": ["Mapa", "Pasaporte", "Guía"],
+        "correctAnswer": "Mapa",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Паспорт",
+        "options": [
+          { "emoji": "🛂", "text": "Pasaporte" },
+          { "emoji": "🗺️", "text": "Mapa" },
+          { "emoji": "📕", "text": "Guía" }
+        ],
+        "correctAnswer": "Pasaporte",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Billete de avión",
+        "options": ["Авиабилет", "Билет на поезд", "Билет на автобус"],
+        "correctAnswer": "Авиабилет",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "quiero_viajar.mp3",
+        "words": ["Quiero", "viajar"],
+        "correctAnswer": "Quiero viajar",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Где гостиница?",
+        "targetLanguage": "испанский",
+        "options": ["¿Dónde está el hotel?", "¿Dónde está la estación?", "¿Dónde está el restaurante?"],
+        "correctAnswer": "¿Dónde está el hotel?",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 16,
+    "title": "Эмоции",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Счастливый",
+        "targetLanguage": "испанский",
+        "options": ["Feliz", "Triste", "Enojado"],
+        "correctAnswer": "Feliz",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Грустный",
+        "options": [
+          { "emoji": "😢", "text": "Triste" },
+          { "emoji": "😊", "text": "Feliz" },
+          { "emoji": "😡", "text": "Enojado" }
+        ],
+        "correctAnswer": "Triste",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Enojado",
+        "options": ["Сердитый", "Счастливый", "Грустный"],
+        "correctAnswer": "Сердитый",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "estoy_feliz.mp3",
+        "words": ["Estoy", "feliz"],
+        "correctAnswer": "Estoy feliz",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Мне грустно",
+        "targetLanguage": "испанский",
+        "options": ["Estoy triste", "Estoy feliz", "Estoy enojado"],
+        "correctAnswer": "Estoy triste",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 17,
+    "title": "Здоровье",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Врач",
+        "targetLanguage": "испанский",
+        "options": ["Médico", "Enfermero", "Paciente"],
+        "correctAnswer": "Médico",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Аптека",
+        "options": [
+          { "emoji": "💊", "text": "Farmacia" },
+          { "emoji": "🏥", "text": "Hospital" },
+          { "emoji": "🩺", "text": "Consultorio" }
+        ],
+        "correctAnswer": "Farmacia",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Tengo fiebre",
+        "options": ["У меня температура", "У меня кашель", "Мне больно"],
+        "correctAnswer": "У меня температура",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "me_duele_la_cabeza.mp3",
+        "words": ["Me", "duele", "la", "cabeza"],
+        "correctAnswer": "Me duele la cabeza",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Мне больно",
+        "targetLanguage": "испанский",
+        "options": ["Me duele", "Estoy bien", "Me siento feliz"],
+        "correctAnswer": "Me duele",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 18,
+    "title": "Спорт",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Футбол",
+        "targetLanguage": "испанский",
+        "options": ["Fútbol", "Baloncesto", "Tenis"],
+        "correctAnswer": "Fútbol",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Баскетбол",
+        "options": [
+          { "emoji": "🏀", "text": "Baloncesto" },
+          { "emoji": "⚽", "text": "Fútbol" },
+          { "emoji": "🎾", "text": "Tenis" }
+        ],
+        "correctAnswer": "Baloncesto",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Natación",
+        "options": ["Плавание", "Футбол", "Баскетбол"],
+        "correctAnswer": "Плавание",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "me_gusta_el_tenis.mp3",
+        "words": ["Me", "gusta", "el", "tenis"],
+        "correctAnswer": "Me gusta el tenis",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я играю в футбол",
+        "targetLanguage": "испанский",
+        "options": ["Juego al fútbol", "Juego al baloncesto", "Juego al tenis"],
+        "correctAnswer": "Juego al fútbol",
+        "points": 10
+      }
+    ]
   }
 ]

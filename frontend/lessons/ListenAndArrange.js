@@ -39,8 +39,8 @@ function ListenAndArrange({ lesson, onAnswer }) {
       setShowNotification(true);
       
       const audioPath = correct 
-        ? './trickle/assets/audio/right_answer.mp3' 
-        : './trickle/assets/audio/wrong_answer.mp3';
+        ? './trickle/assets/audio/correct.mp3' 
+        : './trickle/assets/audio/incorrect.mp3';
       const audio = new Audio(audioPath);
       audio.play().catch(err => console.error('Audio playback error:', err));
     }

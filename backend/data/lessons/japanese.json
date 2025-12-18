@@ -639,5 +639,281 @@
         "points": 10
       }
     ]
+  },
+  {
+    "lessonNumber": 11,
+    "title": "旅行 (Путешествия)",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Аэропорт",
+        "targetLanguage": "японский",
+        "options": ["空港", "駅", "ホテル"],
+        "correctAnswer": "空港",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Паспорт",
+        "options": [
+          { "emoji": "🛂", "text": "パスポート" },
+          { "emoji": "🎫", "text": "切符" },
+          { "emoji": "🧳", "text": "スーツケース" }
+        ],
+        "correctAnswer": "パスポート",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "空港はどこですか",
+        "options": ["Где аэропорт?", "Когда вылет?", "Где отель?"],
+        "correctAnswer": "Где аэропорт?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "boarding_jp.mp3",
+        "words": ["搭乗は", "5番", "ゲート", "です"],
+        "correctAnswer": "搭乗は 5番 ゲート です",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Мне нужен билет",
+        "targetLanguage": "японский",
+        "options": ["切符が必要です", "パスポートがあります", "荷物があります"],
+        "correctAnswer": "切符が必要です",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "これは私の荷物です",
+        "options": ["Это мой багаж", "Где мой билет?", "Я лечу домой"],
+        "correctAnswer": "Это мой багаж",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Отель",
+        "options": [
+          { "emoji": "🏨", "text": "ホテル" },
+          { "emoji": "🏠", "text": "家" },
+          { "emoji": "🏢", "text": "会社" }
+        ],
+        "correctAnswer": "ホテル",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 12,
+    "title": "仕事と職業 (Работа и профессии)",
+    "level": "B1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я работаю инженером",
+        "targetLanguage": "японский",
+        "options": ["私はエンジニアです", "私は仕事です", "私は会社です"],
+        "correctAnswer": "私はエンジニアです",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "仕事は何ですか",
+        "options": ["Кем вы работаете?", "Где вы работаете?", "Вы работаете?"],
+        "correctAnswer": "Кем вы работаете?",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Офис",
+        "options": [
+          { "emoji": "🏢", "text": "オフィス" },
+          { "emoji": "🏫", "text": "学校" },
+          { "emoji": "🏥", "text": "病院" }
+        ],
+        "correctAnswer": "オフィス",
+        "points": 15
+      },
+      {
+        "type": "listen",
+        "audio": "keiken_jp.mp3",
+        "words": ["三年の", "経験が", "あります"],
+        "correctAnswer": "三年の 経験が あります",
+        "points": 15
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я ищу работу",
+        "targetLanguage": "японский",
+        "options": ["仕事を探しています", "仕事があります", "仕事が好きです"],
+        "correctAnswer": "仕事を探しています",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "私の仕事は大変です",
+        "options": ["Моя работа сложная", "Моя работа интересная", "Я люблю работу"],
+        "correctAnswer": "Моя работа сложная",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Коллеги",
+        "options": [
+          { "emoji": "👥", "text": "同僚" },
+          { "emoji": "👨‍👩‍👧", "text": "家族" },
+          { "emoji": "👤", "text": "客" }
+        ],
+        "correctAnswer": "同僚",
+        "points": 15
+      }
+    ]
+  },
+  {
+    "lessonNumber": 13,
+    "title": "意見と感情 (Мнения и эмоции)",
+    "level": "B1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я согласен с тобой",
+        "targetLanguage": "японский",
+        "options": ["賛成です", "聞いています", "考えています"],
+        "correctAnswer": "賛成です",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "いい考えだとは思いません",
+        "options": ["Я не думаю, что это хорошая идея", "Это хорошая идея", "Мне нравится"],
+        "correctAnswer": "Я не думаю, что это хорошая идея",
+        "points": 15
+      },
+      {
+        "type": "listen",
+        "audio": "kimochi_jp.mp3",
+        "words": ["今日は", "緊張して", "います"],
+        "correctAnswer": "今日は 緊張して います",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Счастливый",
+        "options": [
+          { "emoji": "😊", "text": "幸せ" },
+          { "emoji": "😢", "text": "悲しい" },
+          { "emoji": "😡", "text": "怒っている" }
+        ],
+        "correctAnswer": "幸せ",
+        "points": 15
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я волнуюсь",
+        "targetLanguage": "японский",
+        "options": ["心配しています", "退屈です", "嬉しいです"],
+        "correctAnswer": "心配しています",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "それは私を怒らせます",
+        "options": ["Это злит меня", "Это радует меня", "Это удивляет меня"],
+        "correctAnswer": "Это злит меня",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Удивлён",
+        "options": [
+          { "emoji": "😮", "text": "驚いた" },
+          { "emoji": "😴", "text": "疲れた" },
+          { "emoji": "😐", "text": "落ち着いた" }
+        ],
+        "correctAnswer": "驚いた",
+        "points": 15
+      }
+    ]
+  },
+  {
+    "lessonNumber": 14,
+    "title": "条件文 (Условные предложения)",
+    "level": "B2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Если у меня будет время, я позвоню тебе",
+        "targetLanguage": "японский",
+        "options": [
+          "時間があれば、電話します",
+          "時間があった、電話した",
+          "時間がある、電話する"
+        ],
+        "correctAnswer": "時間があれば、電話します",
+        "points": 20
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "もし答えを知っていれば、教えます",
+        "options": [
+          "Если бы я знал ответ, я бы сказал",
+          "Я знаю ответ",
+          "Когда узнаю, скажу"
+        ],
+        "correctAnswer": "Если бы я знал ответ, я бы сказал",
+        "points": 20
+      },
+      {
+        "type": "listen",
+        "audio": "moshi_jp.mp3",
+        "words": ["雨が", "降ったら", "家に", "います"],
+        "correctAnswer": "雨が 降ったら 家に います",
+        "points": 20
+      },
+      {
+        "type": "selectImage",
+        "word": "Дождь",
+        "options": [
+          { "emoji": "🌧️", "text": "雨" },
+          { "emoji": "☀️", "text": "太陽" },
+          { "emoji": "❄️", "text": "雪" }
+        ],
+        "correctAnswer": "雨",
+        "points": 20
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Если бы я был богат",
+        "targetLanguage": "японский",
+        "options": [
+          "お金持ちだったら",
+          "お金持ちです",
+          "お金がある"
+        ],
+        "correctAnswer": "お金持ちだったら",
+        "points": 20
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "勉強すれば、成功します",
+        "options": [
+          "Если будешь учиться, добьёшься успеха",
+          "Ты успешен",
+          "Ты учился"
+        ],
+        "correctAnswer": "Если будешь учиться, добьёшься успеха",
+        "points": 20
+      },
+      {
+        "type": "listen",
+        "audio": "shiken_jp.mp3",
+        "words": ["試験に", "合格します"],
+        "correctAnswer": "試験に 合格します",
+        "points": 20
+      }
+    ]
   }
 ]

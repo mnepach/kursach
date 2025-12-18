@@ -159,8 +159,8 @@
       {
         "type": "listen",
         "audio": "count_to_five.mp3",
-        "words": ["One", "two", "three", "four", "five"],
-        "correctAnswer": "One two three four five",
+        "words": ["Hello", "one", "tea", "please", "five", "coffee"],
+        "correctAnswer": "Hello, one tea please",
         "points": 10
       },
       {
@@ -637,6 +637,434 @@
         "options": ["I'll take it", "I don't want it", "Show me another"],
         "correctAnswer": "I'll take it",
         "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 11,
+    "title": "Путешествия",
+    "level": "A2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Аэропорт",
+        "targetLanguage": "английский",
+        "options": ["Airport", "Station", "Hotel"],
+        "correctAnswer": "Airport",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Паспорт",
+        "options": [
+          { "emoji": "🛂", "text": "Passport" },
+          { "emoji": "🎫", "text": "Ticket" },
+          { "emoji": "🧳", "text": "Suitcase" }
+        ],
+        "correctAnswer": "Passport",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Where is the airport?",
+        "options": ["Где аэропорт?", "Когда вылет?", "Сколько стоит билет?"],
+        "correctAnswer": "Где аэропорт?",
+        "points": 10
+      },
+      {
+        "type": "listen",
+        "audio": "boarding_announcement.mp3",
+        "words": ["Boarding", "starts", "at", "gate", "five"],
+        "correctAnswer": "Boarding starts at gate five",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Мне нужен билет",
+        "targetLanguage": "английский",
+        "options": ["I need a ticket", "I lost my passport", "I have luggage"],
+        "correctAnswer": "I need a ticket",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "This is my luggage",
+        "options": ["Это мой багаж", "Где мой билет?", "Я лечу домой"],
+        "correctAnswer": "Это мой багаж",
+        "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Отель",
+        "options": [
+          { "emoji": "🏨", "text": "Hotel" },
+          { "emoji": "🏠", "text": "House" },
+          { "emoji": "🏢", "text": "Office" }
+        ],
+        "correctAnswer": "Hotel",
+        "points": 10
+      }
+    ]
+  },
+  {
+    "lessonNumber": 12,
+    "title": "Работа и профессии",
+    "level": "B1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я работаю инженером",
+        "targetLanguage": "английский",
+        "options": ["I work as an engineer", "I am an engineering", "I work engineer"],
+        "correctAnswer": "I work as an engineer",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "What do you do for a living?",
+        "options": ["Чем вы зарабатываете на жизнь?", "Где вы работаете?", "Вы работаете?"],
+        "correctAnswer": "Чем вы зарабатываете на жизнь?",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Офис",
+        "options": [
+          { "emoji": "🏢", "text": "Office" },
+          { "emoji": "🏫", "text": "School" },
+          { "emoji": "🏥", "text": "Hospital" }
+        ],
+        "correctAnswer": "Office",
+        "points": 15
+      },
+      {
+        "type": "listen",
+        "audio": "job_experience.mp3",
+        "words": ["I", "have", "three", "years", "of", "experience"],
+        "correctAnswer": "I have three years of experience",
+        "points": 15
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я ищу работу",
+        "targetLanguage": "английский",
+        "options": ["I am looking for a job", "I have a job", "I like my job"],
+        "correctAnswer": "I am looking for a job",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "My job is stressful",
+        "options": ["Моя работа стрессовая", "Моя работа интересная", "Я люблю работу"],
+        "correctAnswer": "Моя работа стрессовая",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Коллеги",
+        "options": [
+          { "emoji": "👥", "text": "Colleagues" },
+          { "emoji": "👨‍👩‍👧", "text": "Family" },
+          { "emoji": "👤", "text": "Client" }
+        ],
+        "correctAnswer": "Colleagues",
+        "points": 15
+      }
+    ]
+  },
+  {
+    "lessonNumber": 13,
+    "title": "Мнения и эмоции",
+    "level": "B1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я согласен с тобой",
+        "targetLanguage": "английский",
+        "options": ["I agree with you", "I listen to you", "I think of you"],
+        "correctAnswer": "I agree with you",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "I don't think it's a good idea",
+        "options": ["Я не думаю, что это хорошая идея", "Мне нравится эта идея", "Это хорошая идея"],
+        "correctAnswer": "Я не думаю, что это хорошая идея",
+        "points": 15
+      },
+      {
+        "type": "listen",
+        "audio": "feelings_today.mp3",
+        "words": ["I", "feel", "nervous", "today"],
+        "correctAnswer": "I feel nervous today",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Счастливый",
+        "options": [
+          { "emoji": "😊", "text": "Happy" },
+          { "emoji": "😢", "text": "Sad" },
+          { "emoji": "😡", "text": "Angry" }
+        ],
+        "correctAnswer": "Happy",
+        "points": 15
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я переживаю",
+        "targetLanguage": "английский",
+        "options": ["I'm worried", "I'm excited", "I'm bored"],
+        "correctAnswer": "I'm worried",
+        "points": 15
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "This makes me angry",
+        "options": ["Это злит меня", "Это радует меня", "Это удивляет меня"],
+        "correctAnswer": "Это злит меня",
+        "points": 15
+      },
+      {
+        "type": "selectImage",
+        "word": "Удивлён",
+        "options": [
+          { "emoji": "😮", "text": "Surprised" },
+          { "emoji": "😴", "text": "Tired" },
+          { "emoji": "😐", "text": "Calm" }
+        ],
+        "correctAnswer": "Surprised",
+        "points": 15
+      }
+    ]
+  },
+  {
+    "lessonNumber": 14,
+    "title": "Условные предложения",
+    "level": "B2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Если у меня будет время, я позвоню тебе",
+        "targetLanguage": "английский",
+        "options": [
+          "If I have time, I will call you",
+          "If I had time, I call you",
+          "When I have time, I called you"
+        ],
+        "correctAnswer": "If I have time, I will call you",
+        "points": 20
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "If I knew the answer, I would tell you",
+        "options": [
+          "Если бы я знал ответ, я бы сказал тебе",
+          "Если я знаю ответ, я говорю",
+          "Когда я узнаю, я скажу"
+        ],
+        "correctAnswer": "Если бы я знал ответ, я бы сказал тебе",
+        "points": 20
+      },
+      {
+        "type": "listen",
+        "audio": "conditional_example.mp3",
+        "words": ["If", "it", "rains", "we", "will", "stay", "inside"],
+        "correctAnswer": "If it rains we will stay inside",
+        "points": 20
+      },
+      {
+        "type": "selectImage",
+        "word": "Дождь",
+        "options": [
+          { "emoji": "🌧️", "text": "Rain" },
+          { "emoji": "☀️", "text": "Sun" },
+          { "emoji": "❄️", "text": "Snow" }
+        ],
+        "correctAnswer": "Rain",
+        "points": 20
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Если бы я был богат, я бы путешествовал",
+        "targetLanguage": "английский",
+        "options": [
+          "If I were rich, I would travel",
+          "If I am rich, I travel",
+          "When I was rich, I traveled"
+        ],
+        "correctAnswer": "If I were rich, I would travel",
+        "points": 20
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "If you study, you will succeed",
+        "options": [
+          "Если ты будешь учиться, ты добьёшься успеха",
+          "Ты учишься и успешен",
+          "Ты добился успеха"
+        ],
+        "correctAnswer": "Если ты будешь учиться, ты добьёшься успеха",
+        "points": 20
+      },
+      {
+        "type": "listen",
+        "audio": "future_result.mp3",
+        "words": ["You", "will", "pass", "the", "exam"],
+        "correctAnswer": "You will pass the exam",
+        "points": 20
+      }
+    ]
+  },
+  {
+    "lessonNumber": 15,
+    "title": "Формальный стиль общения",
+    "level": "C1",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хотел бы обсудить этот вопрос",
+        "targetLanguage": "английский",
+        "options": [
+          "I would like to discuss this matter",
+          "I want to talk about it",
+          "Let's talk"
+        ],
+        "correctAnswer": "I would like to discuss this matter",
+        "points": 25
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Please find the attached document",
+        "options": [
+          "Пожалуйста, найдите прикреплённый документ",
+          "Я отправил документ",
+          "Вот документ"
+        ],
+        "correctAnswer": "Пожалуйста, найдите прикреплённый документ",
+        "points": 25
+      },
+      {
+        "type": "listen",
+        "audio": "formal_email.mp3",
+        "words": ["I", "am", "writing", "to", "confirm"],
+        "correctAnswer": "I am writing to confirm",
+        "points": 25
+      },
+      {
+        "type": "selectImage",
+        "word": "Деловая встреча",
+        "options": [
+          { "emoji": "👔", "text": "Business meeting" },
+          { "emoji": "🎉", "text": "Party" },
+          { "emoji": "☕", "text": "Coffee break" }
+        ],
+        "correctAnswer": "Business meeting",
+        "points": 25
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "С уважением",
+        "targetLanguage": "английский",
+        "options": ["Kind regards", "See you", "Bye"],
+        "correctAnswer": "Kind regards",
+        "points": 25
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "I look forward to your response",
+        "options": [
+          "С нетерпением жду вашего ответа",
+          "Я жду ответа",
+          "Ответьте мне"
+        ],
+        "correctAnswer": "С нетерпением жду вашего ответа",
+        "points": 25
+      },
+      {
+        "type": "listen",
+        "audio": "formal_closing.mp3",
+        "words": ["Thank", "you", "for", "your", "time"],
+        "correctAnswer": "Thank you for your time",
+        "points": 25
+      }
+    ]
+  },
+  {
+    "lessonNumber": 16,
+    "title": "Абстрактные идеи и аргументация",
+    "level": "C2",
+    "exercises": [
+      {
+        "type": "translateToTarget",
+        "russianText": "Этот вопрос требует глубокого анализа",
+        "targetLanguage": "английский",
+        "options": [
+          "This issue requires in-depth analysis",
+          "This question is hard",
+          "This issue is big"
+        ],
+        "correctAnswer": "This issue requires in-depth analysis",
+        "points": 30
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "The problem should be addressed comprehensively",
+        "options": [
+          "Проблему следует решать комплексно",
+          "Проблема существует",
+          "Это сложная проблема"
+        ],
+        "correctAnswer": "Проблему следует решать комплексно",
+        "points": 30
+      },
+      {
+        "type": "listen",
+        "audio": "abstract_argument.mp3",
+        "words": ["There", "are", "multiple", "factors", "to", "consider"],
+        "correctAnswer": "There are multiple factors to consider",
+        "points": 30
+      },
+      {
+        "type": "selectImage",
+        "word": "Аргумент",
+        "options": [
+          { "emoji": "🧠", "text": "Argument" },
+          { "emoji": "💬", "text": "Conversation" },
+          { "emoji": "📢", "text": "Announcement" }
+        ],
+        "correctAnswer": "Argument",
+        "points": 30
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "С одной стороны, это полезно",
+        "targetLanguage": "английский",
+        "options": [
+          "On the one hand, it is beneficial",
+          "This is good",
+          "It helps"
+        ],
+        "correctAnswer": "On the one hand, it is beneficial",
+        "points": 30
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Nevertheless, the outcome remains uncertain",
+        "options": [
+          "Тем не менее, исход остаётся неопределённым",
+          "Результат неизвестен",
+          "Это сложно"
+        ],
+        "correctAnswer": "Тем не менее, исход остаётся неопределённым",
+        "points": 30
+      },
+      {
+        "type": "listen",
+        "audio": "final_thought.mp3",
+        "words": ["This", "conclusion", "is", "based", "on", "evidence"],
+        "correctAnswer": "This conclusion is based on evidence",
+        "points": 30
       }
     ]
   }
