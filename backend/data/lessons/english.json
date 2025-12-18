@@ -24,6 +24,21 @@
         "points": 10
       },
       {
+        "type": "translateToTarget",
+        "russianText": "Добрый день",
+        "targetLanguage": "английский",
+        "options": ["Good afternoon", "Good night", "Good morning"],
+        "correctAnswer": "Good afternoon",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Good evening",
+        "options": ["Добрый вечер", "Доброе утро", "Спокойной ночи"],
+        "correctAnswer": "Добрый вечер",
+        "points": 10
+      },
+      {
         "type": "listen",
         "audio": "how_are_you.mp3",
         "words": ["How", "are", "you"],
@@ -39,10 +54,10 @@
       },
       {
         "type": "translateToTarget",
-        "russianText": "Как дела?",
+        "russianText": "До свидания",
         "targetLanguage": "английский",
-        "options": ["How are you?", "What's your name?", "Where are you?"],
-        "correctAnswer": "How are you?",
+        "options": ["Goodbye", "Hello", "See you later"],
+        "correctAnswer": "Goodbye",
         "points": 10
       }
     ]
@@ -92,6 +107,21 @@
         ],
         "correctAnswer": "Friend",
         "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Как дела?",
+        "targetLanguage": "английский",
+        "options": ["How are you?", "What's your name?", "Where are you?"],
+        "correctAnswer": "How are you?",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "I'm fine, thank you",
+        "options": ["У меня всё хорошо, спасибо", "Меня зовут", "Рад встрече"],
+        "correctAnswer": "У меня всё хорошо, спасибо",
+        "points": 10
       }
     ]
   },
@@ -139,6 +169,21 @@
         "targetLanguage": "английский",
         "options": ["Twenty", "Twelve", "Two"],
         "correctAnswer": "Twenty",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Три",
+        "targetLanguage": "английский",
+        "options": ["Three", "Thirteen", "Thirty"],
+        "correctAnswer": "Three",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Fifteen",
+        "options": ["Пятнадцать", "Пять", "Пятьдесят"],
+        "correctAnswer": "Пятнадцать",
         "points": 10
       }
     ]
@@ -192,6 +237,21 @@
         "options": ["Green", "Grey", "Gold"],
         "correctAnswer": "Green",
         "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Pink",
+        "options": ["Розовый", "Красный", "Фиолетовый"],
+        "correctAnswer": "Розовый",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Чёрный",
+        "targetLanguage": "английский",
+        "options": ["Black", "Blue", "Brown"],
+        "correctAnswer": "Black",
+        "points": 10
       }
     ]
   },
@@ -239,6 +299,21 @@
         "targetLanguage": "английский",
         "options": ["Brother", "Father", "Son"],
         "correctAnswer": "Brother",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Grandmother",
+        "options": ["Бабушка", "Мама", "Тётя"],
+        "correctAnswer": "Бабушка",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Дедушка",
+        "targetLanguage": "английский",
+        "options": ["Grandfather", "Father", "Uncle"],
+        "correctAnswer": "Grandfather",
         "points": 10
       }
     ]
@@ -288,6 +363,25 @@
         "words": ["I", "like", "pizza"],
         "correctAnswer": "I like pizza",
         "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Молоко",
+        "options": [
+          { "emoji": "🥛", "text": "Milk" },
+          { "emoji": "💧", "text": "Water" },
+          { "emoji": "🧃", "text": "Juice" }
+        ],
+        "correctAnswer": "Milk",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хочу есть",
+        "targetLanguage": "английский",
+        "options": ["I'm hungry", "I'm thirsty", "I'm full"],
+        "correctAnswer": "I'm hungry",
+        "points": 10
       }
     ]
   },
@@ -335,6 +429,21 @@
         "audio": "my_room.mp3",
         "words": ["This", "is", "my", "room"],
         "correctAnswer": "This is my room",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Living room",
+        "options": ["Гостиная", "Спальня", "Столовая"],
+        "correctAnswer": "Гостиная",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спальня",
+        "targetLanguage": "английский",
+        "options": ["Bedroom", "Bathroom", "Kitchen"],
+        "correctAnswer": "Bedroom",
         "points": 10
       }
     ]
@@ -384,6 +493,21 @@
         "options": ["It's three o'clock", "It's two o'clock", "It's four o'clock"],
         "correctAnswer": "It's three o'clock",
         "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Wednesday",
+        "options": ["Среда", "Вторник", "Четверг"],
+        "correctAnswer": "Среда",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Суббота",
+        "targetLanguage": "английский",
+        "options": ["Saturday", "Sunday", "Friday"],
+        "correctAnswer": "Saturday",
+        "points": 10
       }
     ]
   },
@@ -432,6 +556,24 @@
         "options": ["What's the weather today?", "How is the weather?", "Is it sunny?"],
         "correctAnswer": "What's the weather today?",
         "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Облачно",
+        "options": [
+          { "emoji": "☁️", "text": "Cloudy" },
+          { "emoji": "⛈️", "text": "Stormy" },
+          { "emoji": "🌤️", "text": "Partly cloudy" }
+        ],
+        "correctAnswer": "Cloudy",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "It's windy",
+        "options": ["Ветрено", "Холодно", "Жарко"],
+        "correctAnswer": "Ветрено",
+        "points": 10
       }
     ]
   },
@@ -479,6 +621,21 @@
         "targetLanguage": "английский",
         "options": ["It's too expensive", "It's very cheap", "I'll take it"],
         "correctAnswer": "It's too expensive",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "Do you accept cards?",
+        "options": ["Вы принимаете карты?", "Сколько это стоит?", "Где касса?"],
+        "correctAnswer": "Вы принимаете карты?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я возьму это",
+        "targetLanguage": "английский",
+        "options": ["I'll take it", "I don't want it", "Show me another"],
+        "correctAnswer": "I'll take it",
         "points": 10
       }
     ]

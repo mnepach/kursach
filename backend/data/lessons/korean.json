@@ -24,6 +24,21 @@
         "points": 10
       },
       {
+        "type": "translateToTarget",
+        "russianText": "Добрый вечер",
+        "targetLanguage": "корейский",
+        "options": ["좋은 저녁", "좋은 아침", "안녕히 가세요"],
+        "correctAnswer": "좋은 저녁",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "안녕히 주무세요",
+        "options": ["Спокойной ночи", "Доброе утро", "До свидания"],
+        "correctAnswer": "Спокойной ночи",
+        "points": 10
+      },
+      {
         "type": "listen",
         "audio": "jal_지냈어요.mp3",
         "words": ["잘", "지냈어요?"],
@@ -39,10 +54,10 @@
       },
       {
         "type": "translateToTarget",
-        "russianText": "Спасибо",
+        "russianText": "До свидания",
         "targetLanguage": "корейский",
-        "options": ["감사합니다", "천만에요", "죄송합니다"],
-        "correctAnswer": "감사합니다",
+        "options": ["안녕히 가세요", "안녕하세요", "또 봐요"],
+        "correctAnswer": "안녕히 가세요",
         "points": 10
       }
     ]
@@ -92,6 +107,21 @@
         ],
         "correctAnswer": "친구",
         "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спасибо",
+        "targetLanguage": "корейский",
+        "options": ["감사합니다", "천만에요", "죄송합니다"],
+        "correctAnswer": "감사합니다",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "잘 지내요",
+        "options": ["У меня всё хорошо", "Меня зовут", "Рад встрече"],
+        "correctAnswer": "У меня всё хорошо",
+        "points": 10
       }
     ]
   },
@@ -139,6 +169,21 @@
         "targetLanguage": "корейский",
         "options": ["스물", "열둘", "둘"],
         "correctAnswer": "스물",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Три",
+        "targetLanguage": "корейский",
+        "options": ["셋", "열셋", "서른"],
+        "correctAnswer": "셋",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "열다섯",
+        "options": ["Пятнадцать", "Пять", "Пятьдесят"],
+        "correctAnswer": "Пятнадцать",
         "points": 10
       }
     ]
@@ -192,6 +237,21 @@
         "options": ["초록색", "회색", "금색"],
         "correctAnswer": "초록색",
         "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "분홍색",
+        "options": ["Розовый", "Красный", "Фиолетовый"],
+        "correctAnswer": "Розовый",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Чёрный",
+        "targetLanguage": "корейский",
+        "options": ["검은색", "파란색", "갈색"],
+        "correctAnswer": "검은색",
+        "points": 10
       }
     ]
   },
@@ -239,6 +299,21 @@
         "targetLanguage": "корейский",
         "options": ["형", "아버지", "아들"],
         "correctAnswer": "형",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "할머니",
+        "options": ["Бабушка", "Мама", "Тётя"],
+        "correctAnswer": "Бабушка",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Дедушка",
+        "targetLanguage": "корейский",
+        "options": ["할아버지", "아버지", "삼촌"],
+        "correctAnswer": "할아버지",
         "points": 10
       }
     ]
@@ -288,6 +363,25 @@
         "words": ["김치를", "좋아해요"],
         "correctAnswer": "김치를 좋아해요",
         "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Молоко",
+        "options": [
+          { "emoji": "🥛", "text": "우유" },
+          { "emoji": "💧", "text": "물" },
+          { "emoji": "🧃", "text": "주스" }
+        ],
+        "correctAnswer": "우유",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хочу есть",
+        "targetLanguage": "корейский",
+        "options": ["배고파요", "목말라요", "배불러요"],
+        "correctAnswer": "배고파요",
+        "points": 10
       }
     ]
   },
@@ -335,6 +429,21 @@
         "audio": "nae_bang.mp3",
         "words": ["제", "방", "이에요"],
         "correctAnswer": "제 방 이에요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "거실",
+        "options": ["Гостиная", "Спальня", "Столовая"],
+        "correctAnswer": "Гостиная",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спальня",
+        "targetLanguage": "корейский",
+        "options": ["침실", "화장실", "부엌"],
+        "correctAnswer": "침실",
         "points": 10
       }
     ]
@@ -384,6 +493,21 @@
         "options": ["세 시예요", "두 시예요", "네 시예요"],
         "correctAnswer": "세 시예요",
         "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "수요일",
+        "options": ["Среда", "Вторник", "Четверг"],
+        "correctAnswer": "Среда",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Суббота",
+        "targetLanguage": "корейский",
+        "options": ["토요일", "일요일", "금요일"],
+        "correctAnswer": "토요일",
+        "points": 10
       }
     ]
   },
@@ -432,6 +556,24 @@
         "options": ["오늘 날씨가 어때요?", "날씨가 어때요?", "맑아요?"],
         "correctAnswer": "오늘 날씨가 어때요?",
         "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Облачно",
+        "options": [
+          { "emoji": "☁️", "text": "흐려요" },
+          { "emoji": "⛈️", "text": "폭풍" },
+          { "emoji": "🌤️", "text": "구름 조금" }
+        ],
+        "correctAnswer": "흐려요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "바람이 불어요",
+        "options": ["Ветрено", "Холодно", "Жарко"],
+        "correctAnswer": "Ветрено",
+        "points": 10
       }
     ]
   },
@@ -479,6 +621,21 @@
         "targetLanguage": "корейский",
         "options": ["너무 비싸요", "싸요", "살게요"],
         "correctAnswer": "너무 비싸요",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "카드 받으세요?",
+        "options": ["Вы принимаете карты?", "Сколько это стоит?", "Где касса?"],
+        "correctAnswer": "Вы принимаете карты?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я возьму это",
+        "targetLanguage": "корейский",
+        "options": ["이걸로 할게요", "필요 없어요", "다른 걸 보여주세요"],
+        "correctAnswer": "이걸로 할게요",
         "points": 10
       }
     ]

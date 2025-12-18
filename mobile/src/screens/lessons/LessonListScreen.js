@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, StatusBar, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, StatusBar, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../context/AuthContext';
@@ -36,7 +36,7 @@ const LessonListScreen = ({ navigation }) => {
       const sortedLessons = sortLessonsByLevel(lessonsResponse.lessons || []);
       const unlockedLessons = determineUnlockedLessons(
         sortedLessons, 
-        progressResponse.progress?.completedLessons || []
+        progressResponse.progress
       );
       
       setLessons(unlockedLessons);
@@ -57,32 +57,59 @@ const LessonListScreen = ({ navigation }) => {
     });
   };
 
-  const determineUnlockedLessons = (lessons, completedLessons) => {
+  const determineUnlockedLessons = (lessons, progress) => {
     if (lessons.length === 0) return [];
+    if (!progress) return lessons.map((l, i) => ({ ...l, isLocked: i !== 0, isCompleted: false }));
 
-    const completedIds = new Set(completedLessons.map(cl => cl.lessonId));
-    let lastUnlockedIndex = -1;
-
+    const completedSet = new Set(progress.completedLessons.map(cl => cl.lessonId));
+    
     return lessons.map((lesson, index) => {
-      const isCompleted = completedIds.has(lesson._id);
-      const isFirst = index === 0;
-      const isPreviousCompleted = index > 0 && completedIds.has(lessons[index - 1]._id);
-      const isUnlocked = isFirst || isPreviousCompleted || isCompleted;
-
-      if (isUnlocked) {
-        lastUnlockedIndex = index;
+      const isCompleted = completedSet.has(lesson._id);
+      
+      if (lesson.lessonNumber === 1 && lesson.level === 'A1') {
+        return { ...lesson, isLocked: false, isCompleted };
       }
-
-      return {
-        ...lesson,
-        isLocked: !isUnlocked,
-        isCompleted,
-      };
+      
+      const previousLesson = lessons.find(
+        l => l.lessonNumber === lesson.lessonNumber - 1 && l.level === lesson.level
+      );
+      
+      if (previousLesson && completedSet.has(previousLesson._id)) {
+        return { ...lesson, isLocked: false, isCompleted };
+      }
+      
+      if (lesson.lessonNumber === 1) {
+        const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+        const currentLevelIndex = levelOrder.indexOf(lesson.level);
+        
+        if (currentLevelIndex > 0) {
+          const previousLevel = levelOrder[currentLevelIndex - 1];
+          const previousLevelLessons = progress.completedLessons.filter(l => l.level === previousLevel);
+          
+          const requiredLessons = {
+            'A2': 6,
+            'B1': 4,
+            'B2': 10,
+            'C1': 10,
+            'C2': 10
+          };
+          
+          const isUnlocked = previousLevelLessons.length >= (requiredLessons[lesson.level] || 0);
+          return { ...lesson, isLocked: !isUnlocked, isCompleted };
+        }
+      }
+      
+      return { ...lesson, isLocked: true, isCompleted };
     });
   };
 
   const handleLessonPress = (lesson) => {
     if (lesson.isLocked) {
+      Alert.alert(
+        'Урок заблокирован',
+        'Сначала завершите предыдущий урок',
+        [{ text: 'OK' }]
+      );
       return;
     }
     
@@ -101,6 +128,18 @@ const LessonListScreen = ({ navigation }) => {
       case 'C1': return '#8B5CF6';
       case 'C2': return '#EC4899';
       default: return Colors.primary;
+    }
+  };
+
+  const getLevelDescription = (level) => {
+    switch (level) {
+      case 'A1': return 'Начальный';
+      case 'A2': return 'Элементарный';
+      case 'B1': return 'Средний';
+      case 'B2': return 'Продвинутый';
+      case 'C1': return 'Профессиональный';
+      case 'C2': return 'Мастерский';
+      default: return 'Начальный';
     }
   };
 
@@ -132,7 +171,7 @@ const LessonListScreen = ({ navigation }) => {
       disabled={item.isLocked}
     >
       <View style={styles.lessonHeader}>
-        <View style={styles.lessonNumber}>
+        <View style={[styles.lessonNumber, { backgroundColor: item.isLocked ? Colors.border : Colors.primary }]}>
           {item.isCompleted ? (
             <Ionicons name="checkmark" size={24} color={Colors.white} />
           ) : item.isLocked ? (
@@ -146,7 +185,7 @@ const LessonListScreen = ({ navigation }) => {
             {item.title}
           </Text>
           <Text style={styles.lessonDescription}>
-            {item.exercises.length} упражнений • {item.totalPoints} очков
+            7 упражнений • {item.totalPoints} очков
           </Text>
         </View>
         <View style={styles.lessonRight}>
@@ -158,11 +197,22 @@ const LessonListScreen = ({ navigation }) => {
     </Card>
   );
 
-  const renderSectionHeader = (level) => (
-    <View style={[styles.sectionHeader, { borderLeftColor: getLevelColor(level) }]}>
-      <Text style={styles.sectionTitle}>Уровень {level}</Text>
-    </View>
-  );
+  const renderSectionHeader = (level) => {
+    const levelLessons = lessons.filter(l => l.level === level);
+    const completedCount = levelLessons.filter(l => l.isCompleted).length;
+    
+    return (
+      <View style={[styles.sectionHeader, { borderLeftColor: getLevelColor(level) }]}>
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>Уровень {level}</Text>
+          <Text style={styles.sectionSubtitle}>{getLevelDescription(level)}</Text>
+        </View>
+        <Text style={styles.sectionProgress}>
+          {completedCount}/{levelLessons.length}
+        </Text>
+      </View>
+    );
+  };
 
   const renderListWithSections = () => {
     const sections = [];
@@ -211,7 +261,7 @@ const LessonListScreen = ({ navigation }) => {
             <Text style={styles.headerTitle}>{selectedLanguage.name}</Text>
             {progress && (
               <Text style={styles.headerSubtitle}>
-                Пройдено: {progress.totalLessonsCompleted} уроков
+                Пройдено: {progress.totalLessonsCompleted} уроков • Уровень: {progress.currentLevel}
               </Text>
             )}
           </View>
@@ -261,11 +311,27 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgLight,
     borderLeftWidth: 4,
     marginBottom: Sizes.margin.small,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  sectionTitleContainer: {
+    flex: 1
   },
   sectionTitle: {
     fontSize: Sizes.fontSize.large,
     fontWeight: 'bold',
     color: Colors.textDark,
+  },
+  sectionSubtitle: {
+    fontSize: Sizes.fontSize.small,
+    color: Colors.textLight,
+    marginTop: 2
+  },
+  sectionProgress: {
+    fontSize: Sizes.fontSize.medium,
+    fontWeight: 'bold',
+    color: Colors.primary
   },
   listContent: {
     padding: Sizes.padding.large,

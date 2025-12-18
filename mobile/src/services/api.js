@@ -144,10 +144,15 @@ class ApiService {
     return await this.request(`/progress/${language}`);
   }
 
-  async completeLesson(language, lessonId, score) {
+  async completeLesson(language, lessonId, score, lessonNumber, level) {
     return await this.request(`/progress/${language}/complete`, {
       method: 'POST',
-      body: JSON.stringify({ lessonId, score })
+      body: JSON.stringify({ 
+        lessonId, 
+        score,
+        lessonNumber,
+        level
+      })
     });
   }
 

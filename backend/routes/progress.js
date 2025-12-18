@@ -51,7 +51,7 @@ router.get('/:language', authMiddleware, async (req, res) => {
 router.post('/:language/complete', authMiddleware, async (req, res) => {
   try {
     const { language } = req.params;
-    const { lessonId, score } = req.body;
+    const { lessonId, lessonNumber, level, score } = req.body;
     
     let progress = await Progress.findOne({ 
       user: req.user._id, 
@@ -62,27 +62,7 @@ router.post('/:language/complete', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Прогресс не найден' });
     }
     
-    const existingLesson = progress.completedLessons.find(
-      cl => cl.lessonId === lessonId
-    );
-    
-    if (existingLesson) {
-      existingLesson.score = Math.max(existingLesson.score, score);
-      existingLesson.completedAt = new Date();
-    } else {
-      progress.completedLessons.push({
-        lessonId,
-        completedAt: new Date(),
-        score
-      });
-    }
-    
-    progress.totalLessonsCompleted = progress.completedLessons.length;
-    progress.vocabularyLearned += 5;
-    progress.overallProgress = Math.min(100, progress.totalLessonsCompleted * 5);
-    progress.lastActivityDate = new Date();
-    
-    await progress.save();
+    await progress.updateProgress(lessonId, lessonNumber, level, score);
     
     const user = await User.findById(req.user._id);
     user.statistics.experience += score || 10;
@@ -114,7 +94,8 @@ router.get('/stats/overall', authMiddleware, async (req, res) => {
         flag: p.languageFlag,
         progress: p.overallProgress,
         lessonsCompleted: p.totalLessonsCompleted,
-        currentLevel: p.currentLevel
+        currentLevel: p.currentLevel,
+        levelProgress: p.levelProgress
       }))
     };
     

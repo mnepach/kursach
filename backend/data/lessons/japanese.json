@@ -24,6 +24,21 @@
         "points": 10
       },
       {
+        "type": "translateToTarget",
+        "russianText": "Добрый вечер",
+        "targetLanguage": "японский",
+        "options": ["こんばんは", "おはよう", "さようなら"],
+        "correctAnswer": "こんばんは",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "おやすみなさい",
+        "options": ["Спокойной ночи", "Доброе утро", "До свидания"],
+        "correctAnswer": "Спокойной ночи",
+        "points": 10
+      },
+      {
         "type": "listen",
         "audio": "ogenki_desu_ka.mp3",
         "words": ["お元気", "ですか"],
@@ -39,10 +54,10 @@
       },
       {
         "type": "translateToTarget",
-        "russianText": "Спасибо",
+        "russianText": "До свидания",
         "targetLanguage": "японский",
-        "options": ["ありがとう", "どういたしまして", "すみません"],
-        "correctAnswer": "ありがとう",
+        "options": ["さようなら", "こんにちは", "またね"],
+        "correctAnswer": "さようなら",
         "points": 10
       }
     ]
@@ -92,6 +107,21 @@
         ],
         "correctAnswer": "友達",
         "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спасибо",
+        "targetLanguage": "японский",
+        "options": ["ありがとう", "どういたしまして", "すみません"],
+        "correctAnswer": "ありがとう",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "元気です",
+        "options": ["У меня всё хорошо", "Меня зовут", "Рад встрече"],
+        "correctAnswer": "У меня всё хорошо",
+        "points": 10
       }
     ]
   },
@@ -139,6 +169,21 @@
         "targetLanguage": "японский",
         "options": ["二十", "十二", "二"],
         "correctAnswer": "二十",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Три",
+        "targetLanguage": "японский",
+        "options": ["三", "十三", "三十"],
+        "correctAnswer": "三",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "十五",
+        "options": ["Пятнадцать", "Пять", "Пятьдесят"],
+        "correctAnswer": "Пятнадцать",
         "points": 10
       }
     ]
@@ -192,6 +237,21 @@
         "options": ["緑", "灰色", "金色"],
         "correctAnswer": "緑",
         "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "ピンク",
+        "options": ["Розовый", "Красный", "Фиолетовый"],
+        "correctAnswer": "Розовый",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Чёрный",
+        "targetLanguage": "японский",
+        "options": ["黒", "青", "茶色"],
+        "correctAnswer": "黒",
+        "points": 10
       }
     ]
   },
@@ -239,6 +299,21 @@
         "targetLanguage": "японский",
         "options": ["兄", "父", "息子"],
         "correctAnswer": "兄",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "祖母",
+        "options": ["Бабушка", "Мама", "Тётя"],
+        "correctAnswer": "Бабушка",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Дедушка",
+        "targetLanguage": "японский",
+        "options": ["祖父", "父", "叔父"],
+        "correctAnswer": "祖父",
         "points": 10
       }
     ]
@@ -288,6 +363,25 @@
         "words": ["寿司が", "好きです"],
         "correctAnswer": "寿司が 好きです",
         "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Молоко",
+        "options": [
+          { "emoji": "🥛", "text": "牛乳" },
+          { "emoji": "💧", "text": "水" },
+          { "emoji": "🧃", "text": "ジュース" }
+        ],
+        "correctAnswer": "牛乳",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я хочу есть",
+        "targetLanguage": "японский",
+        "options": ["お腹がすきました", "のどが渇きました", "お腹いっぱいです"],
+        "correctAnswer": "お腹がすきました",
+        "points": 10
       }
     ]
   },
@@ -335,6 +429,21 @@
         "audio": "watashi_heya.mp3",
         "words": ["私の", "部屋", "です"],
         "correctAnswer": "私の 部屋 です",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "居間",
+        "options": ["Гостиная", "Спальня", "Столовая"],
+        "correctAnswer": "Гостиная",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Спальня",
+        "targetLanguage": "японский",
+        "options": ["寝室", "浴室", "台所"],
+        "correctAnswer": "寝室",
         "points": 10
       }
     ]
@@ -384,6 +493,21 @@
         "options": ["三時です", "二時です", "四時です"],
         "correctAnswer": "三時です",
         "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "水曜日",
+        "options": ["Среда", "Вторник", "Четверг"],
+        "correctAnswer": "Среда",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Суббота",
+        "targetLanguage": "японский",
+        "options": ["土曜日", "日曜日", "金曜日"],
+        "correctAnswer": "土曜日",
+        "points": 10
       }
     ]
   },
@@ -432,6 +556,24 @@
         "options": ["今日の天気はどうですか", "天気はどうですか", "晴れですか"],
         "correctAnswer": "今日の天気はどうですか",
         "points": 10
+      },
+      {
+        "type": "selectImage",
+        "word": "Облачно",
+        "options": [
+          { "emoji": "☁️", "text": "曇り" },
+          { "emoji": "⛈️", "text": "嵐" },
+          { "emoji": "🌤️", "text": "晴れ時々曇り" }
+        ],
+        "correctAnswer": "曇り",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "風が強いです",
+        "options": ["Ветрено", "Холодно", "Жарко"],
+        "correctAnswer": "Ветрено",
+        "points": 10
       }
     ]
   },
@@ -479,6 +621,21 @@
         "targetLanguage": "японский",
         "options": ["高すぎます", "安いです", "買います"],
         "correctAnswer": "高すぎます",
+        "points": 10
+      },
+      {
+        "type": "translateToRussian",
+        "targetText": "カードは使えますか",
+        "options": ["Вы принимаете карты?", "Сколько это стоит?", "Где касса?"],
+        "correctAnswer": "Вы принимаете карты?",
+        "points": 10
+      },
+      {
+        "type": "translateToTarget",
+        "russianText": "Я возьму это",
+        "targetLanguage": "японский",
+        "options": ["これをください", "いりません", "他のを見せてください"],
+        "correctAnswer": "これをください",
         "points": 10
       }
     ]
