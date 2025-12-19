@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, KeyboardAvoidingView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/colors';
@@ -11,6 +11,8 @@ import OptionCard from '../../components/lesson/OptionCard';
 import WordButton from '../../components/lesson/WordButton';
 import Card from '../../components/common/Card';
 import LessonCompleteScreen from './LessonCompleteScreen';
+import audioService from '../../services/audio';
+import { getAudioFile } from '../../constants/audioFiles';
 import api from '../../services/api';
 
 const LessonScreen = ({ navigation, route }) => {
@@ -29,6 +31,7 @@ const LessonScreen = ({ navigation, route }) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [selectedWords, setSelectedWords] = useState([]);
   const [availableWords, setAvailableWords] = useState([]);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const currentExercise = isRetryPhase 
     ? retryExercises[currentRetryIndex] 
@@ -37,6 +40,13 @@ const LessonScreen = ({ navigation, route }) => {
     ? retryExercises.length 
     : lesson.exercises.length;
   const currentProgress = isRetryPhase ? currentRetryIndex + 1 : currentExerciseIndex + 1;
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      audioService.cleanup();
+    };
+  }, []);
 
   const shuffledOptions = useMemo(() => {
     if (!currentExercise) return [];
@@ -78,6 +88,34 @@ const LessonScreen = ({ navigation, route }) => {
       </SafeAreaView>
     );
   }
+
+  const handlePlayAudio = async () => {
+    if (!currentExercise?.audio) {
+      Alert.alert('Ошибка', 'Аудио файл не найден');
+      return;
+    }
+
+    try {
+      setIsPlayingAudio(true);
+      const audioFile = getAudioFile(currentExercise.audio);
+      
+      if (!audioFile) {
+        Alert.alert('Ошибка', 'Аудио файл не загружен');
+        return;
+      }
+
+      await audioService.playSound(audioFile);
+      
+      // Wait a bit to show the playing state
+      setTimeout(() => {
+        setIsPlayingAudio(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Error playing audio:', error);
+      Alert.alert('Ошибка', 'Не удалось воспроизвести аудио');
+      setIsPlayingAudio(false);
+    }
+  };
 
   const handleCheck = () => {
     if (checked) {
@@ -252,8 +290,19 @@ const LessonScreen = ({ navigation, route }) => {
         )}
         <Text style={styles.title}>Составьте из слов предложение</Text>
         <Text style={styles.subtitle}>Прослушайте фразу и составьте предложение</Text>
-        <TouchableOpacity style={styles.audioButton}>
-          <Ionicons name="volume-high" size={40} color={Colors.white} />
+        <TouchableOpacity 
+          style={[
+            styles.audioButton,
+            isPlayingAudio && styles.audioButtonPlaying
+          ]} 
+          onPress={handlePlayAudio}
+          disabled={isPlayingAudio}
+        >
+          <Ionicons 
+            name={isPlayingAudio ? "volume-high" : "volume-medium"} 
+            size={40} 
+            color={Colors.white} 
+          />
         </TouchableOpacity>
         <View style={[styles.selectedArea, checked && (isCorrect ? styles.correctArea : styles.incorrectArea)]}>
           {selectedWords.length === 0 ? (
@@ -453,7 +502,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center', 
     alignSelf: 'center', 
-    marginBottom: Sizes.margin.large 
+    marginBottom: Sizes.margin.large,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  audioButtonPlaying: {
+    backgroundColor: Colors.accent,
+    transform: [{ scale: 1.1 }],
   },
   selectedArea: { 
     minHeight: 80, 

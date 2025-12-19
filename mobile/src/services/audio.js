@@ -4,6 +4,20 @@ class AudioService {
   constructor() {
     this.sound = null;
     this.isPlaying = false;
+    this.initializeAudio();
+  }
+
+  async initializeAudio() {
+    try {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+        shouldDuckAndroid: true,
+      });
+    } catch (error) {
+      console.error('Error initializing audio:', error);
+    }
   }
 
   async playSound(audioFile) {
