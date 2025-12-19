@@ -41,8 +41,8 @@
       {
         "type": "listen",
         "audio": "how_are_you.mp3",
-        "words": ["How", "are", "you"],
-        "correctAnswer": "How are you",
+        "words": ["How", "are", "?", "you", "this", "is"],
+        "correctAnswer": "How are you?",
         "points": 10
       },
       {
@@ -78,8 +78,8 @@
       {
         "type": "listen",
         "audio": "whats_your_name.mp3",
-        "words": ["What's", "your", "name"],
-        "correctAnswer": "What's your name",
+        "words": ["What's", "your", "name", "?", "my", "hello"],
+        "correctAnswer": "What's your name?",
         "points": 10
       },
       {
@@ -158,7 +158,7 @@
       },
       {
         "type": "listen",
-        "audio": "count_to_five.mp3",
+        "audio": "one_tea.mp3",
         "words": ["Hello", "one", "tea", "please", "five", "coffee"],
         "correctAnswer": "Hello, one tea please",
         "points": 10

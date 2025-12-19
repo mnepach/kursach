@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/colors';
@@ -318,7 +318,7 @@ const LessonScreen = ({ navigation, route }) => {
         )}
         <Text style={styles.question}>{currentExercise.word}</Text>
         <Text style={styles.subtitle}>Выберите правильный перевод</Text>
-        <View style={styles.optionsContainer}>
+        <View style={styles.optionsContainerImage}>
           {shuffledOptions.map((option, index) => (
             <Card 
               key={index} 
@@ -377,13 +377,15 @@ const LessonScreen = ({ navigation, route }) => {
         </TouchableOpacity>
         <ProgressBar current={currentProgress} total={totalExercises} />
       </View>
-      <ScrollView 
-        style={styles.scrollView} 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+      
+      <KeyboardAvoidingView 
+        style={styles.content}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
         {renderExercise()}
-      </ScrollView>
+      </KeyboardAvoidingView>
+
       <View style={styles.footer}>
         <Button 
           title={checked ? 'Далее' : 'Проверить'} 
@@ -409,12 +411,8 @@ const styles = StyleSheet.create({
   closeButton: { 
     padding: Sizes.padding.medium 
   },
-  scrollView: { 
-    flex: 1 
-  },
-  scrollContent: { 
-    flexGrow: 1,
-    paddingBottom: Sizes.padding.xlarge 
+  content: {
+    flex: 1
   },
   exerciseContainer: {
     flex: 1,
@@ -527,6 +525,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
+  optionsContainerImage: {
+    justifyContent: 'center'
+  },
   optionCard: { 
     alignItems: 'center', 
     paddingVertical: Sizes.padding.large, 
@@ -547,7 +548,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF2F2' 
   },
   emoji: { 
-    fontSize: 48, 
+    fontSize: 32, 
     marginBottom: Sizes.margin.small 
   },
   optionText: { 

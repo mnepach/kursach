@@ -67,6 +67,50 @@ const ProgressScreen = () => {
     }
   };
 
+  const getLevelNumber = (level) => {
+    switch (level) {
+      case 'A1': return 1;
+      case 'A2': return 2;
+      case 'B1': return 3;
+      case 'B2': return 4;
+      case 'C1': return 5;
+      case 'C2': return 6;
+      default: return 1;
+    }
+  };
+
+  const getNextLevel = (level) => {
+    switch (level) {
+      case 'A1': return 'A2';
+      case 'A2': return 'B1';
+      case 'B1': return 'B2';
+      case 'B2': return 'C1';
+      case 'C1': return 'C2';
+      case 'C2': return null;
+      default: return 'A2';
+    }
+  };
+
+  const getLessonsToNextLevel = (lang) => {
+    const levelProgress = lang.levelProgress || {};
+    const currentLevel = lang.currentLevel;
+    const currentLevelCount = levelProgress[currentLevel] || 0;
+    
+    const requiredLessons = {
+      'A1': 6,
+      'A2': 4,
+      'B1': 10,
+      'B2': 10,
+      'C1': 10,
+      'C2': 10
+    };
+
+    const required = requiredLessons[currentLevel] || 6;
+    const remaining = Math.max(0, required - currentLevelCount);
+    
+    return remaining;
+  };
+
   if (loading) {
     return <Loader fullScreen />;
   }
@@ -115,7 +159,9 @@ const ProgressScreen = () => {
             
             {stats.languages.map((lang, index) => {
               const lessonsCount = lang.lessonsCompleted || 0;
-              const lessonsToNext = Math.ceil((100 - lang.progress) / 5);
+              const currentLevelNumber = getLevelNumber(lang.currentLevel);
+              const nextLevel = getNextLevel(lang.currentLevel);
+              const lessonsToNext = getLessonsToNextLevel(lang);
 
               return (
                 <Card key={index} style={styles.languageCard}>
@@ -163,16 +209,27 @@ const ProgressScreen = () => {
                       ]}>
                         <Text style={styles.milestoneIconText}>🎯</Text>
                       </View>
-                      <Text style={styles.milestoneText}>Текущий уровень</Text>
+                      <Text style={styles.milestoneText}>Текущий уровень: {currentLevelNumber}</Text>
                     </View>
                     
-                    {lang.progress < 100 && (
+                    {nextLevel && lessonsToNext > 0 && (
                       <View style={styles.milestone}>
                         <View style={[styles.milestoneIcon, { backgroundColor: Colors.border }]}>
                           <Text style={styles.milestoneIconText}>🏆</Text>
                         </View>
                         <Text style={styles.milestoneText}>
                           До следующего: {lessonsToNext} {getLessonDeclension(lessonsToNext)}
+                        </Text>
+                      </View>
+                    )}
+
+                    {!nextLevel && (
+                      <View style={styles.milestone}>
+                        <View style={[styles.milestoneIcon, { backgroundColor: Colors.success }]}>
+                          <Text style={styles.milestoneIconText}>👑</Text>
+                        </View>
+                        <Text style={styles.milestoneText}>
+                          Максимальный уровень достигнут!
                         </Text>
                       </View>
                     )}
