@@ -1,47 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, ImageBackground, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
 import Card from '../../components/common/Card';
 import BackgroundImage from '../../../assets/images/onboarding_background.jpg';
 
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = (width - Sizes.padding.large * 2 - Sizes.margin.medium) / 2;
+
 const LanguageSelectionScreen = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
 
   const languages = [
-    { 
-      id: 'english',
-      name: 'Английский', 
-      flag: require('../../../assets/images/flags/england.png'),
-      learners: '5M+' 
-    },
-    { 
-      id: 'spanish',
-      name: 'Испанский', 
-      flag: require('../../../assets/images/flags/spain.png'),
-      learners: '3M+' 
-    },
-    { 
-      id: 'japanese',
-      name: 'Японский', 
-      flag: require('../../../assets/images/flags/japan.png'),
-      learners: '2M+' 
-    },
-    { 
-      id: 'korean',
-      name: 'Корейский', 
-      flag: require('../../../assets/images/flags/korea.png'),
-      learners: '1.5M+' 
-    }
+    { id: 'english', name: 'Английский', flag: require('../../../assets/images/flags/england.png'), learners: '5M+' },
+    { id: 'spanish', name: 'Испанский', flag: require('../../../assets/images/flags/spain.png'), learners: '3M+' },
+    { id: 'japanese', name: 'Японский', flag: require('../../../assets/images/flags/japan.png'), learners: '2M+' },
+    { id: 'korean', name: 'Корейский', flag: require('../../../assets/images/flags/korea.png'), learners: '1.5M+' }
   ];
 
   const handleSelect = (language) => {
     setSelectedLanguage(language);
     setTimeout(() => {
-      navigation.navigate('WelcomeCharacter', { 
-        onboardingData: { selectedLanguage: language }
-      });
+      navigation.navigate('WelcomeCharacter', { onboardingData: { selectedLanguage: language } });
     }, 300);
   };
 
@@ -82,25 +63,14 @@ const LanguageSelectionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   background: { flex: 1 },
-  content: {
-    flex: 1,
-    paddingHorizontal: Sizes.padding.large,
-    paddingTop: 100,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: Colors.textDark,
-    textAlign: 'center',
-    marginBottom: Sizes.margin.xlarge,
-  },
+  content: { flex: 1, paddingHorizontal: Sizes.padding.large, paddingTop: 120 },
+  title: { fontSize: 32, fontWeight: 'bold', color: Colors.textDark, textAlign: 'center', marginBottom: Sizes.margin.xlarge },
   listContent: { paddingBottom: Sizes.padding.xlarge },
   row: { justifyContent: 'space-between', marginBottom: Sizes.margin.medium },
   languageCard: {
-    flex: 1,
-    marginHorizontal: Sizes.margin.small,
+    width: CARD_WIDTH,
     alignItems: 'center',
-    paddingVertical: Sizes.padding.xlarge,
+    paddingVertical: Sizes.padding.large,
     backgroundColor: Colors.white,
     borderRadius: 18,
     borderWidth: 3,
@@ -109,13 +79,7 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   flag: { width: 80, height: 80, marginBottom: Sizes.margin.medium },
-  languageName: {
-    fontSize: Sizes.fontSize.large,
-    fontWeight: 'bold',
-    color: Colors.textDark,
-    marginBottom: Sizes.margin.small,
-    textAlign: 'center',
-  },
+  languageName: { fontSize: Sizes.fontSize.large, fontWeight: 'bold', color: Colors.textDark, marginBottom: 6, textAlign: 'center' },
   learners: { fontSize: Sizes.fontSize.small, color: Colors.textLight, textAlign: 'center' },
 });
 

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, StatusBar, Image, Alert } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, StatusBar, Image, Alert, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import Colors from '../../constants/colors';
 import Sizes from '../../constants/sizes';
@@ -20,6 +21,7 @@ const LessonListScreen = ({ navigation }) => {
   const { user } = useAuth();
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [progress, setProgress] = useState(null);
 
@@ -31,6 +33,14 @@ const LessonListScreen = ({ navigation }) => {
       setLoading(false);
     }
   }, [user]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (selectedLanguage) {
+        loadData(selectedLanguage.name);
+      }
+    }, [selectedLanguage])
+  );
 
   const loadData = async (language) => {
     try {
@@ -54,6 +64,13 @@ const LessonListScreen = ({ navigation }) => {
       setLoading(false);
     }
   };
+
+  const onRefresh = useCallback(async () => {
+    if (!selectedLanguage) return;
+    setRefreshing(true);
+    await loadData(selectedLanguage.name);
+    setRefreshing(false);
+  }, [selectedLanguage]);
 
   const sortLessonsByLevel = (lessons) => {
     const levelOrder = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
@@ -270,6 +287,14 @@ const LessonListScreen = ({ navigation }) => {
         keyExtractor={(item) => item.key}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={Colors.primary}
+            colors={[Colors.primary]}
+          />
+        }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyTitle}>Уроки не найдены</Text>

@@ -38,12 +38,12 @@ function App() {
   const [hideHeader, setHideHeader] = React.useState(false);
   const [sectionsLoaded, setSectionsLoaded] = React.useState({
     hero: true,
-    howItWorks: false,
-    features: false,
-    languages: false,
-    testimonials: false,
-    stats: false,
-    download: false
+    howItWorks: true,
+    features: true,
+    languages: true,
+    testimonials: true,
+    stats: true,
+    download: true
   });
   const [onboardingData, setOnboardingData] = React.useState(null);
   const [authChecked, setAuthChecked] = React.useState(false);
@@ -64,29 +64,6 @@ function App() {
     };
     checkAuth();
   }, []);
-
-  React.useEffect(() => {
-    if (showOnboarding) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionName = entry.target.dataset.section;
-            if (sectionName && !sectionsLoaded[sectionName]) {
-              setSectionsLoaded(prev => ({ ...prev, [sectionName]: true }));
-            }
-          }
-        });
-      },
-      { rootMargin: '100px' }
-    );
-
-    const sections = document.querySelectorAll('[data-section]');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, [showOnboarding, sectionsLoaded]);
 
   const handleGetStarted = () => {
     if (isLoggedIn) {

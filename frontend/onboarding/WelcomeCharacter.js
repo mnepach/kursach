@@ -66,7 +66,7 @@ function WelcomeCharacter({ onNext }) {
             style={{ minWidth: '280px', maxWidth: '350px' }}
           >
             <p className="text-2xl font-bold text-[var(--text-dark)] mb-2">
-              Привет! Я Hello Kitty 👋
+              Привет! Я Milo 👋
             </p>
             <p className="text-[var(--text-dark)] text-lg">
               Я буду твоим проводником в мире LinguaPlay! Нажми "Далее", чтобы продолжить.

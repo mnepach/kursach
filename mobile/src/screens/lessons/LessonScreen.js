@@ -145,6 +145,7 @@ const LessonScreen = ({ navigation, route }) => {
     try {
       const correctAnswers = lesson.exercises.length - wrongAnswers.length;
       const score = Math.round((correctAnswers / lesson.exercises.length) * 100);
+      
       await api.completeLesson(
         language, 
         lesson._id, 
@@ -152,10 +153,43 @@ const LessonScreen = ({ navigation, route }) => {
         lesson.lessonNumber,
         lesson.level
       );
-      navigation.navigate('Main', { screen: 'Lessons' });
+      
+      navigation.reset({
+        index: 0,
+        routes: [
+          { 
+            name: 'Main',
+            state: {
+              routes: [
+                { name: 'Home' },
+                { name: 'Lessons' },
+                { name: 'Progress' },
+                { name: 'Profile' }
+              ],
+              index: 1
+            }
+          }
+        ]
+      });
     } catch (error) {
       console.error('Error completing lesson:', error);
-      navigation.navigate('Main', { screen: 'Lessons' });
+      navigation.reset({
+        index: 0,
+        routes: [
+          { 
+            name: 'Main',
+            state: {
+              routes: [
+                { name: 'Home' },
+                { name: 'Lessons' },
+                { name: 'Progress' },
+                { name: 'Profile' }
+              ],
+              index: 1
+            }
+          }
+        ]
+      });
     } finally {
       setLoading(false);
     }

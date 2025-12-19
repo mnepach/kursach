@@ -25,7 +25,7 @@ const WelcomeCharacterScreen = ({ navigation, route }) => {
         </View>
 
         <View style={styles.speechBubble}>
-          <Text style={styles.greeting}>Привет! Я Hello Kitty 👋</Text>
+          <Text style={styles.greeting}>Привет! Я Milo 👋</Text>
           <Text style={styles.message}>
             Я буду твоим проводником в мире LinguaPlay!
           </Text>
