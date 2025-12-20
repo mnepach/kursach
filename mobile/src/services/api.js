@@ -1,7 +1,7 @@
 import axios from 'axios';
 import storage from './storage';
 
-const API_URL = 'http://192.168.105.30:5000/api';
+const API_URL = 'http://10.244.241.154:5000/api';
 
 class ApiService {
   constructor() {
