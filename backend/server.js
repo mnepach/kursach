@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -13,21 +12,19 @@ const lessonsRoutes = require('./routes/lessons');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://127.0.0.1:5500', 'http://localhost:3000'], 
+  credentials: true
+}));
+
 app.use(express.json());
 
 connectDB();
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/linguaplay', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB подключена'))
-.catch(err => console.error('❌ Ошибка подключения к MongoDB:', err));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/subscription', subscriptionRoutes);
 app.use('/api/progress', progressRoutes);
-app.use('/api/beginner-lessons', beginnerLessonsRoutes); 
+app.use('/api/beginner-lessons', beginnerLessonsRoutes);
 app.use('/api/level-test-lessons', levelTestLessonsRoutes);
 app.use('/api/lessons', lessonsRoutes);
 
