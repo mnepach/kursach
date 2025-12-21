@@ -4,10 +4,18 @@ import storage from '../services/storage';
 
 const AuthContext = createContext();
 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     checkAuth();
@@ -17,28 +25,16 @@ export const AuthProvider = ({ children }) => {
     try {
       const token = await storage.getToken();
       if (token) {
-        await api.initToken();
         const response = await api.getProfile();
         setUser(response.user);
         setIsAuthenticated(true);
       }
     } catch (error) {
       console.error('Auth check failed:', error);
-      await logout();
+      await storage.removeToken();
+      await storage.removeUser();
     } finally {
       setLoading(false);
-    }
-  };
-
-  const login = async (credentials) => {
-    try {
-      const response = await api.login(credentials);
-      setUser(response.user);
-      setIsAuthenticated(true);
-      await storage.setUser(response.user);
-      return response;
-    } catch (error) {
-      throw error;
     }
   };
 
@@ -48,8 +44,20 @@ export const AuthProvider = ({ children }) => {
       setUser(response.user);
       setIsAuthenticated(true);
       await storage.setUser(response.user);
-      return response;
     } catch (error) {
+      console.error('Registration failed:', error);
+      throw error;
+    }
+  };
+
+  const login = async (credentials) => {
+    try {
+      const response = await api.login(credentials);
+      setUser(response.user);
+      setIsAuthenticated(true);
+      await storage.setUser(response.user);
+    } catch (error) {
+      console.error('Login failed:', error);
       throw error;
     }
   };
@@ -57,12 +65,13 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await api.logout();
-      await storage.removeToken();
-      await storage.removeUser();
       setUser(null);
       setIsAuthenticated(false);
+      await storage.removeToken();
+      await storage.removeUser();
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('Logout failed:', error);
+      throw error;
     }
   };
 
@@ -71,33 +80,21 @@ export const AuthProvider = ({ children }) => {
       const response = await api.updateProfile(updates);
       setUser(response.user);
       await storage.setUser(response.user);
-      return response;
     } catch (error) {
+      console.error('Update user failed:', error);
       throw error;
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        isAuthenticated,
-        login,
-        register,
-        logout,
-        updateUser,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  const value = {
+    user,
+    isAuthenticated,
+    loading,
+    register,
+    login,
+    logout,
+    updateUser,
+  };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-  return context;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

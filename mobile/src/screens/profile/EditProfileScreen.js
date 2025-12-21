@@ -51,11 +51,16 @@ const EditProfileScreen = ({ navigation }) => {
     setError('');
 
     try {
-      await updateUser({ name: name.trim(), avatar });
+      await updateUser({ 
+        name: name.trim(), 
+        avatar: avatar 
+      });
+      
       Alert.alert('Успешно', 'Профиль обновлен', [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (err) {
+      console.error('Error updating profile:', err);
       setError(err.message || 'Ошибка при обновлении профиля');
     } finally {
       setLoading(false);
@@ -91,7 +96,10 @@ const EditProfileScreen = ({ navigation }) => {
           <Input
             label="Имя"
             value={name}
-            onChangeText={setName}
+            onChangeText={(text) => {
+              setName(text);
+              setError('');
+            }}
             placeholder="Ваше имя"
             error={error}
             labelStyle={styles.inputLabel}
@@ -123,7 +131,7 @@ const EditProfileScreen = ({ navigation }) => {
             title="Сохранить"
             onPress={handleSave}
             loading={loading}
-            disabled={!name.trim()}
+            disabled={!name.trim() || loading}
             style={styles.halfButton}
           />
         </View>

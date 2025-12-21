@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const crypto = require('crypto');
 const User = require('../models/User');
 const Subscription = require('../models/Subscription');
+const Progress = require('../models/Progress');
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
@@ -56,6 +57,40 @@ router.post('/register', [
     user.subscription = subscription._id;
     await user.save();
 
+    if (onboardingData && onboardingData.selectedLanguage) {
+      const languageMap = {
+        'Английский': 'english',
+        'Испанский': 'spanish',
+        'Японский': 'japanese',
+        'Корейский': 'korean'
+      };
+
+      const languageFlags = {
+        'english': '🇬🇧',
+        'spanish': '🇪🇸',
+        'japanese': '🇯🇵',
+        'korean': '🇰🇷'
+      };
+
+      const languageName = onboardingData.selectedLanguage.name || onboardingData.selectedLanguage;
+      const languageKey = languageMap[languageName] || languageName.toLowerCase();
+
+      const progress = new Progress({
+        user: user._id,
+        language: languageKey,
+        languageFlag: languageFlags[languageKey] || '🌍',
+        currentLevel: 'A1',
+        overallProgress: 0,
+        vocabularyLearned: 0,
+        totalLessonsCompleted: 0,
+        levelProgress: {
+          A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, C2: 0
+        }
+      });
+
+      await progress.save();
+    }
+
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
@@ -71,7 +106,8 @@ router.post('/register', [
         avatar: user.avatar,
         subscription: subscription,
         statistics: user.statistics,
-        hasCompletedOnboarding: user.hasCompletedOnboarding
+        hasCompletedOnboarding: user.hasCompletedOnboarding,
+        onboardingData: user.onboardingData
       }
     });
   } catch (error) {
@@ -117,7 +153,8 @@ router.post('/login', [
         avatar: user.avatar,
         subscription: user.subscription,
         statistics: user.statistics,
-        hasCompletedOnboarding: user.hasCompletedOnboarding
+        hasCompletedOnboarding: user.hasCompletedOnboarding,
+        onboardingData: user.onboardingData
       }
     });
   } catch (error) {
@@ -230,7 +267,8 @@ router.put('/profile', authMiddleware, async (req, res) => {
         avatar: req.user.avatar,
         statistics: req.user.statistics,
         onboardingData: req.user.onboardingData,
-        hasCompletedOnboarding: req.user.hasCompletedOnboarding
+        hasCompletedOnboarding: req.user.hasCompletedOnboarding,
+        subscription: req.user.subscription
       }
     });
   } catch (error) {

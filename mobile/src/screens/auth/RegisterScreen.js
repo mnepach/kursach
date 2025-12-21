@@ -41,14 +41,26 @@ const RegisterScreen = ({ navigation, route }) => {
 
     setLoading(true);
     try {
-      await register({
+      const registrationData = {
         name: name.trim(),
         email,
         password,
-        onboardingData,
+        onboardingData: {
+          selectedLanguage: onboardingData.selectedLanguage,
+          howDidYouHear: onboardingData.howDidYouHear,
+          learningGoal: onboardingData.learningGoal,
+          languageLevel: onboardingData.languageLevel,
+          dailyGoal: onboardingData.dailyGoal,
+          learningMethod: onboardingData.learningMethod,
+        },
         selectedPlan: 'free',
-      });
+      };
+
+      console.log('Registration data:', registrationData);
+      
+      await register(registrationData);
     } catch (error) {
+      console.error('Registration error:', error);
       Alert.alert('Ошибка', error.message || 'Не удалось зарегистрироваться');
     } finally {
       setLoading(false);
@@ -62,13 +74,18 @@ const RegisterScreen = ({ navigation, route }) => {
         style={styles.keyboardView}
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.header}>
             <Text style={styles.title}>Регистрация</Text>
             <Text style={styles.subtitle}>Создайте свой аккаунт</Text>
+            {onboardingData.selectedLanguage && (
+              <Text style={styles.selectedLanguage}>
+                Выбранный язык: {onboardingData.selectedLanguage.name}
+              </Text>
+            )}
           </View>
 
           <View style={styles.form}>
@@ -153,6 +170,12 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: Sizes.fontSize.large,
     color: Colors.textLight,
+  },
+  selectedLanguage: {
+    fontSize: Sizes.fontSize.medium,
+    color: Colors.primary,
+    fontWeight: '600',
+    marginTop: Sizes.margin.small,
   },
   form: {
     flex: 1,

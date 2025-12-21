@@ -13,7 +13,7 @@ const lessonsRoutes = require('./routes/lessons');
 const app = express();
 
 app.use(cors({
-  origin: ['http://127.0.0.1:5500', 'http://localhost:3000'], 
+  origin: ['http://127.0.0.1:5500', 'http://localhost:3000', 'http://localhost:19006', 'exp://192.168.1.1:8081'], 
   credentials: true
 }));
 

@@ -50,6 +50,11 @@ const HomeScreen = ({ navigation }) => {
   const loadData = async () => {
     try {
       setLoading(true);
+      
+      if (user?.onboardingData?.selectedLanguage) {
+        await api.getLanguageProgress(user.onboardingData.selectedLanguage.name);
+      }
+      
       const response = await api.getOverallStats();
       const languages = response.stats.languages || [];
       setProgressData(languages);
@@ -58,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
         const activeLang = languages.find(
           l => l.language === user.onboardingData.selectedLanguage.name
         );
-        setActiveLanguage(activeLang || null);
+        setActiveLanguage(activeLang || languages[0] || null);
       } else if (languages.length > 0) {
         const firstLang = LANGUAGES.find(l => l.name === languages[0].language);
         if (firstLang) {
@@ -119,7 +124,7 @@ const HomeScreen = ({ navigation }) => {
           try {
             await updateUser({
               onboardingData: {
-                ...user.onboardingData,
+                ...user?.onboardingData,
                 selectedLanguage: lang
               }
             });
@@ -127,7 +132,10 @@ const HomeScreen = ({ navigation }) => {
             await api.getLanguageProgress(lang.name);
             
             await loadData();
+            
+            Alert.alert('Успешно', `Язык "${lang.name}" добавлен!`);
           } catch (error) {
+            console.error('Error adding language:', error);
             Alert.alert('Ошибка', 'Не удалось добавить язык');
           }
         }
@@ -138,13 +146,18 @@ const HomeScreen = ({ navigation }) => {
   const handleSwitchLanguage = async (language) => {
     const lang = LANGUAGES.find(l => l.name === language.language);
     if (lang) {
-      await updateUser({
-        onboardingData: {
-          ...user.onboardingData,
-          selectedLanguage: lang
-        }
-      });
-      setActiveLanguage(language);
+      try {
+        await updateUser({
+          onboardingData: {
+            ...user?.onboardingData,
+            selectedLanguage: lang
+          }
+        });
+        setActiveLanguage(language);
+      } catch (error) {
+        console.error('Error switching language:', error);
+        Alert.alert('Ошибка', 'Не удалось переключить язык');
+      }
     }
   };
 
@@ -214,6 +227,7 @@ const HomeScreen = ({ navigation }) => {
                 !canAddLanguage && styles.addButtonDisabled
               ]}
               onPress={handleAddLanguage}
+              disabled={!canAddLanguage}
             >
               <Ionicons 
                 name="add-circle" 
