@@ -57,12 +57,17 @@ router.post('/register', [
     user.subscription = subscription._id;
     await user.save();
 
+    // ИСПРАВЛЕНИЕ: Создаем прогресс для выбранного языка
     if (onboardingData && onboardingData.selectedLanguage) {
       const languageMap = {
         'Английский': 'english',
         'Испанский': 'spanish',
         'Японский': 'japanese',
-        'Корейский': 'korean'
+        'Корейский': 'korean',
+        'english': 'english',
+        'spanish': 'spanish',
+        'japanese': 'japanese',
+        'korean': 'korean'
       };
 
       const languageFlags = {
@@ -72,23 +77,35 @@ router.post('/register', [
         'korean': '🇰🇷'
       };
 
-      const languageName = onboardingData.selectedLanguage.name || onboardingData.selectedLanguage;
-      const languageKey = languageMap[languageName] || languageName.toLowerCase();
+      // Получаем название языка из onboardingData
+      let languageName;
+      if (typeof onboardingData.selectedLanguage === 'string') {
+        languageName = onboardingData.selectedLanguage;
+      } else if (onboardingData.selectedLanguage.name) {
+        languageName = onboardingData.selectedLanguage.name;
+      }
 
-      const progress = new Progress({
-        user: user._id,
-        language: languageKey,
-        languageFlag: languageFlags[languageKey] || '🌍',
-        currentLevel: 'A1',
-        overallProgress: 0,
-        vocabularyLearned: 0,
-        totalLessonsCompleted: 0,
-        levelProgress: {
-          A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, C2: 0
-        }
-      });
+      const languageKey = languageMap[languageName] || languageName?.toLowerCase();
 
-      await progress.save();
+      if (languageKey) {
+        console.log(`Creating progress for language: ${languageKey}`);
+        
+        const progress = new Progress({
+          user: user._id,
+          language: languageKey,
+          languageFlag: languageFlags[languageKey] || '🌍',
+          currentLevel: 'A1',
+          overallProgress: 0,
+          vocabularyLearned: 0,
+          totalLessonsCompleted: 0,
+          levelProgress: {
+            A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, C2: 0
+          }
+        });
+
+        await progress.save();
+        console.log(`Progress created successfully for ${languageKey}`);
+      }
     }
 
     const token = jwt.sign(
@@ -97,17 +114,20 @@ router.post('/register', [
       { expiresIn: '30d' }
     );
 
+    // Загружаем полные данные пользователя с подпиской
+    const fullUser = await User.findById(user._id).populate('subscription');
+
     res.status(201).json({
       token,
       user: {
-        id: user._id,
-        email: user.email,
-        name: user.name,
-        avatar: user.avatar,
-        subscription: subscription,
-        statistics: user.statistics,
-        hasCompletedOnboarding: user.hasCompletedOnboarding,
-        onboardingData: user.onboardingData
+        id: fullUser._id,
+        email: fullUser.email,
+        name: fullUser.name,
+        avatar: fullUser.avatar,
+        subscription: fullUser.subscription,
+        statistics: fullUser.statistics,
+        hasCompletedOnboarding: fullUser.hasCompletedOnboarding,
+        onboardingData: fullUser.onboardingData
       }
     });
   } catch (error) {
