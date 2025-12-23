@@ -1,11 +1,10 @@
 const axios = require('axios');
 
-const API_URL = 'https://linguaplay-production.up.railway.app/api';
+const API_URL = 'http://192.168.8.11:5000/api';
 
 async function testConnection() {
   console.log('🧪 Testing connection to Railway...\n');
   
-  // Тест 1: Проверка здоровья сервера
   console.log('1️⃣ Testing /api/health...');
   try {
     const response = await axios.get(`${API_URL.replace('/api', '')}/api/health`);
@@ -15,7 +14,6 @@ async function testConnection() {
     return;
   }
   
-  // Тест 2: Получение планов подписки
   console.log('\n2️⃣ Testing /api/subscription/plans...');
   try {
     const response = await axios.get(`${API_URL}/subscription/plans`);
@@ -24,7 +22,6 @@ async function testConnection() {
     console.error('❌ Plans failed:', error.message);
   }
   
-  // Тест 3: Регистрация тестового пользователя
   console.log('\n3️⃣ Testing registration...');
   const testEmail = `test${Date.now()}@test.com`;
   try {
@@ -45,27 +42,92 @@ async function testConnection() {
     console.log('Token:', response.data.token ? 'received' : 'missing');
     
     const token = response.data.token;
+    const userId = response.data.user.id;
     
-    // Тест 4: Получение прогресса
-    console.log('\n4️⃣ Testing progress...');
+    console.log('\n⏳ Waiting 2 seconds for MongoDB...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    console.log('\n4️⃣ Testing profile...');
+    try {
+      const profileResponse = await axios.get(`${API_URL}/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log('✅ Profile loaded:', {
+        email: profileResponse.data.user.email,
+        hasOnboardingData: !!profileResponse.data.user.onboardingData,
+        selectedLanguage: profileResponse.data.user.onboardingData?.selectedLanguage
+      });
+    } catch (error) {
+      console.error('❌ Profile failed:', error.response?.data || error.message);
+    }
+    
+    console.log('\n5️⃣ Testing language progress for Английский...');
+    try {
+      const langProgressResponse = await axios.get(`${API_URL}/progress/Английский`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log('✅ Language progress loaded:', {
+        language: langProgressResponse.data.progress.language,
+        currentLevel: langProgressResponse.data.progress.currentLevel,
+        completedLessons: langProgressResponse.data.progress.totalLessonsCompleted,
+        _id: langProgressResponse.data.progress._id
+      });
+    } catch (error) {
+      console.error('❌ Language progress failed:', error.response?.data || error.message);
+    }
+    
+    console.log('\n6️⃣ Testing all progress...');
     try {
       const progressResponse = await axios.get(`${API_URL}/progress`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('✅ Progress loaded:', progressResponse.data.progress.length, 'languages');
+      if (progressResponse.data.progress.length > 0) {
+        console.log('First language:', {
+          language: progressResponse.data.progress[0].language,
+          currentLevel: progressResponse.data.progress[0].currentLevel
+        });
+      } else {
+        console.warn('⚠️ Progress array is empty!');
+      }
     } catch (error) {
       console.error('❌ Progress failed:', error.response?.data || error.message);
     }
-    
-    // Тест 5: Получение общей статистики
-    console.log('\n5️⃣ Testing overall stats...');
+
+    console.log('\n7️⃣ Testing overall stats...');
     try {
       const statsResponse = await axios.get(`${API_URL}/progress/stats/overall`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      console.log('✅ Stats loaded:', statsResponse.data.stats);
+      console.log('✅ Stats loaded:', {
+        totalLanguages: statsResponse.data.stats.totalLanguages,
+        totalLessons: statsResponse.data.stats.totalLessonsCompleted,
+        languages: statsResponse.data.stats.languages.map(l => ({
+          name: l.language,
+          level: l.currentLevel,
+          lessons: l.lessonsCompleted
+        }))
+      });
     } catch (error) {
       console.error('❌ Stats failed:', error.response?.data || error.message);
+    }
+    
+
+    console.log('\n8️⃣ Testing lessons for Английский...');
+    try {
+      const lessonsResponse = await axios.get(`${API_URL}/lessons/Английский`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log('✅ Lessons loaded:', lessonsResponse.data.lessons.length, 'lessons');
+      if (lessonsResponse.data.lessons.length > 0) {
+        console.log('First lesson:', {
+          number: lessonsResponse.data.lessons[0].lessonNumber,
+          title: lessonsResponse.data.lessons[0].title,
+          level: lessonsResponse.data.lessons[0].level
+        });
+      }
+    } catch (error) {
+      console.error('❌ Lessons failed:', error.response?.data || error.message);
     }
     
   } catch (error) {

@@ -1,4 +1,4 @@
-const API_URL = 'https://linguaplay-production.up.railway.app/api';
+const API_URL = 'http://192.168.8.11:5500/api';
 
 class ApiService {
   constructor() {

@@ -1,67 +1,67 @@
 [
-  {
-    "lessonNumber": 1,
-    "title": "Приветствия",
-    "level": "A1",
-    "exercises": [
-      {
-        "type": "translateToTarget",
-        "russianText": "Привет",
-        "targetLanguage": "английский",
-        "options": ["Hello", "Goodbye", "Thanks"],
-        "correctAnswer": "Hello",
-        "points": 10
-      },
-      {
-        "type": "selectImage",
-        "word": "Доброе утро",
-        "options": [
-          { "emoji": "☀️", "text": "Good morning" },
-          { "emoji": "🌙", "text": "Good night" },
-          { "emoji": "🌆", "text": "Good evening" }
-        ],
-        "correctAnswer": "Good morning",
-        "points": 10
-      },
-      {
-        "type": "translateToTarget",
-        "russianText": "Добрый день",
-        "targetLanguage": "английский",
-        "options": ["Good afternoon", "Good night", "Good morning"],
-        "correctAnswer": "Good afternoon",
-        "points": 10
-      },
-      {
-        "type": "translateToRussian",
-        "targetText": "Good evening",
-        "options": ["Добрый вечер", "Доброе утро", "Спокойной ночи"],
-        "correctAnswer": "Добрый вечер",
-        "points": 10
-      },
-      {
-        "type": "listen",
-        "audio": "how_are_you.mp3",
-        "words": ["How", "are", "?", "you", "this", "is"],
-        "correctAnswer": "How are you?",
-        "points": 10
-      },
-      {
-        "type": "translateToRussian",
-        "targetText": "Nice to meet you",
-        "options": ["Приятно познакомиться", "До свидания", "Спасибо"],
-        "correctAnswer": "Приятно познакомиться",
-        "points": 10
-      },
-      {
-        "type": "translateToTarget",
-        "russianText": "До свидания",
-        "targetLanguage": "английский",
-        "options": ["Goodbye", "Hello", "See you later"],
-        "correctAnswer": "Goodbye",
-        "points": 10
-      }
-    ]
-  },
+    {
+      "lessonNumber": 1,
+      "title": "Приветствия",
+      "level": "A1",
+      "exercises": [
+        {
+          "type": "translateToTarget",
+          "russianText": "Привет",
+          "targetLanguage": "английский",
+          "options": ["Hello", "Goodbye", "Thanks"],
+          "correctAnswer": "Hello",
+          "points": 10
+        },
+        {
+          "type": "selectImage",
+          "word": "Доброе утро",
+          "options": [
+            { "emoji": "☀️", "text": "Good morning" },
+            { "emoji": "🌙", "text": "Good night" },
+            { "emoji": "🌆", "text": "Good evening" }
+          ],
+          "correctAnswer": "Good morning",
+          "points": 10
+        },
+        {
+          "type": "translateToTarget",
+          "russianText": "Добрый день",
+          "targetLanguage": "английский",
+          "options": ["Good afternoon", "Good night", "Good morning"],
+          "correctAnswer": "Good afternoon",
+          "points": 10
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "Good evening",
+          "options": ["Добрый вечер", "Доброе утро", "Спокойной ночи"],
+          "correctAnswer": "Добрый вечер",
+          "points": 10
+        },
+        {
+          "type": "listen",
+          "audio": "how_are_you.mp3",
+          "words": ["How", "are", "?", "you", "this", "is"],
+          "correctAnswer": "How are you?",
+          "points": 10
+        },
+        {
+          "type": "translateToRussian",
+          "targetText": "Nice to meet you",
+          "options": ["Приятно познакомиться", "До свидания", "Спасибо"],
+          "correctAnswer": "Приятно познакомиться",
+          "points": 10
+        },
+        {
+          "type": "translateToTarget",
+          "russianText": "До свидания",
+          "targetLanguage": "английский",
+          "options": ["Goodbye", "Hello", "See you later"],
+          "correctAnswer": "Goodbye",
+          "points": 10
+        }
+      ]
+    },
   {
     "lessonNumber": 2,
     "title": "Знакомство",

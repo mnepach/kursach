@@ -1,7 +1,7 @@
 import axios from 'axios';
 import storage from './storage';
 
-const API_URL = 'https://linguaplay-production.up.railway.app/api';
+const API_URL = 'http://192.168.8.11:5000/api';
 
 class ApiService {
   constructor() {
