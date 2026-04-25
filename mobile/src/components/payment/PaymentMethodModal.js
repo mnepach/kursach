@@ -114,7 +114,7 @@
                   <View style={styles.alternativePayment}>
                     {redirecting ? (
                       <>
-                        <ActivityIndicator size="large" color={Colors.primary} />
+                        <ActivityIndicator size={32} color={Colors.primary} />
                         <Text style={styles.redirectingText}>Перенаправление...</Text>
                       </>
                     ) : (

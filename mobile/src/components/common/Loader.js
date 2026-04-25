@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import Colors from '../../constants/colors';
 
-const Loader = ({ size = 'large', color = Colors.primary, fullScreen = false }) => {
+const Loader = ({ size = 32, color = Colors.primary, fullScreen = false }) => {
   if (fullScreen) {
     return (
       <View style={styles.fullScreenContainer}>
