@@ -1,7 +1,7 @@
 import axios from 'axios';
 import storage from './storage';
 
-const API_URL = 'http://192.168.8.11:5000/api';
+const API_URL = 'http://192.168.105.30:5000/api';
 
 class ApiService {
   constructor() {
@@ -45,7 +45,7 @@ class ApiService {
         method: options.method || 'GET',
         headers,
         data: options.body ? JSON.parse(options.body) : undefined,
-        timeout: 10000 // 10 секунд таймаут
+        timeout: 10000 
       });
 
       console.log(`✅ API Success: ${endpoint}`, response.data);

@@ -1,29 +1,49 @@
 const CURRENCY_CONFIG = {
-  BY: { code: 'BYN', symbol: 'Br', name: 'белорусских рублях', locale: 'be-BY' },
+  BY: { code: 'BYN', symbol: 'Br', name: 'белорусских рублях', locale: 'be-BY', fixedPrices: { basic: 9.99, premium: 17.99 } },
   RU: { code: 'RUB', symbol: '₽', name: 'российских рублях', locale: 'ru-RU' },
   DEFAULT: { code: 'EUR', symbol: '€', name: 'евро', locale: 'de-DE' }
 };
 
-const BASE_PRICES_EUR = {
-  basic: 5.49,
-  premium: 9.89
-};
-
 const EXCHANGE_RATES_FALLBACK = {
-  RUB: 100,
-  BYN: 3.6
+  RUB: 25.84,
+  BYN: 1,
+  EUR: 0.3125
 };
 
-async function getExchangeRates() {
+async function getExchangeRates(baseCurrency = 'EUR') {
   try {
-    const response = await fetch('https://api.exchangerate-api.com/v4/latest/EUR', {
+    const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`, {
       signal: AbortSignal.timeout(3000)
     });
     const data = await response.json();
-    return data.rates || EXCHANGE_RATES_FALLBACK;
+    return data.rates || null;
   } catch {
-    return EXCHANGE_RATES_FALLBACK;
+    return null;
   }
+}
+
+async function getBynToTargetRate(targetCurrency, fallbackRates = null) {
+  if (targetCurrency === 'BYN') return 1;
+
+  try {
+    const eurRates = await getExchangeRates('EUR');
+    if (eurRates && eurRates.BYN && eurRates[targetCurrency]) {
+      const bynToEur = 1 / eurRates.BYN;
+      const eurToTarget = eurRates[targetCurrency];
+      return bynToEur * eurToTarget;
+    }
+  } catch (e) {}
+
+  if (fallbackRates && fallbackRates[targetCurrency]) {
+    return fallbackRates[targetCurrency];
+  }
+
+  const fallbacks = {
+    RUB: 25.84,
+    EUR: 0.3125,
+    USD: 0.34
+  };
+  return fallbacks[targetCurrency] || 1;
 }
 
 async function detectCountry() {
@@ -38,40 +58,74 @@ async function detectCountry() {
   }
 }
 
+function roundPrice(amount, currencyCode) {
+  if (currencyCode === 'BYN') {
+    return Math.round(amount * 100) / 100;
+  }
+  if (currencyCode === 'RUB') {
+    return Math.round(amount / 10) * 10;
+  }
+  return Math.round(amount * 100) / 100;
+}
+
 async function getPricingForCountry() {
-  const [country, rates] = await Promise.all([detectCountry(), getExchangeRates()]);
+  const country = await detectCountry();
 
   let currency;
+  let isFixedBelarus = false;
+
   if (country === 'BY') {
     currency = CURRENCY_CONFIG.BY;
+    isFixedBelarus = true;
   } else if (country === 'RU') {
     currency = CURRENCY_CONFIG.RU;
   } else {
     currency = CURRENCY_CONFIG.DEFAULT;
   }
 
-  const formatPrice = (eurPrice) => {
-    if (currency.code === 'EUR') {
-      return { amount: eurPrice, display: `${eurPrice} €` };
+  const formatPrice = async (bynPrice) => {
+    if (isFixedBelarus) {
+      const fixedBasic = CURRENCY_CONFIG.BY.fixedPrices.basic;
+      const fixedPremium = CURRENCY_CONFIG.BY.fixedPrices.premium;
+      return {
+        basic: {
+          amount: fixedBasic,
+          display: `${fixedBasic.toFixed(2)} ${CURRENCY_CONFIG.BY.symbol}`
+        },
+        premium: {
+          amount: fixedPremium,
+          display: `${fixedPremium.toFixed(2)} ${CURRENCY_CONFIG.BY.symbol}`
+        }
+      };
     }
-    const rate = rates[currency.code] || EXCHANGE_RATES_FALLBACK[currency.code] || 1;
-    const converted = Math.round(eurPrice * rate);
-    const rounded = currency.code === 'BYN'
-      ? Math.round(converted / 0.5) * 0.5
-      : Math.round(converted / 10) * 10;
+
+    const rate = await getBynToTargetRate(currency.code, EXCHANGE_RATES_FALLBACK);
+    const convertPrice = (priceInByn) => {
+      const converted = priceInByn * rate;
+      const rounded = roundPrice(converted, currency.code);
+      return {
+        amount: rounded,
+        display: currency.code === 'EUR' ? `${rounded} €` : `${rounded} ${currency.symbol}`
+      };
+    };
+
     return {
-      amount: rounded,
-      display: `${rounded} ${currency.symbol}`
+      basic: convertPrice(9.99),
+      premium: convertPrice(17.99)
     };
   };
 
+  const prices = await formatPrice();
+
   return {
     country,
-    currency,
-    prices: {
-      basic: formatPrice(BASE_PRICES_EUR.basic),
-      premium: formatPrice(BASE_PRICES_EUR.premium)
-    }
+    currency: {
+      code: currency.code,
+      symbol: currency.symbol,
+      name: currency.name,
+      locale: currency.locale
+    },
+    prices
   };
 }
 

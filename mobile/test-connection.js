@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_URL = 'http://192.168.8.11:5000/api';
+const API_URL = 'http://192.168.105.30:5000/api';
 
 async function testConnection() {
   console.log('🧪 Testing connection to Railway...\n');
