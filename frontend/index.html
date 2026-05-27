@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinguaPlay - Изучайте языки играючи</title>
     <meta name="description" content="Изучайте иностранные языки с элементами геймификации. Веселые персонажи, интересные уроки и прогресс в личном кабинете.">
-    
+
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preload" href="https://unpkg.com/lucide-static@0.516.0/font/lucide.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://unpkg.com/lucide-static@0.516.0/font/lucide.css" rel="stylesheet"></noscript>
 
     <style>
         :root {
@@ -23,15 +25,52 @@
             --bg-light: #F8FAFC;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             overflow-x: hidden;
+        }
+
+        #root { min-height: 100vh; }
+
+        #initial-loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #initial-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .initial-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .initial-spinner-ring {
+            width: 64px;
+            height: 64px;
+            border: 6px solid #DBEAFE;
+            border-top-color: #60A5FA;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .initial-spinner-text {
+            font-size: 1rem;
+            color: #64748B;
+            font-weight: 500;
         }
 
         .snap-container {
@@ -49,49 +88,19 @@
             justify-content: center;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes shake-sideways {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(15px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes shake-sideways { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(15px); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        .floating { animation: float 3s ease-in-out infinite; }
+        .sideways { animation: shake-sideways 3s ease-in-out infinite; }
+        .bounce { animation: bounce 2s ease-in-out infinite; }
+        .pulse { animation: pulse 2s ease-in-out infinite; }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .sideways {
-            animation: shake-sideways 3s ease-in-out infinite;
-        }
-
-        .bounce {
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        .pulse {
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%);
-        }
-
-        .gradient-blue {
-            background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
-        }
+        .gradient-bg { background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 50%, #F3E8FF 100%); }
+        .gradient-blue { background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%); }
 
         .btn-primary {
             padding: 1rem 2rem;
@@ -104,12 +113,7 @@
             transition: all 0.3s;
             box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
         }
-
-        .btn-primary:hover {
-            background: var(--accent-color);
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.4);
-        }
+        .btn-primary:hover { background: var(--accent-color); transform: scale(1.05); box-shadow: 0 15px 40px rgba(96, 165, 250, 0.4); }
 
         .btn-secondary {
             padding: 1rem 2rem;
@@ -121,11 +125,7 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
-        .btn-secondary:hover {
-            background: var(--secondary-color);
-            transform: scale(1.05);
-        }
+        .btn-secondary:hover { background: var(--secondary-color); transform: scale(1.05); }
 
         .card {
             background: white;
@@ -134,11 +134,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); }
 
         .testimonial-card {
             background: white;
@@ -148,11 +144,7 @@
             transition: all 0.3s;
             height: 100%;
         }
-
-        .testimonial-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
+        .testimonial-card:hover { transform: scale(1.02); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); }
 
         header {
             position: fixed;
@@ -164,32 +156,13 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
+        header button:hover, header .logo-container:hover { opacity: 0.7; transition: opacity 0.3s; }
+        .logo-container { cursor: pointer; transition: opacity 0.3s; }
 
-        header button:hover, header .logo-container:hover {
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
+        .stat-number { font-size: 3.5rem; font-weight: bold; color: var(--primary-color); line-height: 1; }
 
-        .logo-container {
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            line-height: 1;
-        }
-
-        .language-flag {
-            font-size: 4rem;
-            transition: transform 0.3s;
-        }
-
-        .language-card:hover .language-flag {
-            transform: scale(1.2) rotate(10deg);
-        }
+        .language-flag { font-size: 4rem; transition: transform 0.3s; }
+        .language-card:hover .language-flag { transform: scale(1.2) rotate(10deg); }
 
         .loader {
             display: inline-block;
@@ -201,26 +174,29 @@
             animation: spin 1s ease-in-out infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @media (max-width: 768px) {
+            .snap-section > div { padding: 2rem 1rem !important; }
+            .grid-cols-2, .grid-cols-3, .grid-cols-4 { grid-template-columns: 1fr !important; }
+            .testimonial-card { min-width: 280px; }
         }
 
-        @media (max-width: 768px) {
-            .snap-section > div {
-                padding: 2rem 1rem !important;
-            }
-            .grid-cols-2, .grid-cols-3, .grid-cols-4 {
-                grid-template-columns: 1fr !important;
-            }
-            .testimonial-card {
-                min-width: 280px;
-            }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
 </head>
 <body>
+    <div id="initial-loader">
+        <div class="initial-spinner">
+            <div class="initial-spinner-ring"></div>
+            <span class="initial-spinner-text">LinguaPlay загружается...</span>
+        </div>
+    </div>
+
     <div id="root"></div>
 
+    <script type="text/babel" src="./services/currency.js"></script>
     <script type="text/babel" src="./components/Header.js"></script>
     <script type="text/babel" src="./components/LazyImage.js"></script>
     <script type="text/babel" src="./components/Hero.js"></script>
@@ -234,7 +210,7 @@
     <script type="text/babel" src="./components/RegisterModal.js"></script>
     <script type="text/babel" src="./components/EditProfileModal.js"></script>
     <script type="text/babel" src="./components/SubscriptionPlans.js"></script>
-    
+
     <script type="text/babel" src="./onboarding/LanguageSelection.js"></script>
     <script type="text/babel" src="./onboarding/WelcomeCharacter.js"></script>
     <script type="text/babel" src="./onboarding/HowDidYouHear.js"></script>
@@ -242,7 +218,7 @@
     <script type="text/babel" src="./onboarding/LanguageLevel.js"></script>
     <script type="text/babel" src="./onboarding/DailyGoal.js"></script>
     <script type="text/babel" src="./onboarding/LearningMethod.js"></script>
-    
+
     <script type="text/babel" src="./lessons/ListenAndArrange.js"></script>
     <script type="text/babel" src="./lessons/SelectWordByImage.js"></script>
     <script type="text/babel" src="./lessons/TranslateToTarget.js"></script>
@@ -250,9 +226,33 @@
     <script type="text/babel" src="./lessons/LessonComplete.js"></script>
     <script type="text/babel" src="./onboarding/FirstAchievement.js"></script>
     <script type="text/babel" src="./components/SaveProgressPrompt.js"></script>
-    
+
     <script type="text/babel" src="./components/OnboardingFlow.js"></script>
     <script type="text/babel" src="./services/api.js"></script>
     <script type="text/babel" src="app.js"></script>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var loader = document.getElementById('initial-loader');
+                if (loader) loader.classList.add('hidden');
+            }, 300);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var root = document.getElementById('root');
+            var observer = new MutationObserver(function(mutations) {
+                var hasContent = root.children.length > 0;
+                if (hasContent) {
+                    var loader = document.getElementById('initial-loader');
+                    if (loader) {
+                        setTimeout(function() { loader.classList.add('hidden'); }, 200);
+                    }
+                    observer.disconnect();
+                }
+            });
+            observer.observe(root, { childList: true });
+        });
+    </script>
 </body>
 </html>

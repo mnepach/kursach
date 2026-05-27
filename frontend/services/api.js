@@ -1,4 +1,6 @@
-const API_URL = 'http://192.168.8.11:5000/api';
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000/api'
+  : `http://${window.location.hostname}:5000/api`;
 
 class ApiService {
   constructor() {
@@ -150,6 +152,16 @@ class ApiService {
 
   async getOverallStats() {
     return await this.request('/progress/stats/overall');
+  }
+
+  async getUserCountry() {
+    try {
+      const response = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+      const data = await response.json();
+      return data.country_code || 'EU';
+    } catch {
+      return 'EU';
+    }
   }
 }
 

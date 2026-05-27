@@ -11,23 +11,90 @@ function Testimonials() {
   ];
 
   const [currentPage, setCurrentPage] = React.useState(0);
+  const [animating, setAnimating] = React.useState(false);
+  const [direction, setDirection] = React.useState(null);
+  const [displayPage, setDisplayPage] = React.useState(0);
 
   const totalPages = Math.ceil(testimonials.length / 3);
 
+  const goToPage = (nextPage, dir) => {
+    if (animating) return;
+    setAnimating(true);
+    setDirection(dir);
+    setTimeout(() => {
+      setDisplayPage(nextPage);
+      setCurrentPage(nextPage);
+      setDirection(null);
+      setAnimating(false);
+    }, 350);
+  };
+
   const scrollLeft = () => {
-    setCurrentPage(prev => prev === 0 ? totalPages - 1 : prev - 1);
+    const next = currentPage === 0 ? totalPages - 1 : currentPage - 1;
+    goToPage(next, 'right');
   };
 
   const scrollRight = () => {
-    setCurrentPage(prev => prev === totalPages - 1 ? 0 : prev + 1);
+    const next = currentPage === totalPages - 1 ? 0 : currentPage + 1;
+    goToPage(next, 'left');
   };
 
-  const startIndex = currentPage * 3;
+  const startIndex = displayPage * 3;
   const visible = testimonials.slice(startIndex, startIndex + 3);
 
   return (
-    <section id="testimonials" className="snap-section gradient-bg">
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "4rem 2rem", width: "100%" }}>
+    <section id="testimonials" className="snap-section gradient-bg" style={{ overflow: 'visible' }}>
+      <style>{`
+        @keyframes slideInLeft { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes slideInRight { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
+        .slide-in-left { animation: slideInLeft 0.4s ease forwards; }
+        .slide-in-right { animation: slideInRight 0.4s ease forwards; }
+        .testimonial-enter { animation-duration: 0.4s; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        
+        .testimonial-card {
+          background: var(--card-bg, white);
+          border-radius: 1.5rem;
+          padding: 1.5rem;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          height: auto;
+          min-height: 240px;
+          display: flex;
+          flex-direction: column;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          will-change: transform;
+        }
+        
+        .testimonial-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 30px 40px -12px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 1024px) {
+          .testimonial-card {
+            min-height: 260px;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .testimonial-card {
+            min-height: auto;
+            padding: 1.25rem;
+          }
+          .testimonial-card:hover {
+            transform: translateY(-4px);
+          }
+        }
+      `}</style>
+      
+      <div style={{ 
+        maxWidth: "1280px", 
+        margin: "0 auto", 
+        padding: "4rem 2rem", 
+        width: "100%",
+        position: "relative",
+        overflow: 'visible'
+      }}>
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <h2 style={{ fontSize: "3rem", fontWeight: "bold", color: "var(--text-dark)", marginBottom: "1rem" }}>
             Что говорят <span style={{ color: "var(--primary-color)" }}>наши пользователи</span>
@@ -37,115 +104,146 @@ function Testimonials() {
           </p>
         </div>
 
-        <div style={{ position: "relative" }}>
+        <div style={{ 
+          position: "relative",
+          maxWidth: "1100px",
+          margin: "0 auto",
+          padding: "0 40px",
+          overflow: 'visible'
+        }}>
           <button
             onClick={scrollLeft}
-            style={{
-              position: "absolute",
-              left: "-60px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              border: "none",
-              width: 0,
-              height: 0,
-              borderTop: "20px solid transparent",
-              borderBottom: "20px solid transparent",
-              borderRight: "30px solid var(--primary-color)",
-              background: "transparent",
+            style={{ 
+              position: "absolute", 
+              left: "-20px", 
+              top: "50%", 
+              transform: "translateY(-50%)", 
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "white",
+              border: "1px solid #E2E8F0",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
               cursor: "pointer",
-              filter: "drop-shadow(0 4px 8px rgba(96,165,250,0.3))",
-              transition: "0.25s"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              transition: "0.25s",
+              zIndex: 10,
+              color: "#4B5563"
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderRightColor = "var(--accent-color)")}
-            onMouseLeave={(e) => (e.currentTarget.style.borderRightColor = "var(--primary-color)")}
-          />
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "2rem",
-              maxWidth: "1100px",
-              margin: "0 auto",
-              transition: "opacity 0.5s ease"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "var(--primary-color)";
+              e.currentTarget.style.color = "white";
+              e.currentTarget.style.borderColor = "var(--primary-color)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "white";
+              e.currentTarget.style.color = "#4B5563";
+              e.currentTarget.style.borderColor = "#E2E8F0";
             }}
           >
-            {visible.map((t, i) => (
-              <div key={startIndex + i} className="testimonial-card">
-                <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
-                  <div style={{
-                    width: "3.5rem",
-                    height: "3.5rem",
-                    borderRadius: "50%",
-                    background: "var(--secondary-color)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: "1.7rem",
-                    marginRight: "1rem"
-                  }}>
-                    {t.avatar}
-                  </div>
+            ❮
+          </button>
 
-                  <div>
-                    <div style={{ fontSize: "1rem", fontWeight: "bold", color: "var(--text-dark)" }}>
-                      {t.name}
+          <div style={{ 
+            overflow: 'visible',
+            padding: '10px 0'
+          }}>
+            <div
+              key={displayPage}
+              className={direction === 'left' ? 'slide-in-left testimonial-enter' : direction === 'right' ? 'slide-in-right testimonial-enter' : ''}
+              style={{ 
+                display: "grid", 
+                gridTemplateColumns: "repeat(3, 1fr)", 
+                gap: "2rem"
+              }}
+            >
+              {visible.map((t, i) => (
+                <div key={startIndex + i} className="testimonial-card">
+                  <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+                    <div style={{ 
+                      width: "3.5rem", 
+                      height: "3.5rem", 
+                      borderRadius: "50%", 
+                      background: "linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%)",
+                      display: "flex", 
+                      justifyContent: "center", 
+                      alignItems: "center", 
+                      fontSize: "1.7rem", 
+                      marginRight: "1rem",
+                      flexShrink: 0
+                    }}>
+                      {t.avatar}
                     </div>
-                    <div style={{ color: "var(--text-light)", fontSize: "0.8rem" }}>
-                      {t.role}
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: "1rem", fontWeight: "bold", color: "var(--text-dark)" }}>{t.name}</div>
+                      <div style={{ color: "var(--text-light)", fontSize: "0.8rem" }}>{t.role}</div>
                     </div>
                   </div>
+                  <div style={{ marginBottom: "0.75rem" }}>
+                    {Array.from({ length: t.rating }).map((_, s) => (
+                      <span key={s} style={{ color: "#FBBF24", fontSize: "1.1rem" }}>★</span>
+                    ))}
+                  </div>
+                  <p style={{ color: "var(--text-light)", fontSize: "0.95rem", lineHeight: "1.5", margin: 0 }}>"{t.text}"</p>
                 </div>
-
-                <div style={{ marginBottom: "0.75rem" }}>
-                  {Array.from({ length: t.rating }).map((_, s) => (
-                    <span key={s} style={{ color: "#FCD34D", fontSize: "1.1rem" }}>★</span>
-                  ))}
-                </div>
-
-                <p style={{ color: "var(--text-light)", fontSize: "0.95rem", lineHeight: "1.5" }}>
-                  {t.text}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <button
             onClick={scrollRight}
-            style={{
-              position: "absolute",
-              right: "-60px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              border: "none",
-              width: 0,
-              height: 0,
-              borderTop: "20px solid transparent",
-              borderBottom: "20px solid transparent",
-              borderLeft: "30px solid var(--primary-color)",
-              background: "transparent",
+            style={{ 
+              position: "absolute", 
+              right: "-20px", 
+              top: "50%", 
+              transform: "translateY(-50%)", 
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "white",
+              border: "1px solid #E2E8F0",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
               cursor: "pointer",
-              filter: "drop-shadow(0 4px 8px rgba(96,165,250,0.3))",
-              transition: "0.25s"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              transition: "0.25s",
+              zIndex: 10,
+              color: "#4B5563"
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderLeftColor = "var(--accent-color)")}
-            onMouseLeave={(e) => (e.currentTarget.style.borderLeftColor = "var(--primary-color)")}
-          />
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "var(--primary-color)";
+              e.currentTarget.style.color = "white";
+              e.currentTarget.style.borderColor = "var(--primary-color)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "white";
+              e.currentTarget.style.color = "#4B5563";
+              e.currentTarget.style.borderColor = "#E2E8F0";
+            }}
+          >
+            ❯
+          </button>
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+        <div style={{ textAlign: "center", marginTop: "3rem" }}>
           <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
             {Array.from({ length: totalPages }).map((_, idx) => (
               <div
                 key={idx}
-                onClick={() => setCurrentPage(idx)}
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "50%",
-                  background: currentPage === idx ? "var(--primary-color)" : "#E2E8F0",
-                  transition: "0.5s",
-                  cursor: "pointer"
+                onClick={() => goToPage(idx, idx > currentPage ? 'left' : 'right')}
+                style={{ 
+                  width: currentPage === idx ? "32px" : "10px", 
+                  height: "10px", 
+                  borderRadius: currentPage === idx ? "5px" : "50%", 
+                  background: currentPage === idx ? "var(--primary-color)" : "#E2E8F0", 
+                  transition: "all 0.4s cubic-bezier(0.25,0.46,0.45,0.94)", 
+                  cursor: "pointer",
+                  display: "inline-block"
                 }}
               ></div>
             ))}
