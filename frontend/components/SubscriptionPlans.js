@@ -333,7 +333,7 @@ function PaymentModal({ plan, pricing, onClose, onSuccess, mousePos, scrollY }) 
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="text-6xl mb-4">{paymentMethods.find(m => m.id === paymentMethod)?.icon}</div>
               <p className="text-lg text-[var(--text-light)] mb-8 text-center">Вы будете перенаправлены на страницу оплаты</p>
-              <button onClick={handlePayment} disabled={loading} className="btn-primary w-full">{loading ? 'Обработка...' : `Перейти к оплате ${planPrice} ${symbol}`}</button>
+              <Button title={`Перейти к оплате ${planPrice}`} onPress={handlePayment} disabled={loading || redirecting} loading={loading || redirecting} />
             </div>
           )}
         </div>

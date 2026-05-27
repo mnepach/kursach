@@ -129,7 +129,7 @@
               </ScrollView>
               {paymentMethod === 'card' && (
                 <View style={styles.footer}>
-                  <Button title={`Оплатить ${planPrice} ₽`} onPress={handlePayment} loading={loading || redirecting} disabled={!isCardFormValid() || loading || redirecting} />
+                  <Button title={`Оплатить ${planPrice}`} onPress={handlePayment} loading={loading || redirecting} disabled={!isCardFormValid() || loading || redirecting} />
                 </View>
               )}
             </View>
